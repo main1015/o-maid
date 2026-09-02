@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O-Maid 测试页面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+
+        .test-section {
+            margin: 30px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .test-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .test-button:hover {
+            background: #0056b3;
+        }
+
+        .test-input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 200px;
+        }
+
+        .test-card {
+            background: #f8f9fa;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+
+        .instructions {
+            background: #fff3cd;
+            padding: 15px;
+            border-left: 4px solid #ffc107;
+            margin-bottom: 20px;
+        }
+
+        .instructions h3 {
+            margin-top: 0;
+        }
+
+        .instructions ol {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+
+        .instructions li {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🧪 O-Maid 高亮跟随功能测试页面</h1>
+
+    <div class="instructions">
+        <h3>📋 测试步骤：</h3>
+        <ol>
+            <li>确保已经在 <code>chrome://extensions/</code> 重新加载了扩展</li>
+            <li>按 <kbd>F12</kbd> 打开开发者工具，切换到 Console 标签</li>
+            <li>点击扩展图标，打开 O-Maid 面板</li>
+            <li>点击 <strong>"+"</strong> 按钮，选择 <strong>"悬停提示"</strong></li>
+            <li>观察控制台是否显示：
+                <ul>
+                    <li>"O-Maid: 开始选择模式"</li>
+                    <li>"O-Maid: 已添加事件监听器"</li>
+                </ul>
+            </li>
+            <li>将鼠标移动到下面的测试元素上</li>
+            <li>应该看到：
+                <ul>
+                    <li>控制台显示 "O-Maid: mouseover 事件触发"</li>
+                    <li>元素周围出现蓝色高亮框</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+
+    <div class="test-section">
+        <h2>测试区域 1：按钮</h2>
+        <button class="test-button">测试按钮 1</button>
+        <button class="test-button">测试按钮 2</button>
+        <button class="test-button">测试按钮 3</button>
+    </div>
+
+    <div class="test-section">
+        <h2>测试区域 2：输入框</h2>
+        <input type="text" class="test-input" placeholder="测试输入框 1">
+        <input type="text" class="test-input" placeholder="测试输入框 2">
+    </div>
+
+    <div class="test-section">
+        <h2>测试区域 3：卡片</h2>
+        <div class="test-card">
+            <h3>测试卡片 1</h3>
+            <p>这是一个测试卡片，移动鼠标到这里应该看到高亮。</p>
+        </div>
+        <div class="test-card">
+            <h3>测试卡片 2</h3>
+            <p>这是另一个测试卡片，也应该能够高亮。</p>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>测试区域 4：文本段落</h2>
+        <p>这是一个普通的段落文本。移动鼠标到这里应该看到高亮框。</p>
+        <p>这是另一个段落。每个段落都应该能够独立高亮。</p>
+    </div>
+
+    <div class="test-section" style="margin-bottom: 300px;">
+        <h2>测试区域 6：Iframe</h2>
+        <p>下面的区域是一个 iframe，测试跨 frame 选择。</p>
+        <iframe id="test-iframe" style="width: 100%; height: 200px; border: 1px solid #ccc;"></iframe>
+    </div>
+
+    <div style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+        <button class="test-button" id="bottom-test-btn">页面底部测试按钮</button>
+    </div>
+
+    <div class="instructions" style="background: #d1ecf1; border-color: #0c5460;">
+        <h3>🔍 调试提示：</h3>
+        <ul>
+            <li><strong>如果没有看到控制台日志</strong>：扩展可能没有正确加载，请重新加载扩展并刷新页面</li>
+            <li><strong>如果看到日志但没有高亮</strong>：检查控制台是否有错误信息</li>
+            <li><strong>如果高亮位置不对</strong>：可能是 CSS 样式问题，检查高亮元素的样式</li>
+            <li><strong>手动测试</strong>：在控制台运行 <code>document.getElementById('o-maid-selection-highlight')</code>
+                查看高亮元素是否存在</li>
+            <li><strong>动态定位测试</strong>：悬停在右下角的“页面底部测试按钮”上，提示框应显示在按钮上方。</li>
+        </ul>
+    </div>
+
+    <script>
+        // 页面加载完成后的提示
+        window.addEventListener('load', () => {
+            console.log('✅ O-Maid 测试页面已加载');
+            console.log('📝 请按照上面的步骤进行测试');
+
+            // 初始化 iframe 内容
+            const iframe = document.getElementById('test-iframe');
+            const doc = iframe.contentDocument || iframe.contentWindow.document;
+            doc.open();
+            doc.write(`
+                <html>
+                <head>
+                    <style>
+                        body { font-family: sans-serif; padding: 20px; background: #f0f0f0; }
+                        .iframe-button { background: #28a745; color: white; border: none; padding: 10px; border-radius: 4px; cursor: pointer; }
+                    </style>
+                </head>
+                <body>
+                    <h3>Iframe 内部</h3>
+                    <p>这是 iframe 内部的文本。</p>
+                    <div style="height: 500px; background: linear-gradient(to bottom, #eee, #ccc); padding: 10px; margin: 10px 0;">
+                        可滚动区域
+                        <br><br><br>
+                        <button class="iframe-button" id="inner-scroll-button">Iframe 内部滚动按钮</button>
+                    </div>
+                    <button class="iframe-button">Iframe 内部按钮</button>
+                </body>
+                </html>
+            `);
+            doc.close();
+        });
+    </script>
+</body>
+
+</html>

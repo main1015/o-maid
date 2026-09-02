@@ -1,0 +1,509 @@
+/* styles/panel.css - O-Maid UI 面板样式 */
+
+/* 基础面板样式 - 悬浮式布局 */
+#o-maid-panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 380px;
+    min-width: 280px;
+    max-width: 600px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: -2px 0 20px rgba(0, 0, 0, 0.15);
+    border-radius: 12px 0 0 12px;
+    z-index: 2147483646;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji" !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    color: #333 !important;
+    display: none;
+    flex-direction: column;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: left !important;
+    border: none;
+}
+
+#o-maid-panel *,
+#o-maid-panel *:before,
+#o-maid-panel *:after {
+    font-family: inherit !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+    box-sizing: border-box !important;
+    text-transform: none !important;
+}
+
+/* 折叠状态 */
+#o-maid-panel.collapsed {
+    transform: translateX(100%);
+}
+
+/* 拖拽手柄 */
+.o-maid-resize-handle {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 6px;
+    height: 100%;
+    cursor: ew-resize;
+    background: transparent;
+    transition: background 0.2s;
+    z-index: 10;
+}
+
+.o-maid-resize-handle:hover,
+.o-maid-resize-handle.dragging {
+    background: rgba(13, 110, 253, 0.3);
+}
+
+/* 折叠标签 */
+.o-maid-collapse-tab {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    border-radius: 12px 0 0 12px;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+#o-maid-panel.collapsed .o-maid-collapse-tab {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.o-maid-collapse-tab:hover {
+    background: rgba(255, 255, 255, 1);
+}
+
+.o-maid-collapse-tab-icon {
+    font-size: 24px;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+}
+
+/* 移动端适配 - 竖屏时显示在底部 */
+@media (max-width: 768px) and (orientation: portrait) {
+    #o-maid-panel {
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100vw;
+        height: 50vh;
+        min-height: 300px;
+        max-height: 80vh;
+        border-radius: 12px 12px 0 0;
+    }
+
+    #o-maid-panel.collapsed {
+        transform: translateY(calc(100% - 2px));
+    }
+
+    .o-maid-resize-handle {
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 6px;
+        cursor: ns-resize;
+    }
+
+    .o-maid-collapse-tab {
+        left: 50%;
+        top: -48px;
+        transform: translateX(-50%);
+        width: 120px;
+        height: 48px;
+        border-radius: 12px 12px 0 0;
+    }
+
+    .o-maid-collapse-tab-icon {
+        writing-mode: horizontal-tb;
+    }
+}
+
+#o-maid-panel #o-maid-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background: #f7f7f7;
+    border-bottom: 1px solid #eee;
+    font-weight: bold;
+}
+
+#o-maid-panel #o-maid-header-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+#o-maid-panel #o-maid-header-buttons button {
+    font-size: 18px;
+    border: 1px solid #ccc;
+    background: #fff;
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 2px 8px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#o-maid-panel #o-maid-panel-content {
+    padding: 15px;
+    overflow-y: auto;
+    flex-grow: 1;
+    scrollbar-width: thin;
+}
+
+/* 列表与折叠样式 (手风琴风格) */
+#o-maid-panel .o-maid-list-section {
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    background: #fff;
+}
+
+#o-maid-panel .o-maid-collapsible {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    user-select: none;
+    margin: 0;
+    padding: 12px 15px;
+    background: #fff;
+    color: #0d6efd;
+    font-weight: 600;
+    transition: background-color 0.2s, color 0.2s;
+    border: none;
+    width: 100%;
+    text-align: left;
+}
+
+#o-maid-panel .o-maid-collapsible:hover {
+    background-color: #f8f9fa;
+}
+
+#o-maid-panel .o-maid-collapsible.active {
+    background-color: #e7f1ff;
+    color: #0c63e4;
+    border-bottom: 1px solid #dee2e6;
+}
+
+#o-maid-panel .o-maid-collapsible .arrow {
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform 0.2s ease-in-out;
+    margin-right: 5px;
+}
+
+#o-maid-panel .o-maid-collapsible.active .arrow {
+    transform: rotate(-135deg);
+    margin-top: 5px;
+}
+
+#o-maid-panel #o-maid-tours-list,
+#o-maid-panel #o-maid-hints-list {
+    list-style-type: none;
+    padding: 15px;
+    margin: 0;
+    background: #fdfdfd;
+}
+
+#o-maid-panel .o-maid-list-section h5 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+    color: #666;
+    font-size: 13px;
+}
+
+#o-maid-panel #o-maid-tours-list li,
+#o-maid-panel #o-maid-hints-list li,
+#o-maid-panel #o-maid-tour-steps-list li {
+    background: #fff;
+    margin-bottom: 12px;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+#o-maid-panel #o-maid-tours-list li:last-child,
+#o-maid-panel #o-maid-hints-list li:last-child {
+    margin-bottom: 0;
+}
+
+#o-maid-panel .item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+#o-maid-panel .item-info {
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+#o-maid-panel.item-info .name {
+    font-weight: bold;
+    font-size: 15px;
+    color: #212529;
+}
+
+#o-maid-panel .item-info .details,
+#o-maid-panel .item-step-details {
+    font-size: 11px;
+    color: #6c757d;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    width: 100%;
+    margin-top: 2px;
+}
+
+#o-maid-panel .item-actions {
+    display: flex;
+    gap: 5px;
+}
+
+/* Bootstrap 5 风格按钮 */
+#o-maid-panel .btn {
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    border-radius: 0.25rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+#o-maid-panel .btn-outline-primary {
+    color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+#o-maid-panel .btn-outline-primary:hover {
+    color: #fff;
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+#o-maid-panel .btn-outline-danger {
+    color: #dc3545;
+    border-color: #dc3545;
+}
+
+#o-maid-panel .btn-outline-danger:hover {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+#o-maid-panel .btn-sm {
+    padding: 0.1rem 0.4rem;
+    font-size: 0.75rem;
+    border-radius: 0.2rem;
+}
+
+#o-maid-panel.btn-success {
+    color: #fff;
+    background-color: #198754;
+    border-color: #198754;
+}
+
+#o-maid-panel #o-maid-panel-content label {
+    display: block;
+    margin: 10px 0 5px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+#o-maid-panel #o-maid-panel-content input[type="text"],
+#o-maid-panel #o-maid-panel-content textarea,
+#o-maid-panel #o-maid-panel-content select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#o-maid-panel .selector-wrapper {
+    display: flex;
+}
+
+#o-maid-panel .selector-wrapper input {
+    flex-grow: 1;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    background: #eee;
+}
+
+#o-maid-panel .selector-wrapper button {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+#o-maid-panel .form-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+#o-maid-panel button.save-btn {
+    background: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+#o-maid-panel .button.cancel-btn {
+    background: #f1f1f1;
+}
+
+#o-maid-panel .button.choice-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+#o-maid-tour-steps-list li {
+    background: #f9f9f9;
+}
+
+#o-maid-panel .delete-btn,
+#o-maid-panel .delete-step-btn {
+    background-color: #dc3545;
+    color: white;
+    border-color: #dc3545;
+}
+
+#o-maid-panel .start-btn {
+    background-color: #28a745;
+    color: white;
+    border-color: #28a745;
+}
+
+
+
+/* 引导任务步骤列表样式 */
+#o-maid-panel .o-maid-steps-list {
+    list-style: none;
+    padding: 10px 0 !important;
+    margin: 0;
+    background: #fdfdfd;
+    border-top: 1px dashed #eee;
+}
+
+#o-maid-panel .o-maid-step-item {
+    display: flex;
+    /* flex-direction: column; */
+    flex-direction: row !important;
+    gap: 10px;
+    align-items: center;
+    /* justify-content: center; */
+    justify-content: flex-start;
+    padding: 15px;
+    margin-top: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 13px !important;
+    background: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+#o-maid-panel .o-maid-step-item:hover {
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-1px);
+    border-color: #b3d7ff;
+}
+
+#o-maid-panel .o-maid-step-item.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    color: #999 !important;
+    background: #f9f9f9;
+    box-shadow: none;
+}
+
+#o-maid-panel .o-maid-step-item .step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: #0d6efd;
+    color: white;
+    border-radius: 50%;
+    font-size: 12px !important;
+    font-weight: bold;
+    flex-shrink: 0;
+    margin-bottom: 0px;
+    margin-right: 8px;
+}
+
+#o-maid-panel .o-maid-step-item.disabled .step-num {
+    background: #ccc;
+}
+
+#o-maid-panel .o-maid-step-item .step-text {
+    white-space: normal;
+    /* text-align: center; */
+    line-height: 1.4;
+    color: #333;
+    text-align: left !important;
+    /* 核心：文字内容左对齐 */
+    flex: 1 !important;
+    /* 让文字容器占据剩余的所有宽度 */
+    display: block !important;
+    word-break: break-all;
+    /* 防止长文本溢出 */
+}
+
+#o-maid-panel .step-arrow {
+    display: inline-block;
+    transition: transform 0.2s;
+    margin-right: 8px;
+    font-size: 10px;
+    color: #666;
+}
+
+#o-maid-panel .item-meta {
+    padding: 0 15px 10px 15px;
+    font-size: 12px !important;
+    color: #666;
+}

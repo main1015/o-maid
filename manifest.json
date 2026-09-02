@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "页面元素助手",
+  "version": "1.0",
+  "description": "在特定页面提示或修改元素。",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "webNavigation"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "vendor/introjs.min.css",
+        "styles/selection.css",
+        "styles/panel.css",
+        "styles/hints.css"
+      ],
+      "js": [
+        "vendor/intro.min.js",
+        "content.js"
+      ],
+      "all_frames": true,
+      "match_about_blank": true,
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "modules/*.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}
