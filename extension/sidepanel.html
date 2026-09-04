@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>页面助手</title>
+    <link rel="stylesheet" href="styles/sidepanel.css">
+</head>
+
+<body>
+    <div id="sidepanel-root">
+        <div id="sidepanel-header">
+            <span id="header-title">页面助手</span>
+                <button id="auth-btn" title="云端账号">👤</button>
+                <button id="settings-btn" title="设置">⚙️</button>
+                <button id="export-btn" title="导出数据">📤</button>
+                <button id="import-btn" title="导入数据">📥</button>
+                <button id="add-new-btn" title="添加新提示">+</button>
+            </div>
+        </div>
+        <div id="notification" style="display:none;"></div>
+        <div id="sidepanel-content">
+            <!-- Tabs -->
+            <div id="main-tabs" class="tabs" style="display: flex; gap: 10px; margin-bottom: 10px;">
+                <button class="tab-btn active" data-tab="local" style="flex: 1; padding: 5px;">本地库</button>
+                <button class="tab-btn" data-tab="cloud" style="flex: 1; padding: 5px;">云端发现</button>
+            </div>
+
+            <!-- View: Main list view -->
+            <div id="view-main" class="tab-content active">
+                <div class="list-section">
+                    <h4 class="collapsible active" data-target="tours-list">引导任务 <span class="arrow"></span></h4>
+                    <ul id="tours-list"></ul>
+                </div>
+                <div class="list-section">
+                    <h4 class="collapsible active" data-target="hints-list">悬停提示 <span class="arrow"></span></h4>
+                    <ul id="hints-list"></ul>
+                </div>
+                <p id="no-data-msg" style="display:none;">当前没有任何提示或任务。</p>
+            </div>
+
+            <!-- View: Cloud Discover -->
+            <div id="view-cloud" class="tab-content" style="display:none;">
+                <div class="list-section">
+                    <h4 class="collapsible active" data-target="cloud-tours-list">共享引导任务 <span class="arrow"></span></h4>
+                    <ul id="cloud-tours-list"></ul>
+                </div>
+                <div class="list-section">
+                    <h4 class="collapsible active" data-target="cloud-hints-list">共享悬停提示 <span class="arrow"></span></h4>
+                    <ul id="cloud-hints-list"></ul>
+                </div>
+                <button id="refresh-cloud-btn" class="choice-btn">刷新云端数据</button>
+                <p id="cloud-no-data-msg" style="display:none;">云端当前没有任何匹配的提示或任务。</p>
+            </div>
+
+            <!-- View: Auth -->
+            <div id="view-auth" style="display:none;">
+                <h5>云端账号</h5>
+                <div id="auth-status" style="margin-bottom: 10px; font-size: 14px; color: #666;"></div>
+                <div id="auth-form-container">
+                    <input type="text" id="auth-username" placeholder="用户名" style="width: 100%; margin-bottom: 8px; padding: 6px; box-sizing: border-box;">
+                    <input type="password" id="auth-password" placeholder="密码" style="width: 100%; margin-bottom: 8px; padding: 6px; box-sizing: border-box;">
+                    <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                        <button id="login-btn" class="choice-btn" style="flex: 1; margin: 0;">登录</button>
+                        <button id="register-btn" class="choice-btn" style="flex: 1; margin: 0;">注册</button>
+                    </div>
+                </div>
+                <button id="logout-btn" class="choice-btn" style="display:none; width: 100%; margin-bottom: 10px;">退出登录</button>
+                <hr>
+                <button id="close-auth-btn" class="cancel-btn">关闭</button>
+            </div>
+
+            <!-- View: Settings -->
+            <div id="view-settings" style="display:none;">
+                <h5>设置</h5>
+                <label>后端 API 地址:</label>
+                <input type="text" id="setting-api-base" placeholder="http://localhost:3000/api" style="width: 100%; margin-bottom: 10px; padding: 6px; box-sizing: border-box;">
+                <button id="save-settings-btn" class="save-btn" style="width: 100%; margin-bottom: 10px;">保存设置</button>
+                <hr>
+                <button id="close-settings-btn" class="cancel-btn">关闭</button>
+            </div>
+
+            <!-- View: Add Choice -->
+            <div id="view-add-choice" style="display:none;">
+                <h5>您想创建什么？</h5>
+                <button id="create-hint-btn" class="choice-btn">悬停提示</button>
+                <button id="create-tour-btn" class="choice-btn">引导任务</button>
+                <hr><button id="cancel-creation-btn" class="cancel-btn">取消</button>
+            </div>
+
+            <!-- View: Hint Editor -->
+            <div id="view-edit-hint" style="display:none;">
+                <label>提示文本:</label>
+                <textarea id="hint-text" rows="4"></textarea>
+                <label>CSS 选择器:</label>
+                <div class="selector-wrapper">
+                    <input type="text" id="hint-selector" readonly>
+                    <button id="hint-reselect-btn">重选</button>
+                </div>
+                <div class="form-actions">
+                    <button id="save-hint-btn" class="save-btn">保存</button>
+                    <button id="cancel-edit-hint-btn" class="cancel-btn">取消</button>
+                </div>
+            </div>
+
+            <!-- View: Tour Editor -->
+            <div id="view-edit-tour" style="display:none;">
+                <label>任务名称:</label>
+                <input type="text" id="tour-name">
+                <label>触发方式:</label>
+                <select id="tour-trigger">
+                    <option value="manual">手动</option>
+                    <option value="auto">自动</option>
+                </select>
+                <div class="list-section">
+                    <h5>步骤 (<span id="tour-step-count">0</span>)</h5>
+                    <ul id="tour-steps-list"></ul>
+                </div>
+                <button id="tour-add-step-btn" class="choice-btn">+ 添加步骤</button>
+                <div class="form-actions">
+                    <button id="save-tour-btn" class="save-btn">保存任务</button>
+                    <button id="cancel-edit-tour-btn" class="cancel-btn">取消</button>
+                </div>
+            </div>
+
+            <!-- View: Tour Step Editor -->
+            <div id="view-edit-tour-step" style="display:none;">
+                <label>步骤提示文本:</label>
+                <textarea id="tour-step-text" rows="4"></textarea>
+                <label>CSS 选择器:</label>
+                <div class="selector-wrapper">
+                    <input type="text" id="tour-step-selector" readonly>
+                    <button id="tour-step-reselect-btn">重选</button>
+                </div>
+                <div class="form-actions">
+                    <button id="save-tour-step-btn" class="save-btn">保存步骤</button>
+                    <button id="cancel-edit-tour-step-btn" class="cancel-btn">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="file" id="import-input" accept=".json" style="display:none;">
+    <script src="sidepanel.js" type="module"></script>
+</body>
+
+</html>

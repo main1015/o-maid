@@ -6,39 +6,49 @@
 
 ```text
 o-maid/
-├── 📄 manifest.json              # Chrome 扩展配置文件（必需）
-├── 🚀 background.js              # 后台服务工作者（Service Worker）
-├── 🎯 content.js                 # 内容脚本入口文件
-├── 🖼️  popup.html                 # 弹出窗口 HTML 结构
-├── 🎨 popup.js                   # 弹出窗口交互逻辑
-├── 📋 rules.json                 # 默认规则配置文件
-│
-├── 📦 modules/                   # 功能模块目录（核心业务逻辑）
-│   ├── 📡 communication.js       # 通信模块 - 与 background 的消息传递
-│   ├── 🎯 element-selector.js    # 元素选择模块 - 元素选择和高亮功能
-│   ├── 💡 hover-hints.js         # 悬停提示模块 - 悬停提示功能
-│   ├── 🗺️  tour-manager.js       # 任务管理模块 - 引导任务管理
-│   ├── 🎨 ui-manager.js          # UI 管理模块 - 面板 UI 管理
-│   ├── 💾 storage-api.js         # 存储 API 模块 - 数据存储操作
-│   ├── 🔨 utils.js               # 工具函数模块 - 通用工具函数
-│   ├── 🖍️  dom-modifier.js       # DOM 修改模块（预留）
-│   └── ✨ highlighter.js         # 高亮模块（预留）
-│
-├── 📚 vendor/                    # 第三方库目录
-│   ├── intro.min.js              # Intro.js 核心库（49KB）
-│   └── introjs.min.css           # Intro.js 默认样式（6.5KB）
-│
+├── extension/                    # Chrome 扩展目录 (前端)
+│   ├── 📄 manifest.json          # Chrome 扩展配置文件（必需）
+│   ├── 🚀 background.js          # 后台服务工作者（Service Worker）
+│   ├── 🎯 content.js             # 内容脚本入口文件
+│   ├── 🖼️  popup.html             # 弹出窗口 HTML 结构
+│   ├── 🎨 popup.js               # 弹出窗口交互逻辑
+│   ├── 📋 rules.json             # 默认规则配置文件
+│   ├── 📦 modules/               # 功能模块目录（核心业务逻辑）
+│   │   ├── 📡 communication.js   
+│   │   ├── 🎯 element-selector.js
+│   │   ├── 💡 hover-hints.js     
+│   │   ├── 🗺️  tour-manager.js   
+│   │   ├── 🎨 ui-manager.js      
+│   │   ├── 💾 storage-api.js     
+│   │   ├── ☁️  cloud-api.js       # 云端通信模块
+│   │   └── 🔨 utils.js           
+│   └── 📚 vendor/                # 第三方库目录
+├── server/                       # 后端服务目录 (Monorepo 后端)
+│   ├── 📁 public/                # [NEW] Web 可视化管理控制台前端
+│   │   ├── 📄 index.html         # 控制台单页主结构
+│   │   ├── 📁 css/               # 控制台样式 (深色玻璃拟态)
+│   │   └── 📁 js/                # 控制台前端通信与交互逻辑
+│   ├── 📁 routes/                # [NEW] 模块化路由
+│   │   ├── 📄 auth.js            # 认证路由
+│   │   ├── 📄 guides.js          # 引导任务路由
+│   │   ├── 📄 hints.js           # 悬停提示路由
+│   │   └── 📄 stats.js           # 统计与监控路由
+│   ├── 📁 middleware/            # [NEW] 中间件 (JWT 鉴权)
+│   ├── 📄 package.json
+│   ├── 🚀 server.js              # Express 核心入口 (静态托管 + 路由挂载)
+│   ├── 💾 database.js            # SQLite 数据库配置
+│   └── 📖 README.md              # 后端启动说明与 API
+├── 🚀 start-server.sh            # 一键启动后端脚本 (支持指定端口)
 └── 📖 docs/                      # 文档目录
     ├── PROJECT_STRUCTURE.md      # 本文档 - 详细的目录结构说明
     ├── ARCHITECTURE.md           # 架构设计文档 - 模块化架构说明
-    ├── QUICK_REFERENCE.md        # 快速参考指南 - 快速定位功能
-    ├── REFACTOR_SUMMARY.md       # 重构总结 - 重构前后对比
-    └── 重构完成.md                # 重构完成说明（中文版）
+    ├── REQUIREMENTS.md           # 多人版与管理控制台需求文档
+    └── QUICK_REFERENCE.md        # 快速参考指南
 ```
 
 ---
 
-## 📄 根目录文件详解
+## 📄 extension/ 目录文件详解
 
 ### manifest.json
 **类型**: Chrome 扩展配置文件（必需）  
@@ -389,6 +399,29 @@ o-maid/
 
 ### 重构完成.md
 重构完成说明（中文版），包含使用指南和注意事项。
+
+---
+
+## 🖥️ server/ 目录文件详解 (后端与 Web 控制台)
+
+### server.js
+**作用**: 后端核心入口。负责加载 Express 中间件、挂载 `/api/*` 模块化路由，并将 `server/public` 托管为静态 Web 控制台前端。
+
+### public/ (Web 可视化控制台)
+**作用**: 为用户与管理员提供开箱即用的 Web 界面。
+- **index.html**: 控制台 SPA 骨架，包含概览看板、任务管理、提示管理、用户列表与系统监控视图。
+- **css/dashboard.css**: 深色高质感设计系统，支持玻璃拟态与平滑微动效。
+- **js/api.js**: 统一封装客户端与 Express 接口的 Fetch 请求。
+- **js/app.js**: 负责视图切换、数据过滤检索、模态框弹出与删除确认。
+
+### routes/ (模块化路由目录)
+- **auth.js**: 处理用户注册 (`/register`) 与登录鉴权 (`/login`)。
+- **guides.js**: 处理引导任务的发布、基于域名的拉取、全量查询 (`/all`)、单条详情与安全删除 (`DELETE /:id`)。
+- **hints.js**: 处理悬停提示的发布、基于域名的拉取、全量查询 (`/all`) 与安全删除 (`DELETE /:id`)。
+- **stats.js**: 汇总平台核心指标 (`/overview`)、用户列表 (`/users`) 及 Node 运行状态 (`/system`)。
+
+### middleware/auth.js
+**作用**: 基于 JWT 的请求鉴权中间件，用于校验修改或发布云端规则的操作者身份。
 
 ---
 

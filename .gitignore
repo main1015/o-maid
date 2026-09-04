@@ -22,3 +22,9 @@ yarn-error.log
 dist/
 build/
 *.crx
+*.pem
+*.zip
+*.db
+*.sqlite
+temp/
+

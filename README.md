@@ -36,20 +36,21 @@
 
 ```text
 o-maid/
-├── manifest.json         # Chrome 扩展配置
-├── background.js         # 后台服务工作者
-├── content.js            # 内容脚本入口
-├── popup.html/js         # 弹出窗口
-├── rules.json            # 默认规则配置
-├── modules/              # 功能模块目录
-│   ├── communication.js      # 通信模块
-│   ├── element-selector.js   # 元素选择
-│   ├── hover-hints.js        # 悬停提示
-│   ├── tour-manager.js       # 任务管理
-│   ├── ui-manager.js         # UI 管理
-│   ├── storage-api.js        # 存储 API
-│   └── utils.js              # 工具函数
-└── vendor/               # 第三方库（Intro.js）
+├── extension/            # Chrome 扩展文件目录 (前端)
+│   ├── manifest.json
+│   ├── background.js
+│   ├── content.js
+│   ├── popup.html/js
+│   ├── sidepanel.html/js
+│   ├── rules.json
+│   ├── modules/
+│   ├── styles/
+│   └── vendor/
+├── server/               # 后端服务目录 (Node.js + SQLite)
+│   ├── server.js
+│   ├── database.js
+│   └── package.json
+└── docs/                 # 文档目录
 ```
 
 **📖 详细说明**: 查看 [docs/PROJECT_STRUCTURE.md](./docs/PROJECT_STRUCTURE.md) 了解完整的目录结构和各文件功能详解。

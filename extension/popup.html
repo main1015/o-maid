@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>O-Maid 页面智能助手</title>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      width: 220px;
+      margin: 0;
+      padding: 14px;
+      box-sizing: border-box;
+      background: #ffffff;
+      color: #1e293b;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .header img {
+      width: 24px;
+      height: 24px;
+      border-radius: 5px;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: #0f172a;
+    }
+    #toggle-panel-btn {
+      width: 100%;
+      padding: 8px 12px;
+      background: #0d6efd;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.1s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    #toggle-panel-btn:hover {
+      background: #0b5ed7;
+      transform: translateY(-1px);
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="icons/icon48.png" alt="O-Maid">
+    <h1>O-Maid 页面助手</h1>
+  </div>
+  <button id="toggle-panel-btn">📋 显示/隐藏面板</button>
+  <div id="status-tip" style="display:none; margin-top:10px; font-size:12px; color:#b91c1c; line-height:1.4; background:#fef2f2; padding:8px 10px; border-radius:6px; border:1px solid #fecaca; text-align:left;">
+    <div style="font-weight:600; margin-bottom:4px;">💡 提示：当前页面未连接</div>
+    <div style="font-size:11px; color:#475569; margin-bottom:6px;">扩展重载后需刷新网页方可重新连接助手脚本。</div>
+    <button id="reload-tab-btn" style="width:100%; padding:5px; background:#ef4444; color:#fff; border:none; border-radius:4px; font-size:11px; font-weight:500; cursor:pointer;">立即刷新当前网页 (F5)</button>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>O-Maid 云端服务控制台</title>
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+  <!-- 侧边导航栏 -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="logo-badge">⚡</div>
+      <div>
+        <h1>O-Maid Cloud</h1>
+      </div>
+      <span class="version-tag">v1.1</span>
+    </div>
+    <ul class="nav-menu">
+      <li class="nav-item active" data-tab="overview">
+        <span class="icon">📊</span>
+        <span>平台概览</span>
+      </li>
+      <li class="nav-item" data-tab="guides">
+        <span class="icon">🗺️</span>
+        <span>引导任务</span>
+      </li>
+      <li class="nav-item" data-tab="hints">
+        <span class="icon">💡</span>
+        <span>悬停提示</span>
+      </li>
+      <li class="nav-item" data-tab="users">
+        <span class="icon">👥</span>
+        <span>用户管理</span>
+      </li>
+      <li class="nav-item" data-tab="system">
+        <span class="icon">⚙️</span>
+        <span>系统与 API</span>
+      </li>
+    </ul>
+    <div id="sidebar-user-card" class="sidebar-user-card hidden">
+      <div class="user-avatar">👤</div>
+      <div class="user-meta">
+        <span id="sidebar-username" class="user-name">Admin</span>
+        <span id="sidebar-user-role" class="user-role">已登录</span>
+      </div>
+      <button id="btn-logout" class="btn-logout" title="退出登录">🚪</button>
+    </div>
+    <div class="sidebar-footer">
+      <span>O-Maid Backend Server</span>
+      <span>🟢 就绪</span>
+    </div>
+  </aside>
+
+  <!-- 主应用包装器 -->
+  <main class="main-wrapper">
+    <!-- 顶部状态栏 -->
+    <header class="top-header">
+      <h2 id="header-title" class="page-title">平台概览</h2>
+      <div class="header-meta">
+        <div class="status-badge">
+          <span class="status-indicator"></span>
+          <span>服务在线</span>
+        </div>
+        <button id="manual-refresh-btn" class="refresh-btn">
+          <span>🔄</span>
+          <span>刷新数据</span>
+        </button>
+
+        <!-- 顶部显眼的用户信息卡片与退出按钮 -->
+        <div id="header-user-card" class="header-user-card hidden">
+          <div class="header-user-pill">
+            <span class="header-user-avatar">👤</span>
+            <div class="header-user-info">
+              <span id="header-username" class="header-user-name">-</span>
+              <span id="header-user-role" class="header-user-role">管理员</span>
+            </div>
+          </div>
+          <button id="btn-header-logout" class="btn-header-logout" title="退出当前登录账号">
+            <span class="logout-icon">🚪</span>
+            <span>退出登录</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- 主展示内容 -->
+    <div class="content-body">
+      
+      <!-- 视图 1：概览 -->
+      <section id="view-overview" class="view-section active">
+        <!-- 核心统计指标卡片 -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-title">注册用户</span>
+              <div class="stat-icon">👥</div>
+            </div>
+            <div id="stat-users-count" class="stat-value">0</div>
+            <div class="stat-desc">支持云端发布的创作者总数</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-title">云端引导任务</span>
+              <div class="stat-icon">🗺️</div>
+            </div>
+            <div id="stat-guides-count" class="stat-value">0</div>
+            <div class="stat-desc">可跨客户端共享的导览任务</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-title">悬停提示规则</span>
+              <div class="stat-icon">💡</div>
+            </div>
+            <div id="stat-hints-count" class="stat-value">0</div>
+            <div class="stat-desc">特定 DOM 元素的提示注解</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-header">
+              <span class="stat-title">累计下载安装</span>
+              <div class="stat-icon">📥</div>
+            </div>
+            <div id="stat-downloads-count" class="stat-value">0</div>
+            <div class="stat-desc">插件端从云端拉取导出的总人次</div>
+          </div>
+        </div>
+
+        <!-- 概览下半区：最新活动与快速指引 -->
+        <div class="overview-panels">
+          <div class="panel-card">
+            <div class="panel-title">
+              <span>🔥 最新共享发布动态</span>
+              <span style="font-size:12px; color:var(--text-dim);">实时更新</span>
+            </div>
+            <ul id="recent-activities-list" class="activity-list">
+              <!-- 动态填充 -->
+            </ul>
+          </div>
+
+          <div class="panel-card">
+            <div class="panel-title">
+              <span>🚀 快速操作指南</span>
+            </div>
+            <div style="font-size: 13px; color: var(--text-muted); display: flex; flex-direction: column; gap: 14px;">
+              <div>
+                <strong style="color:var(--text-main);">1. Web 控制台直接录入</strong>
+                <p style="margin-top:4px; line-height:1.5;">您可以在本控制台直接点击 <strong>“+ 注册新用户”</strong> 创建账号，并点击 <strong>“+ 新建引导任务”</strong> 或 <strong>“+ 新建提示”</strong> 快速录入测试数据。</p>
+              </div>
+              <div>
+                <strong style="color:var(--text-main);">2. 浏览器插件联动</strong>
+                <p style="margin-top:4px; line-height:1.5;">在 Chrome 插件中点击顶部的 <strong>⚙️ 设置</strong> 按钮，确保接口地址指向本服务端口，即可从插件端登录并同步拉取。</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 视图 2：引导任务管理 -->
+      <section id="view-guides" class="view-section">
+        <div class="table-toolbar">
+          <div class="search-input-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="search-guides-input" class="search-input" placeholder="输入任务名称、域名或作者检索...">
+          </div>
+          <button id="open-create-guide-modal-btn" class="btn-action-primary">
+            <span>+</span>
+            <span>新建引导任务</span>
+          </button>
+        </div>
+
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>任务名称</th>
+                <th>生效域名</th>
+                <th>步骤数</th>
+                <th>发布作者</th>
+                <th>下载量</th>
+                <th>发布时间</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="guides-table-body">
+              <!-- 动态填充 -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 视图 3：悬停提示管理 -->
+      <section id="view-hints" class="view-section">
+        <div class="table-toolbar">
+          <div class="search-input-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="search-hints-input" class="search-input" placeholder="输入提示文本、目标域名或选择器检索...">
+          </div>
+          <button id="open-create-hint-modal-btn" class="btn-action-primary">
+            <span>+</span>
+            <span>新建悬停提示</span>
+          </button>
+        </div>
+
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>提示文案</th>
+                <th>生效域名</th>
+                <th>CSS 选择器</th>
+                <th>发布作者</th>
+                <th>下载量</th>
+                <th>发布时间</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="hints-table-body">
+              <!-- 动态填充 -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 视图 4：用户管理 -->
+      <section id="view-users" class="view-section">
+        <div class="table-toolbar">
+          <span style="font-size:13px; color:var(--text-muted);">管理所有注册的创作者账号</span>
+          <button id="open-create-user-modal-btn" class="btn-action-primary">
+            <span>+</span>
+            <span>注册新用户</span>
+          </button>
+        </div>
+
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>用户 ID</th>
+                <th>用户名</th>
+                <th>已发布引导</th>
+                <th>已发布提示</th>
+                <th>注册时间</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody id="users-table-body">
+              <!-- 动态填充 -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 视图 5：系统状态与 API 文档 -->
+      <section id="view-system" class="view-section">
+        <div class="overview-panels" style="grid-template-columns: 1fr 1fr; margin-bottom: 24px;">
+          <div class="panel-card">
+            <div class="panel-title">
+              <span>🖥️ 运行时环境状态</span>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:12px; font-size:13px;">
+              <div style="display:flex; justify-content:space-between;">
+                <span style="color:var(--text-dim);">Node.js 版本:</span>
+                <strong id="sys-node-version">-</strong>
+              </div>
+              <div style="display:flex; justify-content:space-between;">
+                <span style="color:var(--text-dim);">操作系统平台:</span>
+                <strong id="sys-platform">-</strong>
+              </div>
+              <div style="display:flex; justify-content:space-between;">
+                <span style="color:var(--text-dim);">服务连续运行:</span>
+                <strong id="sys-uptime">-</strong>
+              </div>
+              <div style="display:flex; justify-content:space-between;">
+                <span style="color:var(--text-dim);">堆内存占用:</span>
+                <strong id="sys-memory">-</strong>
+              </div>
+              <div style="display:flex; justify-content:space-between;">
+                <span style="color:var(--text-dim);">服务系统时间:</span>
+                <strong id="sys-time">-</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <div class="panel-title">
+              <span>💾 存储引擎信息</span>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:12px; font-size:13px;">
+              <div style="display:flex; justify-content:space-between;">
+                <span style="color:var(--text-dim);">数据库类型:</span>
+                <strong style="color:var(--accent-secondary);">SQLite 3 (本地文件)</strong>
+              </div>
+              <div style="display:flex; justify-content:space-between;">
+                <span style="color:var(--text-dim);">存储路径:</span>
+                <span style="font-family:monospace; color:var(--text-muted);">server/data.db</span>
+              </div>
+              <div style="display:flex; justify-content:space-between;">
+                <span style="color:var(--text-dim);">跨域策略 (CORS):</span>
+                <strong style="color:var(--accent-success);">已启用 (允许扩展跨域通信)</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-card">
+          <div class="panel-title">
+            <span>📡 RESTful API 接口参考</span>
+          </div>
+
+          <div class="api-card">
+            <div>
+              <span class="api-method method-post">POST</span>
+              <span class="api-path">/api/auth/register</span>
+            </div>
+            <div class="api-desc">用户注册账号。入参: <code>{ username, password }</code></div>
+          </div>
+
+          <div class="api-card">
+            <div>
+              <span class="api-method method-post">POST</span>
+              <span class="api-path">/api/auth/login</span>
+            </div>
+            <div class="api-desc">用户登录换取 JWT Token。入参: <code>{ username, password }</code></div>
+          </div>
+
+          <div class="api-card">
+            <div>
+              <span class="api-method method-get">GET</span>
+              <span class="api-path">/api/guides?domain={domain}</span>
+            </div>
+            <div class="api-desc">按域名拉取引导任务（若省略 domain 参数则拉取全部）。</div>
+          </div>
+
+          <div class="api-card">
+            <div>
+              <span class="api-method method-post">POST</span>
+              <span class="api-path">/api/guides</span>
+            </div>
+            <div class="api-desc">发布或录入引导任务。支持传入 <code>{ name, startUrl, domain, steps, authorId }</code>。</div>
+          </div>
+
+          <div class="api-card">
+            <div>
+              <span class="api-method method-delete">DELETE</span>
+              <span class="api-path">/api/guides/:id</span>
+            </div>
+            <div class="api-desc">删除指定的云端引导任务。</div>
+          </div>
+
+          <div class="api-card">
+            <div>
+              <span class="api-method method-get">GET</span>
+              <span class="api-path">/api/hints?domain={domain}</span>
+            </div>
+            <div class="api-desc">按域名拉取特定页面的悬停提示列表。</div>
+          </div>
+
+          <div class="api-card">
+            <div>
+              <span class="api-method method-post">POST</span>
+              <span class="api-path">/api/hints</span>
+            </div>
+            <div class="api-desc">发布或录入悬停提示。支持传入 <code>{ text, url, domain, selector, authorId }</code>。</div>
+          </div>
+
+          <div class="api-card">
+            <div>
+              <span class="api-method method-delete">DELETE</span>
+              <span class="api-path">/api/hints/:id</span>
+            </div>
+            <div class="api-desc">删除指定的云端悬停提示。</div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- 1. 引导步骤详情查看模态框 -->
+  <div id="guide-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modal-guide-title">引导任务步骤详情</h3>
+        <button class="modal-close-btn" data-close="guide-modal">&times;</button>
+      </div>
+      <div id="modal-step-list" class="modal-body">
+        <!-- 步骤卡片 -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Web 录入：新建引导任务模态框 -->
+  <div id="create-guide-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>+ 录入新引导任务</h3>
+        <button class="modal-close-btn" data-close="create-guide-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">任务名称 *</label>
+          <input type="text" id="new-guide-name" class="form-input" placeholder="例如：新手指引教程">
+        </div>
+        <div class="form-group" style="display:flex; gap:12px;">
+          <div style="flex:1;">
+            <label class="form-label">目标域名 (Domain) *</label>
+            <input type="text" id="new-guide-domain" class="form-input" placeholder="例如：github.com">
+          </div>
+          <div style="flex:1;">
+            <label class="form-label">发布作者 (可选)</label>
+            <select id="new-guide-author" class="form-select">
+              <option value="">-- 选择作者 --</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">起始页面网址 (URL)</label>
+          <input type="text" id="new-guide-url" class="form-input" placeholder="https://github.com/">
+        </div>
+
+        <div style="margin-top:20px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
+          <strong style="font-size:13px;">引导步骤清单</strong>
+          <button id="add-guide-step-btn" class="btn-sm btn-primary-sm">+ 增加步骤</button>
+        </div>
+        <div id="new-guide-steps-container" style="display:flex; flex-direction:column; gap:10px;">
+          <!-- 步骤动态项 -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" data-close="create-guide-modal">取消</button>
+        <button id="submit-create-guide-btn" class="btn-action-primary">保存并发布</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Web 录入：新建悬停提示模态框 -->
+  <div id="create-hint-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>+ 录入新悬停提示</h3>
+        <button class="modal-close-btn" data-close="create-hint-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">提示文本内容 *</label>
+          <textarea id="new-hint-text" class="form-textarea" rows="3" placeholder="例如：点击此处可快速克隆仓库"></textarea>
+        </div>
+        <div class="form-group" style="display:flex; gap:12px;">
+          <div style="flex:1;">
+            <label class="form-label">目标域名 (Domain) *</label>
+            <input type="text" id="new-hint-domain" class="form-input" placeholder="例如：github.com">
+          </div>
+          <div style="flex:1;">
+            <label class="form-label">发布作者 (可选)</label>
+            <select id="new-hint-author" class="form-select">
+              <option value="">-- 选择作者 --</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">页面 URL (完整或部分)</label>
+          <input type="text" id="new-hint-url" class="form-input" placeholder="https://github.com/...">
+        </div>
+        <div class="form-group">
+          <label class="form-label">目标元素 CSS 选择器 *</label>
+          <input type="text" id="new-hint-selector" class="form-input" placeholder="例如：#repository-container-header button">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" data-close="create-hint-modal">取消</button>
+        <button id="submit-create-hint-btn" class="btn-action-primary">保存并发布</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Web 录入：注册新用户模态框 -->
+  <div id="create-user-modal" class="modal-overlay">
+    <div class="modal-card" style="max-width:420px;">
+      <div class="modal-header">
+        <h3>+ 注册新创作者账号</h3>
+        <button class="modal-close-btn" data-close="create-user-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">用户名 *</label>
+          <input type="text" id="new-user-name" class="form-input" placeholder="请输入用户名">
+        </div>
+        <div class="form-group">
+          <label class="form-label">初始密码 *</label>
+          <input type="password" id="new-user-password" class="form-input" placeholder="请输入密码">
+        </div>
+        <div class="form-group">
+          <label class="form-label">分配角色 *</label>
+          <select id="new-user-role" class="form-select">
+            <option value="user">普通创作者 (user)</option>
+            <option value="admin">超级管理员 (admin)</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" data-close="create-user-modal">取消</button>
+        <button id="submit-create-user-btn" class="btn-action-primary">立即注册</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. 用户重置密码模态框 -->
+  <div id="reset-password-modal" class="modal-overlay">
+    <div class="modal-card" style="max-width:400px;">
+      <div class="modal-header">
+        <h3>重置用户密码</h3>
+        <button class="modal-close-btn" data-close="reset-password-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="font-size:13px; color:var(--text-muted); margin-bottom:12px;">
+          正在为用户 <strong id="reset-pwd-username" style="color:var(--text-main);">-</strong> 设置新密码
+        </div>
+        <div class="form-group">
+          <label class="form-label">新密码 *</label>
+          <input type="password" id="reset-pwd-input" class="form-input" placeholder="输入新的登录密码">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" data-close="reset-password-modal">取消</button>
+        <button id="submit-reset-password-btn" class="btn-action-primary">确认修改</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. 全屏毛玻璃登录 / 注册模态框 -->
+  <div id="login-overlay" class="login-overlay hidden">
+    <div class="login-modal-card">
+      <div class="login-modal-header">
+        <div class="login-logo-badge">⚡</div>
+        <h2 id="auth-modal-title">登录 O-Maid 控制台</h2>
+        <p id="auth-modal-subtitle">请输入管理员账号以访问控制台</p>
+      </div>
+
+      <div id="auth-error-msg" class="auth-error-msg hidden"></div>
+
+      <form id="auth-form" class="auth-form">
+        <div class="form-group">
+          <label class="form-label" for="auth-username">用户名</label>
+          <input type="text" id="auth-username" class="form-input" placeholder="输入用户名" autocomplete="username" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="auth-password">密码</label>
+          <input type="password" id="auth-password" class="form-input" placeholder="输入登录密码" autocomplete="current-password" required>
+        </div>
+        <button type="submit" id="auth-submit-btn" class="btn-login-submit">登 录</button>
+      </form>
+
+      <div class="auth-footer-actions">
+        <button type="button" id="auth-toggle-mode-btn" class="btn-toggle-auth-mode">没有账号？立即注册</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast 通知容器 -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
