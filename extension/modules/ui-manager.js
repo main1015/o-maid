@@ -1018,6 +1018,8 @@ function wireUpPanelEvents() {
         const res = await CloudAPI.login(u, p);
         if(res.success) {
             showNotification('登录成功', 'success');
+            const pwdInput = uiPanel.querySelector('#auth-password');
+            if (pwdInput) pwdInput.value = '';
             updateAuthUI();
         } else {
             showNotification('登录失败: ' + res.error, 'error');
@@ -1417,6 +1419,72 @@ async function fetchAllAndRenderLists() {
 }
 
 /**
+ * 显示规则同步冲突仲裁模态框
+ * @param {Array} conflicts - 冲突规则数组
+ * @param {Function} onResolve - 仲裁结果回调 ('overwrite' | 'keep')
+ */
+function showConflictModal(conflicts, onResolve) {
+    let modal = shadowRoot.getElementById('o-maid-conflict-modal');
+    if (modal) modal.remove();
+
+    modal = document.createElement('div');
+    modal.id = 'o-maid-conflict-modal';
+    modal.style.cssText = `
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(15, 23, 42, 0.45); backdrop-filter: blur(2px);
+        display: flex; align-items: center; justify-content: center; z-index: 10000;
+        padding: 16px; box-sizing: border-box;
+    `;
+
+    const itemsHtml = conflicts.map(c => `
+        <li style="margin-bottom: 8px; padding: 8px 10px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 11px;">
+            <div style="font-weight: 600; color: #1e293b; margin-bottom: 2px;">
+                ${c.type === 'tour' ? '📌 引导' : '💡 提示'}: ${c.name}
+            </div>
+            <div style="color: #64748b;">
+                原作者: <strong>${c.author || '他人'}</strong> | <span style="color: #b45309; font-weight: 500;">本地已改动，云端有更新</span>
+            </div>
+        </li>
+    `).join('');
+
+    modal.innerHTML = `
+        <div style="background: #ffffff; border-radius: 10px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15); width: 100%; max-width: 330px; overflow: hidden; border: 1px solid #cbd5e1;">
+            <div style="padding: 12px 14px; background: #fffbeb; border-bottom: 1px solid #fef3c7; display: flex; align-items: center; gap: 6px;">
+                <span style="font-size: 15px;">⚠️</span>
+                <strong style="font-size: 12px; color: #92400e;">规则同步冲突确认</strong>
+            </div>
+            <div style="padding: 12px 14px; font-size: 11px; color: #475569; line-height: 1.5;">
+                <p style="margin: 0 0 8px 0;">检测到以下 <strong>${conflicts.length}</strong> 条规则在本地有定制修改，且云端原作者也更新了新版本：</p>
+                <ul style="list-style: none; padding: 0; margin: 0 0 10px 0; max-height: 140px; overflow-y: auto;">
+                    ${itemsHtml}
+                </ul>
+                <p style="margin: 0; color: #64748b;">请选择您的处理决策：</p>
+            </div>
+            <div style="padding: 10px 14px; background: #f8fafc; border-top: 1px solid #f1f5f9; display: flex; gap: 8px; justify-content: flex-end;">
+                <button id="conflict-keep-btn" style="background: #ffffff; color: #475569; border: 1px solid #cbd5e1; padding: 5px 9px; border-radius: 5px; font-size: 11px; cursor: pointer; font-weight: 500;">
+                    🛡️ 保留本地修改
+                </button>
+                <button id="conflict-overwrite-btn" style="background: #6366f1; color: #ffffff; border: none; padding: 5px 11px; border-radius: 5px; font-size: 11px; cursor: pointer; font-weight: 500;">
+                    🔄 覆盖本地
+                </button>
+            </div>
+        </div>
+    `;
+
+    shadowRoot.getElementById('o-maid-panel').appendChild(modal);
+
+    modal.querySelector('#conflict-keep-btn').addEventListener('click', () => {
+        modal.remove();
+        onResolve('keep');
+    });
+
+    modal.querySelector('#conflict-overwrite-btn').addEventListener('click', () => {
+        modal.remove();
+        onResolve('overwrite');
+    });
+}
+
+/**
  * 触发本地已同步规则的云端最新快照刷新
  */
 async function handleSyncRefresh() {
@@ -1441,18 +1509,66 @@ async function handleSyncRefresh() {
             return;
         }
 
-        // 请求云端最新快照
+        // 请求云端比对快照（分离纯净更新与冲突项）
         const syncResult = await CloudAPI.syncCloudRules(allTours, allHints);
-        if (syncResult && syncResult.success) {
-            if (syncResult.updatedCount > 0) {
-                await refreshSyncedRules(syncResult.updatedTours, syncResult.updatedHints);
-                showNotification(`已成功同步更新 ${syncResult.updatedCount} 项来自云端的规则！`, 'success');
+        if (!syncResult || !syncResult.success) {
+            showNotification('同步刷新失败，请检查网络或后端连接', 'error');
+            return;
+        }
+
+        const conflicts = syncResult.conflicts || [];
+        const updatedTours = syncResult.updatedTours || [];
+        const updatedHints = syncResult.updatedHints || [];
+
+        // 1. 先就地静默更新无冲突的规则
+        if (updatedTours.length > 0 || updatedHints.length > 0) {
+            await refreshSyncedRules(updatedTours, updatedHints);
+        }
+
+        // 2. 如果存在冲突，唤起仲裁模态弹窗
+        if (conflicts.length > 0) {
+            showConflictModal(conflicts, async (decision) => {
+                if (decision === 'overwrite') {
+                    // 覆盖本地：放弃本地修改，以云端快照为准覆写
+                    const conflictTours = conflicts.filter(c => c.type === 'tour').map(c => ({
+                        ...c.localItem,
+                        ...c.cloudItem,
+                        id: c.localItem.id,
+                        resolution: 'overwrite'
+                    }));
+                    const conflictHints = conflicts.filter(c => c.type === 'hint').map(c => ({
+                        ...c.localItem,
+                        ...c.cloudItem,
+                        id: c.localItem.id,
+                        resolution: 'overwrite'
+                    }));
+                    await refreshSyncedRules(conflictTours, conflictHints);
+                    showNotification(`已将 ${conflicts.length} 条冲突规则恢复覆盖为云端最新版！`, 'success');
+                } else {
+                    // 保留本地修改：不覆写 steps/text/selector，维持用户定制修改
+                    const conflictTours = conflicts.filter(c => c.type === 'tour').map(c => ({
+                        ...c.localItem,
+                        downloads: c.cloudItem.downloads,
+                        resolution: 'keep'
+                    }));
+                    const conflictHints = conflicts.filter(c => c.type === 'hint').map(c => ({
+                        ...c.localItem,
+                        downloads: c.cloudItem.downloads,
+                        resolution: 'keep'
+                    }));
+                    await refreshSyncedRules(conflictTours, conflictHints);
+                    showNotification(`已保留 ${conflicts.length} 条规则的本地个性化修改！`, 'info');
+                }
                 await fetchAllAndRenderLists();
+            });
+        } else {
+            // 无任何冲突时的常规反馈
+            if (syncResult.updatedCount > 0) {
+                showNotification(`已成功同步更新 ${syncResult.updatedCount} 项来自云端的规则！`, 'success');
             } else {
                 showNotification('所有已关联云端的规则均已是最新版本', 'info');
             }
-        } else {
-            showNotification('同步刷新失败，请检查网络或后端连接', 'error');
+            await fetchAllAndRenderLists();
         }
     } catch (err) {
         console.error('O-Maid: 同步刷新失败:', err);
@@ -1667,6 +1783,12 @@ function renderToursList(tours, isShowAll = false) {
         // 云端状态识别判断
         const isDownloaded = !!tour.isDownloaded;
         const isSynced = !!(tour.isSynced || (tour.cloudId && !isDownloaded));
+        const isModified = !!tour.isLocallyModified;
+
+        let modifiedBadge = '';
+        if (isModified) {
+            modifiedBadge = `<span style="background: #fffbeb; color: #b45309; border: 1px solid #fde68a; padding: 1px 5px; border-radius: 4px; font-size: 10px; margin-left: 6px; font-weight: 500;" title="本地已有二次编辑修改">⚠️ 本地已修改</span>`;
+        }
 
         let cloudIcon = '☁️';
         let cloudTitle = '未同步：点击发布到云端';
@@ -1674,7 +1796,7 @@ function renderToursList(tours, isShowAll = false) {
 
         if (isDownloaded) {
             cloudIcon = '🌐';
-            cloudTitle = '来自云端共享：点击可更新发布';
+            cloudTitle = `来自云端共享 (作者: ${tour.author || '他人'})：受所有权保护`;
             cloudBtnStyle = 'border-color: #0284c7; color: #0284c7; background: rgba(14, 165, 233, 0.08);';
         } else if (isSynced) {
             cloudIcon = '☁️✓';
@@ -1686,7 +1808,7 @@ function renderToursList(tours, isShowAll = false) {
             <div class="item-header">
                 <div class="item-info toggle-steps" style="cursor: pointer;" title="点击展开/折叠步骤">
                     <span class="step-arrow">▶</span>
-                    <div class="name">${domainBadge}${tour.name}</div>
+                    <div class="name">${domainBadge}${tour.name}${modifiedBadge}</div>
                 </div>
                 <div class="item-actions">
                     <button class="btn btn-outline-secondary btn-sm reset-btn" title="重置完成状态">↺</button>
@@ -1737,6 +1859,13 @@ function renderToursList(tours, isShowAll = false) {
                 switchToView('auth');
                 return;
             }
+
+            // 原作者写保护：非原作者不可覆盖云端规则
+            if (tour.isDownloaded && tour.author && tour.author !== CloudAPI.getUsername()) {
+                showNotification(`该规则由 [${tour.author}] 共享，不可直接覆盖原版。如需分享，请新建或另存为专属规则`, 'error', 4000);
+                return;
+            }
+
             try {
                 const domain = new URL(tour.steps[0]?.url || tour.startUrl || window.location.href).hostname;
                 const cloudTour = {
@@ -1885,6 +2014,12 @@ function renderHintsList(hints, isShowAll = false) {
         // 云端状态识别判断
         const isDownloaded = !!hint.isDownloaded;
         const isSynced = !!(hint.isSynced || (hint.cloudId && !isDownloaded));
+        const isModified = !!hint.isLocallyModified;
+
+        let modifiedBadge = '';
+        if (isModified) {
+            modifiedBadge = `<span style="background: #fffbeb; color: #b45309; border: 1px solid #fde68a; padding: 1px 5px; border-radius: 4px; font-size: 10px; margin-left: 6px; font-weight: 500;" title="本地已有二次编辑修改">⚠️ 本地已修改</span>`;
+        }
 
         let cloudIcon = '☁️';
         let cloudTitle = '未同步：点击发布到云端';
@@ -1892,7 +2027,7 @@ function renderHintsList(hints, isShowAll = false) {
 
         if (isDownloaded) {
             cloudIcon = '🌐';
-            cloudTitle = '来自云端共享：点击可更新发布';
+            cloudTitle = `来自云端共享 (作者: ${hint.author || '他人'})：受所有权保护`;
             cloudBtnStyle = 'border-color: #0284c7; color: #0284c7; background: rgba(14, 165, 233, 0.08);';
         } else if (isSynced) {
             cloudIcon = '☁️✓';
@@ -1904,7 +2039,7 @@ function renderHintsList(hints, isShowAll = false) {
         li.innerHTML = `
             <div class="item-header">
                 <div class="item-info preview-trigger" style="cursor: pointer;" title="点击在页面上定位">
-                    <div class="name">${domainBadge}${hint.text}</div>
+                    <div class="name">${domainBadge}${hint.text}${modifiedBadge}</div>
                 </div>
                 <div class="item-actions">
                     <button class="btn btn-outline-primary btn-sm publish-btn" style="${cloudBtnStyle}" title="${cloudTitle}">${cloudIcon}</button>
@@ -1924,6 +2059,13 @@ function renderHintsList(hints, isShowAll = false) {
                 switchToView('auth');
                 return;
             }
+
+            // 原作者写保护：非原作者不可覆盖云端规则
+            if (hint.isDownloaded && hint.author && hint.author !== CloudAPI.getUsername()) {
+                showNotification(`该规则由 [${hint.author}] 共享，不可直接覆盖原版。如需分享，请新建或另存为专属规则`, 'error', 4000);
+                return;
+            }
+
             try {
                 const domain = new URL(hint.url || window.location.href).hostname;
                 const cloudHint = {

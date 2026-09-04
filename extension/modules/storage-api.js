@@ -186,11 +186,14 @@ export function addTour(tour, sendResponse, broadcastCallback) {
             if (existingIndex !== -1) {
                 // 已存在：就地覆盖更新，保留原ID
                 const existing = tours[existingIndex];
+                const baseSig = tour.baseSignature || existing.baseSignature || targetSig;
                 const updatedTour = {
                     ...existing,
                     ...tour,
                     id: existing.id,
-                    signature: targetSig
+                    signature: targetSig,
+                    baseSignature: baseSig,
+                    isLocallyModified: tour.isLocallyModified !== undefined ? tour.isLocallyModified : false
                 };
                 tours[existingIndex] = updatedTour;
                 chrome.storage.local.set({ guided_tours: tours }, () => {
@@ -199,10 +202,13 @@ export function addTour(tour, sendResponse, broadcastCallback) {
                 });
             } else {
                 // 不存在：生成全局唯一 GURID 并追加
+                const baseSig = tour.baseSignature || targetSig;
                 const newTour = {
                     ...tour,
                     id: generateUniqueRuleId('tour', clientId),
-                    signature: targetSig
+                    signature: targetSig,
+                    baseSignature: baseSig,
+                    isLocallyModified: tour.isLocallyModified !== undefined ? tour.isLocallyModified : false
                 };
                 tours.push(newTour);
                 chrome.storage.local.set({ guided_tours: tours }, () => {
@@ -225,9 +231,22 @@ export function updateTour(tour, sendResponse, broadcastCallback) {
         let tours = data.guided_tours || [];
         const index = tours.findIndex(t => t.id === tour.id);
         if (index !== -1) {
-            tours[index] = tour;
+            const existing = tours[index];
+            const currentSig = computeSignature('tour', tour);
+            const baseSig = tour.baseSignature || existing.baseSignature || currentSig;
+            // 判断是否相对于基线被修改
+            const isLocallyModified = (currentSig !== baseSig);
+            
+            const updated = {
+                ...existing,
+                ...tour,
+                signature: currentSig,
+                baseSignature: baseSig,
+                isLocallyModified: isLocallyModified
+            };
+            tours[index] = updated;
             chrome.storage.local.set({ guided_tours: tours }, () => {
-                sendResponse({ success: true });
+                sendResponse({ success: true, tour: updated });
                 broadcastCallback();
             });
         } else {
@@ -289,11 +308,14 @@ export function addHoverHint(hint, sendResponse, broadcastCallback) {
             if (existingIndex !== -1) {
                 // 已存在：就地覆盖更新
                 const existing = hints[existingIndex];
+                const baseSig = hint.baseSignature || existing.baseSignature || targetSig;
                 const updatedHint = {
                     ...existing,
                     ...hint,
                     id: existing.id,
-                    signature: targetSig
+                    signature: targetSig,
+                    baseSignature: baseSig,
+                    isLocallyModified: hint.isLocallyModified !== undefined ? hint.isLocallyModified : false
                 };
                 hints[existingIndex] = updatedHint;
                 chrome.storage.local.set({ hover_hints: hints }, () => {
@@ -302,10 +324,13 @@ export function addHoverHint(hint, sendResponse, broadcastCallback) {
                 });
             } else {
                 // 不存在：生成全局唯一 GURID 并追加
+                const baseSig = hint.baseSignature || targetSig;
                 const newHint = {
                     ...hint,
                     id: generateUniqueRuleId('hint', clientId),
-                    signature: targetSig
+                    signature: targetSig,
+                    baseSignature: baseSig,
+                    isLocallyModified: hint.isLocallyModified !== undefined ? hint.isLocallyModified : false
                 };
                 hints.push(newHint);
                 chrome.storage.local.set({ hover_hints: hints }, () => {
@@ -328,9 +353,22 @@ export function updateHoverHint(hint, sendResponse, broadcastCallback) {
         let hints = data.hover_hints || [];
         const index = hints.findIndex(h => h.id === hint.id);
         if (index !== -1) {
-            hints[index] = hint;
+            const existing = hints[index];
+            const currentSig = computeSignature('hint', hint);
+            const baseSig = hint.baseSignature || existing.baseSignature || currentSig;
+            // 判断是否相对于基线被修改
+            const isLocallyModified = (currentSig !== baseSig);
+
+            const updated = {
+                ...existing,
+                ...hint,
+                signature: currentSig,
+                baseSignature: baseSig,
+                isLocallyModified: isLocallyModified
+            };
+            hints[index] = updated;
             chrome.storage.local.set({ hover_hints: hints }, () => {
-                sendResponse({ success: true });
+                sendResponse({ success: true, hint: updated });
                 broadcastCallback();
             });
         } else {
@@ -495,10 +533,24 @@ export function refreshSyncedRules(updatedTours = [], updatedHints = [], sendRes
         tours = tours.map(localTour => {
             const update = tourUpdatesMap.get(localTour.id) || (localTour.cloudId ? tourUpdatesMap.get(`cloud_${localTour.cloudId}`) : null);
             if (update) {
+                if (update.resolution === 'keep') {
+                    // 保留本地修改：仅同步下载量等元数据
+                    return {
+                        ...localTour,
+                        downloads: (update.downloads !== undefined) ? update.downloads : localTour.downloads,
+                        isSynced: true
+                    };
+                }
+                // 默认或 overwrite：覆写为云端快照，重置基线指纹与修改标记
+                const newSig = computeSignature('tour', update);
                 return {
                     ...localTour,
                     ...update,
-                    id: localTour.id, // 保障本地局部主键不变
+                    id: localTour.id,
+                    signature: newSig,
+                    baseSignature: newSig,
+                    isLocallyModified: false,
+                    isSynced: true,
                     created_at: localTour.created_at || update.created_at
                 };
             }
@@ -508,10 +560,24 @@ export function refreshSyncedRules(updatedTours = [], updatedHints = [], sendRes
         hints = hints.map(localHint => {
             const update = hintUpdatesMap.get(localHint.id) || (localHint.cloudId ? hintUpdatesMap.get(`cloud_${localHint.cloudId}`) : null);
             if (update) {
+                if (update.resolution === 'keep') {
+                    // 保留本地修改：仅同步下载量等元数据
+                    return {
+                        ...localHint,
+                        downloads: (update.downloads !== undefined) ? update.downloads : localHint.downloads,
+                        isSynced: true
+                    };
+                }
+                // 默认或 overwrite：覆写为云端快照，重置基线指纹与修改标记
+                const newSig = computeSignature('hint', update);
                 return {
                     ...localHint,
                     ...update,
-                    id: localHint.id, // 保障本地局部主键不变
+                    id: localHint.id,
+                    signature: newSig,
+                    baseSignature: newSig,
+                    isLocallyModified: false,
+                    isSynced: true,
                     created_at: localHint.created_at || update.created_at
                 };
             }

@@ -18,14 +18,32 @@ router.post('/', authenticateToken, (req, res) => {
     }
     const stepsStr = JSON.stringify(steps || []);
 
-    db.run(
-        'INSERT OR REPLACE INTO guides (id, name, startUrl, domain, steps, authorId) VALUES (?, ?, ?, ?, ?, ?)',
-        [id, name, startUrl || '', domain || '', stepsStr, authorId],
-        function(err) {
-            if (err) return res.status(500).json({ error: '发布失败: ' + err.message });
-            res.json({ success: true, id });
-        }
-    );
+    const performSave = () => {
+        db.run(
+            'INSERT OR REPLACE INTO guides (id, name, startUrl, domain, steps, authorId) VALUES (?, ?, ?, ?, ?, ?)',
+            [id, name, startUrl || '', domain || '', stepsStr, authorId],
+            function(err) {
+                if (err) return res.status(500).json({ error: '发布失败: ' + err.message });
+                res.json({ success: true, id });
+            }
+        );
+    };
+
+    // 若请求体携带现有 id，先校验是否存在且属于当前作者，防止他人越权覆盖
+    if (req.body.id) {
+        db.get('SELECT authorId FROM guides WHERE id = ?', [req.body.id], (err, existing) => {
+            if (err) return res.status(500).json({ error: '数据校验失败: ' + err.message });
+            if (existing) {
+                if (req.user.role !== 'admin' && existing.authorId !== req.user.id) {
+                    return res.status(403).json({ error: '权限不足：您不是该规则的原作者，无法覆写云端原版规则' });
+                }
+                authorId = existing.authorId;
+            }
+            performSave();
+        });
+    } else {
+        performSave();
+    }
 });
 
 // 获取所有 Guides（全网大厅浏览 / 管理后台查看，公开免登接口）

@@ -37,7 +37,10 @@ function initCloudStorage() {
 initCloudStorage();
 
 function saveCloudState(updates) {
-    Object.assign(cloudState, updates);
+    if (updates.token !== undefined) cloudState.token = updates.token;
+    if (updates.username !== undefined) cloudState.username = updates.username;
+    if (updates.apiBase !== undefined) cloudState.apiBase = updates.apiBase;
+
     if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.local) {
         const payload = {};
         if (updates.token !== undefined) payload['o-maid-token'] = updates.token;
@@ -76,9 +79,10 @@ export async function login(username, password) {
         });
         const data = await res.json();
         if (data.success) {
+            const resolvedUsername = (data.user && data.user.username) || data.username || username;
             saveCloudState({
                 token: data.token,
-                username: data.username
+                username: resolvedUsername
             });
         }
         return data;
@@ -205,13 +209,14 @@ export async function fetchHintDetails(id) {
 export async function syncCloudRules(tours = [], hints = []) {
     const syncedTours = [];
     const syncedHints = [];
+    const conflicts = [];
     let updatedCount = 0;
 
     const targetTours = tours.filter(t => t.cloudId);
     const targetHints = hints.filter(h => h.cloudId);
 
     if (targetTours.length === 0 && targetHints.length === 0) {
-        return { success: true, updatedCount: 0, updatedTours: [], updatedHints: [] };
+        return { success: true, updatedCount: 0, updatedTours: [], updatedHints: [], conflicts: [] };
     }
 
     // 优先批量获取全部全网数据做匹配，减少单条请求开销
@@ -246,15 +251,33 @@ export async function syncCloudRules(tours = [], hints = []) {
         }
 
         if (cloudItem) {
-            updatedCount++;
-            syncedTours.push({
-                ...t,
-                name: cloudItem.name || t.name,
-                steps: (Array.isArray(cloudItem.steps) && cloudItem.steps.length > 0) ? cloudItem.steps : t.steps,
-                author: cloudItem.author || t.author,
-                downloads: (cloudItem.downloads !== undefined) ? cloudItem.downloads : t.downloads,
-                isSynced: true
-            });
+            const stepsDiffer = JSON.stringify(t.steps || []) !== JSON.stringify(cloudItem.steps || []);
+            const nameDiffer = t.name !== cloudItem.name;
+            const isContentDifferent = stepsDiffer || nameDiffer;
+
+            // 核心冲突判定：本地已有修改且云端内容与本地当前内容不一致
+            if (t.isLocallyModified && isContentDifferent) {
+                conflicts.push({
+                    type: 'tour',
+                    id: t.id,
+                    cloudId: t.cloudId,
+                    name: t.name,
+                    author: cloudItem.author || t.author,
+                    localItem: t,
+                    cloudItem: cloudItem
+                });
+            } else {
+                // 无冲突静默更新
+                updatedCount++;
+                syncedTours.push({
+                    ...t,
+                    name: cloudItem.name || t.name,
+                    steps: (Array.isArray(cloudItem.steps) && cloudItem.steps.length > 0) ? cloudItem.steps : t.steps,
+                    author: cloudItem.author || t.author,
+                    downloads: (cloudItem.downloads !== undefined) ? cloudItem.downloads : t.downloads,
+                    isSynced: true
+                });
+            }
         }
     }
 
@@ -271,15 +294,31 @@ export async function syncCloudRules(tours = [], hints = []) {
         }
 
         if (cloudItem) {
-            updatedCount++;
-            syncedHints.push({
-                ...h,
-                text: cloudItem.text || h.text,
-                selector: cloudItem.selector || h.selector,
-                author: cloudItem.author || h.author,
-                downloads: (cloudItem.downloads !== undefined) ? cloudItem.downloads : h.downloads,
-                isSynced: true
-            });
+            const isContentDifferent = (h.text !== cloudItem.text) || (h.selector !== cloudItem.selector);
+
+            // 核心冲突判定：本地已有修改且云端内容与本地当前内容不一致
+            if (h.isLocallyModified && isContentDifferent) {
+                conflicts.push({
+                    type: 'hint',
+                    id: h.id,
+                    cloudId: h.cloudId,
+                    name: h.text ? (h.text.length > 15 ? h.text.slice(0, 15) + '...' : h.text) : '悬停提示',
+                    author: cloudItem.author || h.author,
+                    localItem: h,
+                    cloudItem: cloudItem
+                });
+            } else {
+                // 无冲突静默更新
+                updatedCount++;
+                syncedHints.push({
+                    ...h,
+                    text: cloudItem.text || h.text,
+                    selector: cloudItem.selector || h.selector,
+                    author: cloudItem.author || h.author,
+                    downloads: (cloudItem.downloads !== undefined) ? cloudItem.downloads : h.downloads,
+                    isSynced: true
+                });
+            }
         }
     }
 
@@ -287,7 +326,8 @@ export async function syncCloudRules(tours = [], hints = []) {
         success: true,
         updatedCount,
         updatedTours: syncedTours,
-        updatedHints: syncedHints
+        updatedHints: syncedHints,
+        conflicts
     };
 }
 
