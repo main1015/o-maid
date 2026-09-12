@@ -13,28 +13,45 @@
    在项目根目录下执行启动脚本：
    ```bash
    ./start-server.sh [端口号]
-   # 示例：使用默认端口 3000
+   # 示例：使用默认端口 8632
    ./start-server.sh
    # 示例：指定端口 8080 避免冲突
    ./start-server.sh 8080
    ```
 
-2. **手动启动**：
-   ```bash
-   cd server
-   npm install
-   PORT=8080 npm start
-   ```
+2. **配置数据库与初始化**：
+   - 复制环境配置模板：
+     ```bash
+     cd server
+     cp .env.example .env
+     ```
+   - 数据库类型可通过 `.env` 中的 `DB_TYPE` 配置：
+     - 本地开发：默认 `DB_TYPE=sqlite`，无需额外配置。
+     - 线上部署：设置 `DB_TYPE=mysql` 或 `DB_TYPE=postgres` 并配置主机与账号密码。
+   - 执行独立的数据库建表与初始数据播种脚本：
+     ```bash
+     npm run db:init
+     # 如需重置清空旧库，可运行：npm run db:init -- --force
+     ```
+     > 初始化完成后会自动生成初始管理员账号（`admin / admin123`）。
 
-3. **数据库文件**：
-   第一次启动时，会在当前目录下自动生成一个 `data.db`（SQLite 数据库文件），请勿将其提交到 Git（已在根目录的 `.gitignore` 中被忽略）。
+3. **运行全量自动化测试**：
+   ```bash
+   npm test
+   ```
+   > 自动化测试套件包含 16 个核心测试用例，覆盖：数据库表完整性、账号认证、普通用户发布待审、多层级可见性隔离（访客/他人/作者）、管理员审核通过与驳回、免审特权以及看板统计，并在测试完成后自动清理测试数据。
+
+4. **手动启动服务**：
+   ```bash
+   npm start
+   ```
 
 ---
 
 ## 🖥️ Web 可视化管理控制台
 
 服务启动成功后，直接用浏览器访问服务根地址即可进入 Web 控制台：
-- **控制台地址**：`http://localhost:<端口>/`（例如 `http://localhost:3000/`）
+- **控制台地址**：`http://localhost:<端口>/`（例如 `http://localhost:8632/`）
 - **功能特性**：
   - **平台概览**：实时统计用户总数、任务数、提示数、累计下载量，并展示最新发布动态流。
   - **引导任务管理**：全量检索所有云端任务，支持查看步骤详情模态框，以及一键删除不合规任务。
@@ -48,6 +65,10 @@
 
 ```text
 server/
+├── config/                # 统一数据库配置
+│   └── database.js        # 多数据库配置与连接池定义
+├── scripts/               # 运维与自动化脚本
+│   └── init-db.js         # 独立数据库建表与种子数据播种脚本
 ├── public/                # Web 控制台静态资源前端
 │   ├── index.html         # 控制台单页主结构
 │   ├── css/
@@ -62,8 +83,9 @@ server/
 │   └── stats.js           # 仪表盘统计与系统监控接口
 ├── middleware/            # 中间件
 │   └── auth.js            # JWT 身份鉴权中间件
-├── database.js            # SQLite 数据库模型与初始化
+├── database.js            # 数据库实例导出与运行时探活
 ├── server.js              # 服务端主入口（集成静态托管 + 路由挂载）
+├── .env.example           # 数据库与环境变量模板
 ├── package.json
 └── README.md
 ```
@@ -100,6 +122,7 @@ server/
 #### 发布/更新导览
 - **POST** `/api/guides`
 - **Headers**: `Authorization: Bearer <token>`
+- **说明**: 管理员账号发布直接免审生效（`status: approved`）；普通用户发布或修改需进入待审（`status: pending`）。
 - **Body**:
   ```json
   {
@@ -110,14 +133,22 @@ server/
     "steps": [...]
   }
   ```
-- **Response**: `{ "success": true }`
+- **Response**: `{ "success": true, "id": "tour-xxx", "status": "approved" | "pending" }`
+
+#### 审核导览任务 (仅管理员)
+- **POST** `/api/guides/:id/audit`
+- **Headers**: `Authorization: Bearer <admin-token>`
+- **Body**: `{ "status": "approved" | "rejected" | "pending" }`
+- **Response**: `{ "success": true, "id": "...", "status": "approved" }`
 
 #### 获取特定域名的导览（插件端拉取）
 - **GET** `/api/guides?domain=example.com`
+- **说明**: 匿名访客仅拉取已审核通过 (`approved`) 的规则；登录用户可额外获取自己创建的待审核规则。
 - **Response**: `{ "success": true, "guides": [...] }`
 
-#### 获取全量导览列表（管理后台）
-- **GET** `/api/guides/all`
+#### 获取全量导览列表（管理后台 / 广场大厅）
+- **GET** `/api/guides/all[?status=pending]`
+- **说明**: 匿名仅拉取 `approved`；登录作者可拉取自己全部；管理员可查看全量及按状态筛选。
 - **Response**: `{ "success": true, "guides": [...] }`
 
 #### 获取单项导览详情
@@ -136,31 +167,40 @@ server/
 
 ### 3. 悬停提示 (Hints)
 
-#### 发布/更新提示
+#### 发布/更新悬停提示
 - **POST** `/api/hints`
 - **Headers**: `Authorization: Bearer <token>`
+- **说明**: 管理员账号发布直接免审生效（`status: approved`）；普通用户发布或修改需进入待审（`status: pending`）。
 - **Body**:
   ```json
   {
     "id": "hint-xxx",
     "url": "https://example.com/page",
     "domain": "example.com",
-    "selector": "#submit-btn",
-    "text": "这是一个按钮"
+    "selector": "#btn-submit",
+    "text": "点击此处提交表单"
   }
   ```
-- **Response**: `{ "success": true }`
+- **Response**: `{ "success": true, "id": "hint-xxx", "status": "approved" | "pending" }`
 
-#### 获取特定域名的提示（插件端拉取）
+#### 审核悬停提示 (仅管理员)
+- **POST** `/api/hints/:id/audit`
+- **Headers**: `Authorization: Bearer <admin-token>`
+- **Body**: `{ "status": "approved" | "rejected" | "pending" }`
+- **Response**: `{ "success": true, "id": "...", "status": "approved" }`
+
+#### 获取特定域名的悬停提示（插件端拉取）
 - **GET** `/api/hints?domain=example.com`
+- **说明**: 匿名访客仅拉取已审核通过 (`approved`) 的提示；登录用户可额外获取自己创建的待审核提示。
 - **Response**: `{ "success": true, "hints": [...] }`
 
-#### 获取全量提示列表（管理后台）
-- **GET** `/api/hints/all`
+#### 获取全量悬停提示列表（管理后台 / 广场大厅）
+- **GET** `/api/hints/all[?status=pending]`
+- **说明**: 匿名仅拉取 `approved`；登录作者可拉取自己全部；管理员可查看全量及按状态筛选。
 - **Response**: `{ "success": true, "hints": [...] }`
 
-#### 删除指定提示
-- **DELETE** `/api/hints/:id`
+#### 获取单项提示详情
+- **GET** `/api/hints/:id`
 - **Response**: `{ "success": true, "message": "删除成功" }`
 
 ---

@@ -37,13 +37,19 @@ app.use('/api', (req, res) => {
     res.status(404).json({ error: `接口不存在: ${req.method} ${req.originalUrl}` });
 });
 
+const db = require('./database');
+
 // 启动服务
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
     console.log(`==============================================`);
     console.log(`🚀 O-Maid 云端服务已就绪`);
     console.log(`📡 API 服务地址:  http://localhost:${PORT}/api`);
     console.log(`🖥️  Web 控制台:    http://localhost:${PORT}/`);
+    console.log(`💾 数据库引擎:    ${db.dbType}`);
     console.log(`==============================================`);
+    
+    // 执行启动时数据库连接与表结构探活（不自动建表，仅提示）
+    await db.checkDatabaseHealth();
 });
 
 module.exports = app;

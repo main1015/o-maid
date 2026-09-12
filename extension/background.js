@@ -22,6 +22,11 @@ chrome.runtime.onConnect.addListener((port) => {
 
   console.log(`O-Maid: [${isTop ? 'Top' : 'Iframe'}] 连接已建立, TabID: ${tabId}, URL: ${frameUrl}`);
 
+  if (!tabPorts[tabId]) {
+    tabPorts[tabId] = [];
+  }
+  tabPorts[tabId].push({ port, isTop });
+
   port.onDisconnect.addListener(() => {
     // 强制消费 lastError，彻底消除 BFCache 导致 Unchecked runtime.lastError 报警
     if (chrome.runtime.lastError) {

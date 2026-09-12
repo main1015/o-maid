@@ -53,6 +53,12 @@
       } else if (msg.action === 'startTourFromPanel' && isTop) {
         // 来自 Side Panel 的开始任务请求
         resumeTour(msg.tourId, 1);
+      } else if (msg.action === 'dataUpdated') {
+        // 跨页面/后台通知数据更新
+        processPageData();
+        if (isTop && getCurrentView() === 'view') {
+          switchToView('view');
+        }
       }
       return true;
     });
@@ -62,6 +68,12 @@
       if (isTop && getCurrentView() === 'view') {
         switchToView('view');
       }
+    });
+
+    // 监听本地同页面的直接数据变更事件，实现 0 延迟即刻生效
+    window.addEventListener('o-maid-data-changed', async () => {
+      console.log(`O-Maid: [${isTop ? 'Top' : 'Iframe'}] 收到本地数据更新通知，即刻生效...`);
+      await processPageData();
     });
 
     // ----------------- 数据处理 -----------------

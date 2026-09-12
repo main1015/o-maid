@@ -1,66 +1,28 @@
-const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
+const knex = require('knex');
+const { knexConfig, dbType } = require('./config/database');
 
-const dbPath = path.resolve(__dirname, 'data.db');
-const db = new sqlite3.Database(dbPath);
+// 初始化统一 Knex 实例
+const db = knex(knexConfig);
 
-db.serialize(() => {
-    // Users table
-    db.run(`
-        CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT UNIQUE,
-            password TEXT,
-            role TEXT DEFAULT 'user',
-            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-        )
-    `);
+/**
+ * 轻量健康检查：仅在服务启动时探测连接与表存在性
+ * 恪守原则：纯探测，绝不在此处自动建表或修改数据！
+ */
+async function checkDatabaseHealth() {
+    try {
+        const hasUsers = await db.schema.hasTable('users');
+        if (!hasUsers) {
+            console.warn(`\n⚠️  [警告] 检测到数据库尚未初始化（未找到 users 表）！`);
+            console.warn(`👉 请先在 server 目录下执行初始化脚本: npm run db:init\n`);
+        }
+    } catch (err) {
+        console.error(`\n❌ [错误] 数据库连接失败: ${err.message}`);
+        console.error(`👉 请检查 .env 中的数据库连接配置，或确认目标数据库服务是否正常启动。\n`);
+    }
+}
 
-    // 兼容迁移：若已有旧数据库表则补充 role 字段
-    db.run("ALTER TABLE users ADD COLUMN role TEXT DEFAULT 'user'", (err) => {
-        // duplicate column name 报错表示已存在该字段，忽略即可
-        // 保证平台中至少有一位初始用户为 admin
-        db.get("SELECT COUNT(*) as adminCount FROM users WHERE role = 'admin'", [], (err, row) => {
-            if (!err && (!row || row.adminCount === 0)) {
-                db.run("UPDATE users SET role = 'admin' WHERE id = (SELECT id FROM users ORDER BY id ASC LIMIT 1)");
-            }
-        });
-    });
-
-    // Guides table
-    db.run(`
-        CREATE TABLE IF NOT EXISTS guides (
-            id TEXT PRIMARY KEY,
-            name TEXT,
-            startUrl TEXT,
-            domain TEXT,
-            steps TEXT,
-            authorId INTEGER,
-            downloads INTEGER DEFAULT 0,
-            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY(authorId) REFERENCES users(id)
-        )
-    `);
-
-    // Hints table
-    db.run(`
-        CREATE TABLE IF NOT EXISTS hints (
-            id TEXT PRIMARY KEY,
-            url TEXT,
-            domain TEXT,
-            selector TEXT,
-            text TEXT,
-            authorId INTEGER,
-            downloads INTEGER DEFAULT 0,
-            created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY(authorId) REFERENCES users(id)
-        )
-    `);
-
-    // 兼容迁移：若已有旧 hints 表则平滑补充 downloads 字段
-    db.run("ALTER TABLE hints ADD COLUMN downloads INTEGER DEFAULT 0", (err) => {
-        // duplicate column name 报错表示已存在该字段，忽略即可
-    });
-});
+// 导出 knex 实例和健康检查函数
+db.checkDatabaseHealth = checkDatabaseHealth;
+db.dbType = dbType;
 
 module.exports = db;

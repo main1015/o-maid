@@ -1,79 +1,121 @@
 const express = require('express');
-const os = require('os');
 const db = require('../database');
 const { authenticateToken, requireAdmin } = require('../middleware/auth');
 
 const router = express.Router();
 
 // 概览统计指标（受保护，已登录即可访问）
-router.get('/overview', authenticateToken, (req, res) => {
-    const stats = {
-        totalUsers: 0,
-        totalGuides: 0,
-        totalHints: 0,
-        totalDownloads: 0,
-        recentActivities: []
-    };
+router.get('/overview', authenticateToken, async (req, res) => {
+    try {
+        const [
+            userCountRow,
+            guideStatsRow,
+            hintStatsRow,
+            pendingGuidesRow,
+            pendingHintsRow,
+            recentGuides,
+            recentHints
+        ] = await Promise.all([
+            db('users').count('id as count').first(),
+            db('guides').count('id as count').sum('downloads as downloads').first(),
+            db('hints').count('id as count').sum('downloads as downloads').first(),
+            db('guides').where({ status: 'pending' }).count('id as count').first(),
+            db('hints').where({ status: 'pending' }).count('id as count').first(),
+            db('guides as g')
+                .leftJoin('users as u', 'g.authorId', 'u.id')
+                .select(
+                    db.raw("'guide' as type"),
+                    'g.id',
+                    'g.name as title',
+                    'g.domain',
+                    'g.status',
+                    'g.created_at',
+                    'u.username as author'
+                )
+                .orderBy('g.created_at', 'desc')
+                .limit(8),
+            db('hints as h')
+                .leftJoin('users as u', 'h.authorId', 'u.id')
+                .select(
+                    db.raw("'hint' as type"),
+                    'h.id',
+                    'h.text as title',
+                    'h.domain',
+                    'h.status',
+                    'h.created_at',
+                    'u.username as author'
+                )
+                .orderBy('h.created_at', 'desc')
+                .limit(8)
+        ]);
 
-    db.serialize(() => {
-        db.get('SELECT COUNT(*) as count FROM users', [], (err, row) => {
-            if (!err && row) stats.totalUsers = row.count;
-        });
+        const totalUsers = userCountRow ? Number(userCountRow.count || 0) : 0;
+        const totalGuides = guideStatsRow ? Number(guideStatsRow.count || 0) : 0;
+        const guideDownloads = guideStatsRow ? Number(guideStatsRow.downloads || 0) : 0;
+        const totalHints = hintStatsRow ? Number(hintStatsRow.count || 0) : 0;
+        const hintDownloads = hintStatsRow ? Number(hintStatsRow.downloads || 0) : 0;
+        const pendingGuides = pendingGuidesRow ? Number(pendingGuidesRow.count || 0) : 0;
+        const pendingHints = pendingHintsRow ? Number(pendingHintsRow.count || 0) : 0;
 
-        db.get('SELECT COUNT(*) as count, COALESCE(SUM(downloads), 0) as downloads FROM guides', [], (err, row) => {
-            if (!err && row) {
-                stats.totalGuides = row.count;
-                stats.totalDownloads = (stats.totalDownloads || 0) + row.downloads;
+        // 合并最新动态并按时间降序截取前 8 条
+        const combinedActivities = [...recentGuides, ...recentHints]
+            .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+            .slice(0, 8);
+
+        res.json({
+            success: true,
+            stats: {
+                totalUsers,
+                totalGuides,
+                totalHints,
+                pendingGuides,
+                pendingHints,
+                pendingTotal: pendingGuides + pendingHints,
+                totalDownloads: guideDownloads + hintDownloads,
+                recentActivities: combinedActivities
             }
         });
-
-        db.get('SELECT COUNT(*) as count, COALESCE(SUM(downloads), 0) as downloads FROM hints', [], (err, row) => {
-            if (!err && row) {
-                stats.totalHints = row.count;
-                stats.totalDownloads = (stats.totalDownloads || 0) + row.downloads;
-            }
-        });
-
-        // 获取最新发布的5条动态
-        db.all(`
-            SELECT 'guide' as type, g.id, g.name as title, g.domain, g.created_at, u.username as author
-            FROM guides g
-            LEFT JOIN users u ON g.authorId = u.id
-            UNION ALL
-            SELECT 'hint' as type, h.id, h.text as title, h.domain, h.created_at, u.username as author
-            FROM hints h
-            LEFT JOIN users u ON h.authorId = u.id
-            ORDER BY created_at DESC
-            LIMIT 8
-        `, [], (err, rows) => {
-            if (!err && rows) {
-                stats.recentActivities = rows;
-            }
-            res.json({ success: true, stats });
-        });
-    });
+    } catch (err) {
+        res.status(500).json({ error: '获取概览统计失败: ' + err.message });
+    }
 });
 
 // 用户列表与发布统计（仅管理员允许）
-router.get('/users', authenticateToken, requireAdmin, (req, res) => {
-    db.all(`
-        SELECT 
-            u.id, 
-            u.username, 
-            u.role,
-            u.created_at,
-            (SELECT COUNT(*) FROM guides WHERE authorId = u.id) as guidesCount,
-            (SELECT COUNT(*) FROM hints WHERE authorId = u.id) as hintsCount
-        FROM users u
-        ORDER BY u.created_at DESC
-    `, [], (err, rows) => {
-        if (err) return res.status(500).json({ error: '查询失败' });
-        res.json({ success: true, users: rows.map(r => ({ ...r, role: r.role || 'user' })) });
-    });
+router.get('/users', authenticateToken, requireAdmin, async (req, res) => {
+    try {
+        const users = await db('users as u')
+            .select(
+                'u.id',
+                'u.username',
+                'u.role',
+                'u.created_at',
+                db('guides').count('id').whereRaw('authorId = u.id').as('guidesCount'),
+                db('hints').count('id').whereRaw('authorId = u.id').as('hintsCount')
+            )
+            .orderBy('u.created_at', 'desc');
+
+        res.json({
+            success: true,
+            users: users.map(r => ({
+                ...r,
+                role: r.role || 'user',
+                guidesCount: Number(r.guidesCount || 0),
+                hintsCount: Number(r.hintsCount || 0)
+            }))
+        });
+    } catch (err) {
+        res.status(500).json({ error: '查询用户列表失败: ' + err.message });
+    }
 });
 
 // 系统与运行状态（仅管理员允许）
 router.get('/system', authenticateToken, requireAdmin, (req, res) => {
+    const dbTypeMap = {
+        sqlite: 'SQLite 3',
+        mysql: 'MySQL',
+        postgres: 'PostgreSQL'
+    };
+
     res.json({
         success: true,
         system: {
@@ -85,7 +127,7 @@ router.get('/system', authenticateToken, requireAdmin, (req, res) => {
                 heapUsed: (process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2) + ' MB'
             },
             serverTime: new Date().toISOString(),
-            dbType: 'SQLite 3'
+            dbType: dbTypeMap[db.dbType] || db.dbType || 'SQLite 3'
         }
     });
 });

@@ -1651,10 +1651,18 @@ function renderCloudToursList(tours) {
     tours.forEach(tour => {
         const li = document.createElement('li');
         const domainBadge = tour.domain ? `<span style="background:rgba(99,102,241,0.12); color:#6366f1; padding:1px 5px; border-radius:3px; font-size:11px; margin-right:5px; font-family:monospace;">${tour.domain}</span>` : '';
+        
+        let statusBadge = '';
+        if (tour.status === 'pending') {
+            statusBadge = `<span style="background:rgba(245,158,11,0.15); color:#f59e0b; border:1px solid rgba(245,158,11,0.35); padding:1px 5px; border-radius:3px; font-size:11px; margin-left:5px;">⏳ 待审核</span>`;
+        } else if (tour.status === 'rejected') {
+            statusBadge = `<span style="background:rgba(239,68,68,0.15); color:#ef4444; border:1px solid rgba(239,68,68,0.35); padding:1px 5px; border-radius:3px; font-size:11px; margin-left:5px;">✕ 已驳回</span>`;
+        }
+
         li.innerHTML = `
             <div class="item-header">
                 <div class="item-info toggle-steps" style="cursor: pointer;">
-                    <div class="name">${domainBadge}${tour.name}</div>
+                    <div class="name">${domainBadge}${tour.name}${statusBadge}</div>
                 </div>
                 <div class="item-actions">
                     <button class="btn btn-outline-primary btn-sm download-btn" title="下载到本地">⬇️</button>
@@ -1669,6 +1677,7 @@ function renderCloudToursList(tours) {
             if(res.success) {
                 CloudAPI.downloadGuide(tour.id);
                 showNotification(res.updated ? '本地已存在该任务，已自动覆盖更新为最新版！' : '已下载到本地！', 'success');
+                window.dispatchEvent(new CustomEvent('o-maid-data-changed'));
                 fetchAllAndRenderLists();
             }
         });
@@ -1682,10 +1691,18 @@ function renderCloudHintsList(hints) {
     hints.forEach(hint => {
         const li = document.createElement('li');
         const domainBadge = hint.domain ? `<span style="background:rgba(99,102,241,0.12); color:#6366f1; padding:1px 5px; border-radius:3px; font-size:11px; margin-right:5px; font-family:monospace;">${hint.domain}</span>` : '';
+        
+        let statusBadge = '';
+        if (hint.status === 'pending') {
+            statusBadge = `<span style="background:rgba(245,158,11,0.15); color:#f59e0b; border:1px solid rgba(245,158,11,0.35); padding:1px 5px; border-radius:3px; font-size:11px; margin-left:5px;">⏳ 待审核</span>`;
+        } else if (hint.status === 'rejected') {
+            statusBadge = `<span style="background:rgba(239,68,68,0.15); color:#ef4444; border:1px solid rgba(239,68,68,0.35); padding:1px 5px; border-radius:3px; font-size:11px; margin-left:5px;">✕ 已驳回</span>`;
+        }
+
         li.innerHTML = `
             <div class="item-header">
                 <div class="item-info">
-                    <div class="name">${domainBadge}${hint.text}</div>
+                    <div class="name">${domainBadge}${hint.text}${statusBadge}</div>
                 </div>
                 <div class="item-actions">
                     <button class="btn btn-outline-primary btn-sm download-btn" title="下载到本地">⬇️</button>
@@ -1700,6 +1717,7 @@ function renderCloudHintsList(hints) {
             if(res.success) {
                 CloudAPI.downloadHint(hint.id);
                 showNotification(res.updated ? '本地已存在该提示，已自动覆盖更新为最新版！' : '已下载到本地！', 'success');
+                window.dispatchEvent(new CustomEvent('o-maid-data-changed'));
                 fetchAllAndRenderLists();
             }
         });
@@ -1878,7 +1896,11 @@ function renderToursList(tours, isShowAll = false) {
                 const res = await CloudAPI.publishGuide(cloudTour);
                 if(res.error) showNotification('发布失败: ' + res.error, 'error');
                 else {
-                    showNotification('发布成功！已同步至云端。', 'success');
+                    if (res.status === 'pending') {
+                        showNotification(res.message || '已提交云端，需等待管理员审核通过后公开可见', 'warning', 4000);
+                    } else {
+                        showNotification('发布成功！已在云端公开生效。', 'success');
+                    }
                     await updateTour({ ...tour, cloudId: res.id || tour.cloudId || tour.id, isSynced: true });
                     fetchAllAndRenderLists();
                 }
@@ -1895,6 +1917,7 @@ function renderToursList(tours, isShowAll = false) {
             const res = await resetTourCompletion(tour.id);
             if (res.success) {
                 showNotification(`任务 "${tour.name}" 的完成状态已重置。`, 'success');
+                window.dispatchEvent(new CustomEvent('o-maid-data-changed'));
                 fetchAllAndRenderLists();
             } else {
                 console.error(`O-Maid: [UI] Failed to reset completion for tour: ${tour.id}`, res);
@@ -1985,6 +2008,7 @@ function renderToursList(tours, isShowAll = false) {
             const res = await deleteTour(tour.id);
             if (res && res.success) {
                 showNotification(`引导任务 "${tour.name}" 已删除！`, 'success');
+                window.dispatchEvent(new CustomEvent('o-maid-data-changed'));
                 fetchAllAndRenderLists();
             } else {
                 showNotification(`删除失败: ${res?.error || '存储异常'}`, 'error');
@@ -2078,7 +2102,11 @@ function renderHintsList(hints, isShowAll = false) {
                 const res = await CloudAPI.publishHint(cloudHint);
                 if(res.error) showNotification('发布失败: ' + res.error, 'error');
                 else {
-                    showNotification('发布成功！已同步至云端。', 'success');
+                    if (res.status === 'pending') {
+                        showNotification(res.message || '已提交云端，需等待管理员审核通过后公开可见', 'warning', 4000);
+                    } else {
+                        showNotification('发布成功！已在云端公开生效。', 'success');
+                    }
                     await updateHoverHint({ ...hint, cloudId: res.id || hint.cloudId || hint.id, isSynced: true });
                     fetchAllAndRenderLists();
                 }
@@ -2094,6 +2122,7 @@ function renderHintsList(hints, isShowAll = false) {
             const res = await deleteHoverHint(hint.id);
             if (res && res.success) {
                 showNotification(`悬停提示已删除！`, 'success');
+                window.dispatchEvent(new CustomEvent('o-maid-data-changed'));
                 fetchAllAndRenderLists();
             } else {
                 showNotification(`删除失败: ${res?.error || '存储异常'}`, 'error');
@@ -2269,6 +2298,7 @@ async function saveHint() {
         if (res && res.success) {
             switchToView('view');
             showNotification('保存成功', 'success');
+            window.dispatchEvent(new CustomEvent('o-maid-data-changed'));
         } else {
             console.error('O-Maid: 保存失败', res);
             showNotification('保存失败，请检查后台日志。', 'error');
@@ -2297,6 +2327,7 @@ async function saveTour() {
     if (res.success) {
         switchToView('view');
         showNotification('任务保存成功', 'success');
+        window.dispatchEvent(new CustomEvent('o-maid-data-changed'));
     }
 }
 

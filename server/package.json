@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "db:init": "node scripts/init-db.js",
+    "test": "node test/api.test.js"
   },
   "keywords": [],
   "author": "",
@@ -13,8 +14,12 @@
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
+    "dotenv": "^17.4.2",
     "express": "^4.21.0",
     "jsonwebtoken": "^9.0.2",
+    "knex": "^3.3.0",
+    "mysql2": "^3.24.4",
+    "pg": "^8.23.0",
     "sqlite3": "^5.1.7"
   }
 }

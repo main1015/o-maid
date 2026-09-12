@@ -7,7 +7,12 @@ const state = {
   guides: [],
   hints: [],
   users: [],
-  system: null
+  system: null,
+  pagination: {
+    guides: { page: 1, pageSize: 10 },
+    hints: { page: 1, pageSize: 10 },
+    users: { page: 1, pageSize: 10 }
+  }
 };
 
 // 辅助函数：显示通知
@@ -62,6 +67,83 @@ function openModal(modalId) {
 function closeModal(modalId) {
   const modal = document.getElementById(modalId);
   if (modal) modal.classList.remove('active');
+}
+
+// 通用分页渲染组件
+function renderPaginationControls({ containerId, total, page, pageSize, onPageChange, onPageSizeChange }) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  if (total === 0) {
+    container.innerHTML = '';
+    container.style.display = 'none';
+    return;
+  }
+
+  container.style.display = 'flex';
+  const totalPages = Math.ceil(total / pageSize) || 1;
+  const currentPage = Math.max(1, Math.min(page, totalPages));
+
+  // 计算页码列表 (最长展示7项，智能折叠)
+  let pages = [];
+  if (totalPages <= 7) {
+    for (let i = 1; i <= totalPages; i++) pages.push(i);
+  } else {
+    pages.push(1);
+    if (currentPage > 3) pages.push('...');
+    
+    const start = Math.max(2, currentPage - 1);
+    const end = Math.min(totalPages - 1, currentPage + 1);
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
+    }
+    
+    if (currentPage < totalPages - 2) pages.push('...');
+    pages.push(totalPages);
+  }
+
+  const startItem = (currentPage - 1) * pageSize + 1;
+  const endItem = Math.min(currentPage * pageSize, total);
+
+  container.innerHTML = `
+    <div class="pagination-info">
+      <span>共 <strong>${total}</strong> 条，显示 ${startItem}-${endItem}</span>
+      <select class="pagination-size-select" title="每页显示条数">
+        <option value="10" ${pageSize === 10 ? 'selected' : ''}>10 条/页</option>
+        <option value="20" ${pageSize === 20 ? 'selected' : ''}>20 条/页</option>
+        <option value="50" ${pageSize === 50 ? 'selected' : ''}>50 条/页</option>
+      </select>
+    </div>
+    <div class="pagination-controls">
+      <button class="page-btn prev-page-btn" ${currentPage <= 1 ? 'disabled' : ''} title="上一页">上一页</button>
+      ${pages.map(p => {
+        if (p === '...') return `<span class="page-ellipsis">...</span>`;
+        return `<button class="page-btn num-page-btn ${p === currentPage ? 'active' : ''}" data-page="${p}">${p}</button>`;
+      }).join('')}
+      <button class="page-btn next-page-btn" ${currentPage >= totalPages ? 'disabled' : ''} title="下一页">下一页</button>
+    </div>
+  `;
+
+  // 绑定事件
+  container.querySelector('.pagination-size-select')?.addEventListener('change', (e) => {
+    const newSize = parseInt(e.target.value, 10);
+    onPageSizeChange(newSize);
+  });
+
+  container.querySelector('.prev-page-btn')?.addEventListener('click', () => {
+    if (currentPage > 1) onPageChange(currentPage - 1);
+  });
+
+  container.querySelector('.next-page-btn')?.addEventListener('click', () => {
+    if (currentPage < totalPages) onPageChange(currentPage + 1);
+  });
+
+  container.querySelectorAll('.num-page-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const p = parseInt(btn.dataset.page, 10);
+      if (p !== currentPage) onPageChange(p);
+    });
+  });
 }
 
 // 角色权限动态适配
@@ -132,6 +214,7 @@ async function loadCurrentTabData() {
 }
 
 // 1. 加载平台概览
+// 1. 加载平台概览
 async function loadOverview() {
   try {
     const res = await Api.getOverview();
@@ -141,6 +224,18 @@ async function loadOverview() {
       document.getElementById('stat-guides-count').textContent = stats.totalGuides || 0;
       document.getElementById('stat-hints-count').textContent = stats.totalHints || 0;
       document.getElementById('stat-downloads-count').textContent = stats.totalDownloads || 0;
+      const pendingCountElem = document.getElementById('stat-pending-count');
+      if (pendingCountElem) {
+        pendingCountElem.textContent = stats.pendingTotal || 0;
+      }
+      const pendingGuidesBadge = document.getElementById('stat-pending-guides-badge');
+      if (pendingGuidesBadge) {
+        pendingGuidesBadge.textContent = stats.pendingGuides || 0;
+      }
+      const pendingHintsBadge = document.getElementById('stat-pending-hints-badge');
+      if (pendingHintsBadge) {
+        pendingHintsBadge.textContent = stats.pendingHints || 0;
+      }
 
       // 渲染最新动态
       const activityList = document.getElementById('recent-activities-list');
@@ -152,6 +247,8 @@ async function loadOverview() {
           const isGuide = item.type === 'guide';
           const li = document.createElement('li');
           li.className = 'activity-item';
+          li.style.cursor = 'pointer';
+          li.title = `点击前往查看此${isGuide ? '引导任务' : '悬停提示'}`;
           li.innerHTML = `
             <span class="activity-badge ${isGuide ? 'badge-guide' : 'badge-hint'}">
               ${isGuide ? '任务' : '提示'}
@@ -165,6 +262,25 @@ async function loadOverview() {
               </div>
             </div>
           `;
+          li.addEventListener('click', () => {
+            if (isGuide) {
+              switchTab('guides');
+              const select = document.getElementById('filter-guides-status');
+              const search = document.getElementById('search-guides-input');
+              if (select) select.value = '';
+              if (search) search.value = '';
+              state.pagination.guides.page = 1;
+              filterAndRenderGuides();
+            } else {
+              switchTab('hints');
+              const select = document.getElementById('filter-hints-status');
+              const search = document.getElementById('search-hints-input');
+              if (select) select.value = '';
+              if (search) search.value = '';
+              state.pagination.hints.page = 1;
+              filterAndRenderHints();
+            }
+          });
           activityList.appendChild(li);
         });
       }
@@ -174,24 +290,75 @@ async function loadOverview() {
   }
 }
 
+// 辅助函数：渲染状态徽标
+function renderStatusBadge(status) {
+  const map = {
+    approved: '<span class="status-badge approved">● 已发布</span>',
+    pending: '<span class="status-badge pending">⏳ 待审核</span>',
+    rejected: '<span class="status-badge rejected">✕ 已驳回</span>'
+  };
+  return map[status] || map.pending;
+}
+
 // 2. 加载引导任务列表
 async function loadGuides() {
   try {
     const res = await Api.getGuides();
     if (res.success) {
       state.guides = res.guides || [];
-      renderGuidesTable(state.guides);
+      filterAndRenderGuides();
     }
   } catch (err) {
     showToast('加载引导列表失败: ' + err.message, 'error');
   }
 }
 
+function filterAndRenderGuides() {
+  const searchVal = (document.getElementById('search-guides-input')?.value || '').toLowerCase().trim();
+  const statusVal = document.getElementById('filter-guides-status')?.value || '';
+
+  const filtered = state.guides.filter(g => {
+    const matchSearch = !searchVal || 
+      (g.name && g.name.toLowerCase().includes(searchVal)) ||
+      (g.domain && g.domain.toLowerCase().includes(searchVal)) ||
+      (g.author && g.author.toLowerCase().includes(searchVal));
+    const matchStatus = !statusVal || (g.status || 'pending') === statusVal;
+    return matchSearch && matchStatus;
+  });
+
+  const total = filtered.length;
+  const { page, pageSize } = state.pagination.guides;
+  const totalPages = Math.ceil(total / pageSize) || 1;
+  const validPage = Math.max(1, Math.min(page, totalPages));
+  state.pagination.guides.page = validPage;
+
+  const startIndex = (validPage - 1) * pageSize;
+  const pagedList = filtered.slice(startIndex, startIndex + pageSize);
+
+  renderGuidesTable(pagedList);
+
+  renderPaginationControls({
+    containerId: 'guides-pagination',
+    total,
+    page: validPage,
+    pageSize,
+    onPageChange: (newPage) => {
+      state.pagination.guides.page = newPage;
+      filterAndRenderGuides();
+    },
+    onPageSizeChange: (newSize) => {
+      state.pagination.guides.pageSize = newSize;
+      state.pagination.guides.page = 1;
+      filterAndRenderGuides();
+    }
+  });
+}
+
 function renderGuidesTable(list) {
   const tbody = document.getElementById('guides-table-body');
   tbody.innerHTML = '';
   if (list.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="7" class="empty-state"><div class="empty-icon">📂</div>暂无符合条件的引导任务，可点击上方「+ 新建引导任务」录入</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="8" class="empty-state"><div class="empty-icon">📂</div>暂无符合条件的引导任务，可点击上方「+ 新建引导任务」录入</td></tr>`;
     return;
   }
 
@@ -201,6 +368,7 @@ function renderGuidesTable(list) {
   list.forEach(item => {
     const isMyWork = currentUserId && String(item.authorId) === String(currentUserId);
     const canDelete = isAdmin || isMyWork;
+    const status = item.status || 'pending';
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td><strong>${escapeHtml(item.name)}</strong></td>
@@ -210,12 +378,20 @@ function renderGuidesTable(list) {
         ${escapeHtml(item.author || '平台')}
         ${isMyWork ? '<span class="author-badge-self">我</span>' : ''}
       </td>
+      <td>${renderStatusBadge(status)}</td>
       <td>🔥 ${item.downloads || 0}</td>
       <td style="color:var(--text-dim); font-size:12px;">${formatTime(item.created_at)}</td>
       <td>
         <div class="action-btn-group">
           <button class="btn-sm btn-primary-sm view-guide-btn" data-id="${escapeHtml(item.id)}">详情</button>
-          ${canDelete ? `<button class="btn-sm btn-danger-sm delete-guide-btn" data-id="${escapeHtml(item.id)}" data-name="${escapeHtml(item.name)}">删除</button>` : '<span style="color:var(--text-dim); font-size:12px;">只读</span>'}
+          ${isAdmin && status === 'pending' ? `
+            <button class="btn-sm btn-audit-approve audit-guide-btn" data-id="${escapeHtml(item.id)}" data-action="approved">通过</button>
+            <button class="btn-sm btn-audit-reject audit-guide-btn" data-id="${escapeHtml(item.id)}" data-action="rejected">驳回</button>
+          ` : ''}
+          ${isAdmin && status === 'rejected' ? `
+            <button class="btn-sm btn-audit-approve audit-guide-btn" data-id="${escapeHtml(item.id)}" data-action="approved">重新通过</button>
+          ` : ''}
+          ${canDelete ? `<button class="btn-sm btn-danger-sm delete-guide-btn" data-id="${escapeHtml(item.id)}" data-name="${escapeHtml(item.name)}">删除</button>` : (!isAdmin ? '<span style="color:var(--text-dim); font-size:12px;">只读</span>' : '')}
         </div>
       </td>
     `;
@@ -224,6 +400,34 @@ function renderGuidesTable(list) {
 
   tbody.querySelectorAll('.view-guide-btn').forEach(btn => {
     btn.addEventListener('click', () => openGuideDetailsModal(btn.dataset.id));
+  });
+  tbody.querySelectorAll('.audit-guide-btn').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      const currentBtn = e.currentTarget;
+      const id = currentBtn.dataset.id;
+      const action = currentBtn.dataset.action;
+      const originalText = currentBtn.textContent;
+
+      currentBtn.disabled = true;
+      currentBtn.textContent = '处理中...';
+
+      try {
+        const res = await Api.auditGuide(id, action);
+        if (res.success) {
+          showToast(res.message || '审核操作成功', 'success');
+          await loadGuides();
+          loadOverview();
+        } else {
+          showToast(res.error || '审核操作未完成', 'error');
+        }
+      } catch (err) {
+        showToast('审核失败: ' + err.message, 'error');
+      } finally {
+        currentBtn.disabled = false;
+        currentBtn.textContent = originalText;
+      }
+    });
   });
   tbody.querySelectorAll('.delete-guide-btn').forEach(btn => {
     btn.addEventListener('click', () => confirmDeleteGuide(btn.dataset.id, btn.dataset.name));
@@ -236,18 +440,59 @@ async function loadHints() {
     const res = await Api.getHints();
     if (res.success) {
       state.hints = res.hints || [];
-      renderHintsTable(state.hints);
+      filterAndRenderHints();
     }
   } catch (err) {
     showToast('加载提示列表失败: ' + err.message, 'error');
   }
 }
 
+function filterAndRenderHints() {
+  const searchVal = (document.getElementById('search-hints-input')?.value || '').toLowerCase().trim();
+  const statusVal = document.getElementById('filter-hints-status')?.value || '';
+
+  const filtered = state.hints.filter(h => {
+    const matchSearch = !searchVal || 
+      (h.text && h.text.toLowerCase().includes(searchVal)) ||
+      (h.domain && h.domain.toLowerCase().includes(searchVal)) ||
+      (h.selector && h.selector.toLowerCase().includes(searchVal));
+    const matchStatus = !statusVal || (h.status || 'pending') === statusVal;
+    return matchSearch && matchStatus;
+  });
+
+  const total = filtered.length;
+  const { page, pageSize } = state.pagination.hints;
+  const totalPages = Math.ceil(total / pageSize) || 1;
+  const validPage = Math.max(1, Math.min(page, totalPages));
+  state.pagination.hints.page = validPage;
+
+  const startIndex = (validPage - 1) * pageSize;
+  const pagedList = filtered.slice(startIndex, startIndex + pageSize);
+
+  renderHintsTable(pagedList);
+
+  renderPaginationControls({
+    containerId: 'hints-pagination',
+    total,
+    page: validPage,
+    pageSize,
+    onPageChange: (newPage) => {
+      state.pagination.hints.page = newPage;
+      filterAndRenderHints();
+    },
+    onPageSizeChange: (newSize) => {
+      state.pagination.hints.pageSize = newSize;
+      state.pagination.hints.page = 1;
+      filterAndRenderHints();
+    }
+  });
+}
+
 function renderHintsTable(list) {
   const tbody = document.getElementById('hints-table-body');
   tbody.innerHTML = '';
   if (list.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="7" class="empty-state"><div class="empty-icon">💬</div>暂无符合条件的悬停提示，可点击上方「+ 新建悬停提示」录入</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="8" class="empty-state"><div class="empty-icon">💬</div>暂无符合条件的悬停提示，可点击上方「+ 新建悬停提示」录入</td></tr>`;
     return;
   }
 
@@ -257,6 +502,7 @@ function renderHintsTable(list) {
   list.forEach(item => {
     const isMyWork = currentUserId && String(item.authorId) === String(currentUserId);
     const canDelete = isAdmin || isMyWork;
+    const status = item.status || 'pending';
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td style="max-width:240px;" title="${escapeHtml(item.text)}">${escapeHtml(item.text)}</td>
@@ -266,15 +512,52 @@ function renderHintsTable(list) {
         ${escapeHtml(item.author || '平台')}
         ${isMyWork ? '<span class="author-badge-self">我</span>' : ''}
       </td>
+      <td>${renderStatusBadge(status)}</td>
       <td>🔥 ${item.downloads || 0}</td>
       <td style="color:var(--text-dim); font-size:12px;">${formatTime(item.created_at)}</td>
       <td>
         <div class="action-btn-group">
-          ${canDelete ? `<button class="btn-sm btn-danger-sm delete-hint-btn" data-id="${escapeHtml(item.id)}">删除</button>` : '<span style="color:var(--text-dim); font-size:12px;">只读</span>'}
+          ${isAdmin && status === 'pending' ? `
+            <button class="btn-sm btn-audit-approve audit-hint-btn" data-id="${escapeHtml(item.id)}" data-action="approved">通过</button>
+            <button class="btn-sm btn-audit-reject audit-hint-btn" data-id="${escapeHtml(item.id)}" data-action="rejected">驳回</button>
+          ` : ''}
+          ${isAdmin && status === 'rejected' ? `
+            <button class="btn-sm btn-audit-approve audit-hint-btn" data-id="${escapeHtml(item.id)}" data-action="approved">重新通过</button>
+          ` : ''}
+          ${canDelete ? `<button class="btn-sm btn-danger-sm delete-hint-btn" data-id="${escapeHtml(item.id)}">删除</button>` : (!isAdmin ? '<span style="color:var(--text-dim); font-size:12px;">只读</span>' : '')}
         </div>
       </td>
     `;
     tbody.appendChild(tr);
+  });
+
+  tbody.querySelectorAll('.audit-hint-btn').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      const currentBtn = e.currentTarget;
+      const id = currentBtn.dataset.id;
+      const action = currentBtn.dataset.action;
+      const originalText = currentBtn.textContent;
+
+      currentBtn.disabled = true;
+      currentBtn.textContent = '处理中...';
+
+      try {
+        const res = await Api.auditHint(id, action);
+        if (res.success) {
+          showToast(res.message || '审核操作成功', 'success');
+          await loadHints();
+          loadOverview();
+        } else {
+          showToast(res.error || '审核操作未完成', 'error');
+        }
+      } catch (err) {
+        showToast('审核失败: ' + err.message, 'error');
+      } finally {
+        currentBtn.disabled = false;
+        currentBtn.textContent = originalText;
+      }
+    });
   });
 
   tbody.querySelectorAll('.delete-hint-btn').forEach(btn => {
@@ -299,12 +582,22 @@ async function loadUsers() {
 function renderUsersTable(list) {
   const tbody = document.getElementById('users-table-body');
   tbody.innerHTML = '';
-  if (list.length === 0) {
+  if (!list || list.length === 0) {
     tbody.innerHTML = `<tr><td colspan="6" class="empty-state"><div class="empty-icon">👥</div>暂无注册用户，可点击右上角「+ 注册新用户」快速创建</td></tr>`;
+    renderPaginationControls({ containerId: 'users-pagination', total: 0 });
     return;
   }
 
-  list.forEach(item => {
+  const total = list.length;
+  const { page, pageSize } = state.pagination.users;
+  const totalPages = Math.ceil(total / pageSize) || 1;
+  const validPage = Math.max(1, Math.min(page, totalPages));
+  state.pagination.users.page = validPage;
+
+  const startIndex = (validPage - 1) * pageSize;
+  const pagedList = list.slice(startIndex, startIndex + pageSize);
+
+  pagedList.forEach(item => {
     const isSelf = Auth.currentUser && String(Auth.currentUser.id) === String(item.id);
     const isItemAdmin = item.role === 'admin';
     const tr = document.createElement('tr');
@@ -359,6 +652,22 @@ function renderUsersTable(list) {
   });
   tbody.querySelectorAll('.reset-pwd-btn').forEach(btn => {
     btn.addEventListener('click', () => openResetPasswordModal(btn.dataset.id, btn.dataset.name));
+  });
+
+  renderPaginationControls({
+    containerId: 'users-pagination',
+    total,
+    page: validPage,
+    pageSize,
+    onPageChange: (newPage) => {
+      state.pagination.users.page = newPage;
+      renderUsersTable(state.users);
+    },
+    onPageSizeChange: (newSize) => {
+      state.pagination.users.pageSize = newSize;
+      state.pagination.users.page = 1;
+      renderUsersTable(state.users);
+    }
   });
 }
 
@@ -668,33 +977,29 @@ async function submitCreateUser() {
   }
 }
 
-// 搜索过滤绑定
+// 搜索与状态过滤监听绑定
 function initSearchListeners() {
   const guideSearch = document.getElementById('search-guides-input');
-  if (guideSearch) {
-    guideSearch.addEventListener('input', (e) => {
-      const val = e.target.value.toLowerCase().trim();
-      const filtered = state.guides.filter(g => 
-        (g.name && g.name.toLowerCase().includes(val)) ||
-        (g.domain && g.domain.toLowerCase().includes(val)) ||
-        (g.author && g.author.toLowerCase().includes(val))
-      );
-      renderGuidesTable(filtered);
-    });
-  }
+  const guideFilter = document.getElementById('filter-guides-status');
+  if (guideSearch) guideSearch.addEventListener('input', () => {
+    state.pagination.guides.page = 1;
+    filterAndRenderGuides();
+  });
+  if (guideFilter) guideFilter.addEventListener('change', () => {
+    state.pagination.guides.page = 1;
+    filterAndRenderGuides();
+  });
 
   const hintSearch = document.getElementById('search-hints-input');
-  if (hintSearch) {
-    hintSearch.addEventListener('input', (e) => {
-      const val = e.target.value.toLowerCase().trim();
-      const filtered = state.hints.filter(h => 
-        (h.text && h.text.toLowerCase().includes(val)) ||
-        (h.domain && h.domain.toLowerCase().includes(val)) ||
-        (h.selector && h.selector.toLowerCase().includes(val))
-      );
-      renderHintsTable(filtered);
-    });
-  }
+  const hintFilter = document.getElementById('filter-hints-status');
+  if (hintSearch) hintSearch.addEventListener('input', () => {
+    state.pagination.hints.page = 1;
+    filterAndRenderHints();
+  });
+  if (hintFilter) hintFilter.addEventListener('change', () => {
+    state.pagination.hints.page = 1;
+    filterAndRenderHints();
+  });
 }
 
 // 初始化应用
@@ -702,6 +1007,78 @@ document.addEventListener('DOMContentLoaded', () => {
   // 导航项点击切换
   document.querySelectorAll('.nav-item').forEach(item => {
     item.addEventListener('click', () => switchTab(item.dataset.tab));
+  });
+
+  // 概览核心指标卡片 - 点击快速直达各管理模块 (自动重置为全部展示)
+  document.getElementById('stat-card-users')?.addEventListener('click', () => {
+    switchTab('users');
+    state.pagination.users.page = 1;
+    renderUsersTable(state.users);
+  });
+
+  document.getElementById('stat-card-guides')?.addEventListener('click', () => {
+    switchTab('guides');
+    const select = document.getElementById('filter-guides-status');
+    const search = document.getElementById('search-guides-input');
+    if (select) select.value = '';
+    if (search) search.value = '';
+    state.pagination.guides.page = 1;
+    filterAndRenderGuides();
+  });
+
+  document.getElementById('stat-card-hints')?.addEventListener('click', () => {
+    switchTab('hints');
+    const select = document.getElementById('filter-hints-status');
+    const search = document.getElementById('search-hints-input');
+    if (select) select.value = '';
+    if (search) search.value = '';
+    state.pagination.hints.page = 1;
+    filterAndRenderHints();
+  });
+
+  // 待审核卡片 - 直达待审引导任务
+  document.getElementById('btn-jump-pending-guides')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    switchTab('guides');
+    const select = document.getElementById('filter-guides-status');
+    if (select) {
+      select.value = 'pending';
+      filterAndRenderGuides();
+    }
+  });
+
+  // 待审核卡片 - 直达待审悬停提示
+  document.getElementById('btn-jump-pending-hints')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    switchTab('hints');
+    const select = document.getElementById('filter-hints-status');
+    if (select) {
+      select.value = 'pending';
+      filterAndRenderHints();
+    }
+  });
+
+  // 待审核卡片主体 - 智能跳转到有待审核内容的模块
+  document.getElementById('stat-card-pending')?.addEventListener('click', () => {
+    const guidesCount = parseInt(document.getElementById('stat-pending-guides-badge')?.textContent || '0', 10);
+    const hintsCount = parseInt(document.getElementById('stat-pending-hints-badge')?.textContent || '0', 10);
+
+    // 若只有悬停提示有待审核，自动跳到悬停提示；否则跳到引导任务
+    if (hintsCount > 0 && guidesCount === 0) {
+      switchTab('hints');
+      const select = document.getElementById('filter-hints-status');
+      if (select) {
+        select.value = 'pending';
+        filterAndRenderHints();
+      }
+    } else {
+      switchTab('guides');
+      const select = document.getElementById('filter-guides-status');
+      if (select) {
+        select.value = 'pending';
+        filterAndRenderGuides();
+      }
+    }
   });
 
   // 手动刷新按钮

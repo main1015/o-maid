@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "O-Maid 页面智能助手",
-  "version": "1.0",
+  "version": "1.1",
   "description": "网页元素智能标注、悬停提示与自动化业务流程引导助手。",
   "icons": {
     "16": "icons/icon16.png",
@@ -9,8 +9,6 @@
     "128": "icons/icon128.png"
   },
   "permissions": [
-    "activeTab",
-    "scripting",
     "storage",
     "webNavigation"
   ],

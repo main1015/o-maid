@@ -91,40 +91,58 @@
       <section id="view-overview" class="view-section active">
         <!-- 核心统计指标卡片 -->
         <div class="stats-grid">
-          <div class="stat-card">
+          <div class="stat-card stat-card-clickable" id="stat-card-users" title="点击前往用户管理">
             <div class="stat-header">
               <span class="stat-title">注册用户</span>
               <div class="stat-icon">👥</div>
             </div>
             <div id="stat-users-count" class="stat-value">0</div>
-            <div class="stat-desc">支持云端发布的创作者总数</div>
+            <div class="stat-desc">支持云端发布的创作者总数 (点击查看)</div>
           </div>
 
-          <div class="stat-card">
+          <div class="stat-card stat-card-clickable" id="stat-card-guides" title="点击前往引导任务管理">
             <div class="stat-header">
               <span class="stat-title">云端引导任务</span>
               <div class="stat-icon">🗺️</div>
             </div>
             <div id="stat-guides-count" class="stat-value">0</div>
-            <div class="stat-desc">可跨客户端共享的导览任务</div>
+            <div class="stat-desc">可跨客户端共享的导览任务 (点击查看)</div>
           </div>
 
-          <div class="stat-card">
+          <div class="stat-card stat-card-clickable" id="stat-card-hints" title="点击前往悬停提示管理">
             <div class="stat-header">
               <span class="stat-title">悬停提示规则</span>
               <div class="stat-icon">💡</div>
             </div>
             <div id="stat-hints-count" class="stat-value">0</div>
-            <div class="stat-desc">特定 DOM 元素的提示注解</div>
+            <div class="stat-desc">特定 DOM 元素的提示注解 (点击查看)</div>
           </div>
 
           <div class="stat-card">
             <div class="stat-header">
               <span class="stat-title">累计下载安装</span>
-              <div class="stat-icon">📥</div>
             </div>
             <div id="stat-downloads-count" class="stat-value">0</div>
             <div class="stat-desc">插件端从云端拉取导出的总人次</div>
+          </div>
+
+          <div class="stat-card stat-card-pending" id="stat-card-pending" style="cursor: pointer;" title="点击查看待审核内容">
+            <div class="stat-header">
+              <span class="stat-title">待审核内容</span>
+              <div class="stat-icon">⏳</div>
+            </div>
+            <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px;">
+              <div id="stat-pending-count" class="stat-value" style="color: #f59e0b;">0</div>
+              <div class="pending-sub-badges" style="display: flex; gap: 6px;">
+                <button type="button" id="btn-jump-pending-guides" class="btn-pending-sub" title="查看待审核的引导任务">
+                  🗺️ 引导 <strong id="stat-pending-guides-badge">0</strong>
+                </button>
+                <button type="button" id="btn-jump-pending-hints" class="btn-pending-sub" title="查看待审核的悬停提示">
+                  💡 提示 <strong id="stat-pending-hints-badge">0</strong>
+                </button>
+              </div>
+            </div>
+            <div class="stat-desc">需管理员审核通过方可对外公开（点击直达）</div>
           </div>
         </div>
 
@@ -146,12 +164,12 @@
             </div>
             <div style="font-size: 13px; color: var(--text-muted); display: flex; flex-direction: column; gap: 14px;">
               <div>
-                <strong style="color:var(--text-main);">1. Web 控制台直接录入</strong>
-                <p style="margin-top:4px; line-height:1.5;">您可以在本控制台直接点击 <strong>“+ 注册新用户”</strong> 创建账号，并点击 <strong>“+ 新建引导任务”</strong> 或 <strong>“+ 新建提示”</strong> 快速录入测试数据。</p>
+                <strong style="color:var(--text-main);">1. 内容审核工作流</strong>
+                <p style="margin-top:4px; line-height:1.5;">普通用户发布或修改的引导与提示会进入 <strong>待审核</strong> 状态；管理员在控制台点击 <strong>“通过”</strong> 即可一键全网公开生效。</p>
               </div>
               <div>
                 <strong style="color:var(--text-main);">2. 浏览器插件联动</strong>
-                <p style="margin-top:4px; line-height:1.5;">在 Chrome 插件中点击顶部的 <strong>⚙️ 设置</strong> 按钮，确保接口地址指向本服务端口，即可从插件端登录并同步拉取。</p>
+                <p style="margin-top:4px; line-height:1.5;">在 Chrome 插件中点击顶部的 <strong>⚙️ 设置</strong> 按钮，确保接口地址指向本服务端口，即可从插件端登录并同步拉取已审核内容。</p>
               </div>
             </div>
           </div>
@@ -165,6 +183,12 @@
             <span class="search-icon">🔍</span>
             <input type="text" id="search-guides-input" class="search-input" placeholder="输入任务名称、域名或作者检索...">
           </div>
+          <select id="filter-guides-status" class="filter-select">
+            <option value="">全部状态</option>
+            <option value="approved">已发布 (Approved)</option>
+            <option value="pending">待审核 (Pending)</option>
+            <option value="rejected">已驳回 (Rejected)</option>
+          </select>
           <button id="open-create-guide-modal-btn" class="btn-action-primary">
             <span>+</span>
             <span>新建引导任务</span>
@@ -179,6 +203,7 @@
                 <th>生效域名</th>
                 <th>步骤数</th>
                 <th>发布作者</th>
+                <th>状态</th>
                 <th>下载量</th>
                 <th>发布时间</th>
                 <th>操作</th>
@@ -189,6 +214,7 @@
             </tbody>
           </table>
         </div>
+        <div id="guides-pagination" class="table-pagination"></div>
       </section>
 
       <!-- 视图 3：悬停提示管理 -->
@@ -198,6 +224,12 @@
             <span class="search-icon">🔍</span>
             <input type="text" id="search-hints-input" class="search-input" placeholder="输入提示文本、目标域名或选择器检索...">
           </div>
+          <select id="filter-hints-status" class="filter-select">
+            <option value="">全部状态</option>
+            <option value="approved">已发布 (Approved)</option>
+            <option value="pending">待审核 (Pending)</option>
+            <option value="rejected">已驳回 (Rejected)</option>
+          </select>
           <button id="open-create-hint-modal-btn" class="btn-action-primary">
             <span>+</span>
             <span>新建悬停提示</span>
@@ -212,6 +244,7 @@
                 <th>生效域名</th>
                 <th>CSS 选择器</th>
                 <th>发布作者</th>
+                <th>状态</th>
                 <th>下载量</th>
                 <th>发布时间</th>
                 <th>操作</th>
@@ -222,6 +255,7 @@
             </tbody>
           </table>
         </div>
+        <div id="hints-pagination" class="table-pagination"></div>
       </section>
 
       <!-- 视图 4：用户管理 -->
@@ -251,6 +285,7 @@
             </tbody>
           </table>
         </div>
+        <div id="users-pagination" class="table-pagination"></div>
       </section>
 
       <!-- 视图 5：系统状态与 API 文档 -->
@@ -307,71 +342,203 @@
 
         <div class="panel-card">
           <div class="panel-title">
-            <span>📡 RESTful API 接口参考</span>
+            <span>📡 RESTful API 接口完整参考 (共 22 个服务端端点)</span>
           </div>
 
+          <!-- 模块 1：用户认证与账号权限 -->
+          <h4 style="margin: 16px 0 10px; color: var(--accent-primary); font-size: 13px; display: flex; align-items: center; gap: 6px;">
+            <span>🔐</span> 用户认证与权限体系 (/api/auth)
+          </h4>
           <div class="api-card">
             <div>
               <span class="api-method method-post">POST</span>
               <span class="api-path">/api/auth/register</span>
+              <span class="api-auth-badge auth-public">公开 / 管理员</span>
             </div>
-            <div class="api-desc">用户注册账号。入参: <code>{ username, password }</code></div>
+            <div class="api-desc">用户注册。系统首个用户自动设定为超级管理员 (admin)，普通注册默认为 user。入参: <code>{ username, password, [role] }</code></div>
           </div>
-
           <div class="api-card">
             <div>
               <span class="api-method method-post">POST</span>
               <span class="api-path">/api/auth/login</span>
+              <span class="api-auth-badge auth-public">公开</span>
             </div>
-            <div class="api-desc">用户登录换取 JWT Token。入参: <code>{ username, password }</code></div>
+            <div class="api-desc">用户登录换取 JWT Token 与身份信息。入参: <code>{ username, password }</code></div>
+          </div>
+          <div class="api-card">
+            <div>
+              <span class="api-method method-get">GET</span>
+              <span class="api-path">/api/auth/me</span>
+              <span class="api-auth-badge auth-user">已登录</span>
+            </div>
+            <div class="api-desc">获取当前登录用户信息、归属角色 (admin / user) 与登录有效性。</div>
+          </div>
+          <div class="api-card">
+            <div>
+              <span class="api-method method-put">PUT</span>
+              <span class="api-path">/api/auth/users/:id/role</span>
+              <span class="api-auth-badge auth-admin">仅管理员</span>
+            </div>
+            <div class="api-desc">调整指定用户的系统角色。入参: <code>{ role: "admin" | "user" }</code></div>
+          </div>
+          <div class="api-card">
+            <div>
+              <span class="api-method method-post">POST</span>
+              <span class="api-path">/api/auth/users/:id/reset-password</span>
+              <span class="api-auth-badge auth-admin">仅管理员</span>
+            </div>
+            <div class="api-desc">管理员重置指定用户的登录密码。入参: <code>{ newPassword }</code></div>
+          </div>
+          <div class="api-card">
+            <div>
+              <span class="api-method method-delete">DELETE</span>
+              <span class="api-path">/api/auth/users/:id</span>
+              <span class="api-auth-badge auth-admin">仅管理员</span>
+            </div>
+            <div class="api-desc">删除指定用户账号（禁止删除本人当前登录账号）。</div>
           </div>
 
+          <!-- 模块 2：引导任务 -->
+          <h4 style="margin: 24px 0 10px; color: #818cf8; font-size: 13px; display: flex; align-items: center; gap: 6px;">
+            <span>🗺️</span> 业务引导任务管理 (/api/guides)
+          </h4>
           <div class="api-card">
             <div>
               <span class="api-method method-get">GET</span>
               <span class="api-path">/api/guides?domain={domain}</span>
+              <span class="api-auth-badge auth-public">插件专用 / 可选鉴权</span>
             </div>
-            <div class="api-desc">按域名拉取引导任务（若省略 domain 参数则拉取全部）。</div>
+            <div class="api-desc">Chrome 插件专用：按当前访问域名拉取审核通过的引导任务（若携带 Token，创作者可见自己创建的待审核项）。</div>
           </div>
-
+          <div class="api-card">
+            <div>
+              <span class="api-method method-get">GET</span>
+              <span class="api-path">/api/guides/all[?status=pending]</span>
+              <span class="api-auth-badge auth-public">可选鉴权</span>
+            </div>
+            <div class="api-desc">全网大厅 / 控制台列表：获取全量引导任务。管理员可见全状态，普通创作者可见已发布+本人作品，匿名仅见已发布。</div>
+          </div>
+          <div class="api-card">
+            <div>
+              <span class="api-method method-get">GET</span>
+              <span class="api-path">/api/guides/:id</span>
+              <span class="api-auth-badge auth-public">可选鉴权</span>
+            </div>
+            <div class="api-desc">查询单条引导任务的详细步骤列表与元数据信息（待审核项受权限隔离保护）。</div>
+          </div>
           <div class="api-card">
             <div>
               <span class="api-method method-post">POST</span>
               <span class="api-path">/api/guides</span>
+              <span class="api-auth-badge auth-user">已登录</span>
             </div>
-            <div class="api-desc">发布或录入引导任务。支持传入 <code>{ name, startUrl, domain, steps, authorId }</code>。</div>
+            <div class="api-desc">发布或录入引导任务。普通用户发布默认进入 <code>pending</code> 待审核，管理员直接 <code>approved</code> 免审。支持传入 <code>{ name, startUrl, domain, steps, [authorId] }</code>。</div>
           </div>
-
+          <div class="api-card">
+            <div>
+              <span class="api-method method-post">POST</span>
+              <span class="api-path">/api/guides/:id/audit</span>
+              <span class="api-auth-badge auth-admin">仅管理员</span>
+            </div>
+            <div class="api-desc">管理员审核引导任务。入参: <code>{ status: "approved" | "rejected" | "pending" }</code>，通过后全网公开。</div>
+          </div>
+          <div class="api-card">
+            <div>
+              <span class="api-method method-post">POST</span>
+              <span class="api-path">/api/guides/:id/download</span>
+              <span class="api-auth-badge auth-public">公开</span>
+            </div>
+            <div class="api-desc">Chrome 插件下载引导任务时上报，热度/下载计数自增 +1。</div>
+          </div>
           <div class="api-card">
             <div>
               <span class="api-method method-delete">DELETE</span>
               <span class="api-path">/api/guides/:id</span>
+              <span class="api-auth-badge auth-user">数据作者 / 管理员</span>
             </div>
-            <div class="api-desc">删除指定的云端引导任务。</div>
+            <div class="api-desc">删除指定的云端引导任务（仅管理员或该任务的原作者允许删除）。</div>
           </div>
 
+          <!-- 模块 3：悬停提示 -->
+          <h4 style="margin: 24px 0 10px; color: #fbbf24; font-size: 13px; display: flex; align-items: center; gap: 6px;">
+            <span>💡</span> DOM 悬停提示管理 (/api/hints)
+          </h4>
           <div class="api-card">
             <div>
               <span class="api-method method-get">GET</span>
               <span class="api-path">/api/hints?domain={domain}</span>
+              <span class="api-auth-badge auth-public">插件专用 / 可选鉴权</span>
             </div>
-            <div class="api-desc">按域名拉取特定页面的悬停提示列表。</div>
+            <div class="api-desc">Chrome 插件专用：按当前访问域名拉取已审核通过的悬停提示，注入到对应页面 DOM 元素。</div>
           </div>
-
+          <div class="api-card">
+            <div>
+              <span class="api-method method-get">GET</span>
+              <span class="api-path">/api/hints/all[?status=pending]</span>
+              <span class="api-auth-badge auth-public">可选鉴权</span>
+            </div>
+            <div class="api-desc">全网大厅 / 控制台列表：获取全量悬停提示列表（支持状态过滤与创作者可见性隔离）。</div>
+          </div>
+          <div class="api-card">
+            <div>
+              <span class="api-method method-get">GET</span>
+              <span class="api-path">/api/hints/:id</span>
+              <span class="api-auth-badge auth-public">可选鉴权</span>
+            </div>
+            <div class="api-desc">查询单条悬停提示详情（包含提示文案、CSS 选择器路径及作者信息）。</div>
+          </div>
           <div class="api-card">
             <div>
               <span class="api-method method-post">POST</span>
               <span class="api-path">/api/hints</span>
+              <span class="api-auth-badge auth-user">已登录</span>
             </div>
-            <div class="api-desc">发布或录入悬停提示。支持传入 <code>{ text, url, domain, selector, authorId }</code>。</div>
+            <div class="api-desc">发布或录入悬停提示。普通用户发布默认进入 <code>pending</code> 待审核，管理员直接 <code>approved</code> 免审。支持传入 <code>{ text, url, domain, selector, [authorId] }</code>。</div>
           </div>
-
+          <div class="api-card">
+            <div>
+              <span class="api-method method-post">POST</span>
+              <span class="api-path">/api/hints/:id/audit</span>
+              <span class="api-auth-badge auth-admin">仅管理员</span>
+            </div>
+            <div class="api-desc">管理员审核悬停提示。入参: <code>{ status: "approved" | "rejected" | "pending" }</code>，通过后全网公开。</div>
+          </div>
+          <div class="api-card">
+            <div>
+              <span class="api-method method-post">POST</span>
+              <span class="api-path">/api/hints/:id/download</span>
+              <span class="api-auth-badge auth-public">公开</span>
+            </div>
+            <div class="api-desc">Chrome 插件下载悬停提示时上报，热度/下载计数自增 +1。</div>
+          </div>
           <div class="api-card">
             <div>
               <span class="api-method method-delete">DELETE</span>
               <span class="api-path">/api/hints/:id</span>
+              <span class="api-auth-badge auth-user">数据作者 / 管理员</span>
             </div>
-            <div class="api-desc">删除指定的云端悬停提示。</div>
+            <div class="api-desc">删除指定的云端悬停提示（仅管理员或该提示的原作者允许删除）。</div>
+          </div>
+
+          <!-- 模块 4：平台监控与统计 -->
+          <h4 style="margin: 24px 0 10px; color: #34d399; font-size: 13px; display: flex; align-items: center; gap: 6px;">
+            <span>📊</span> 数据大盘与监控统计 (/api/stats)
+          </h4>
+          <div class="api-card">
+            <div>
+              <span class="api-method method-get">GET</span>
+              <span class="api-path">/api/stats/overview</span>
+              <span class="api-auth-badge auth-user">已登录</span>
+            </div>
+            <div class="api-desc">获取控制台核心指标统计：用户总数、任务数、提示数、累计下载量、待审核总数 (pendingTotal) 及最新发布动态。</div>
+          </div>
+          <div class="api-card">
+            <div>
+              <span class="api-method method-get">GET</span>
+              <span class="api-path">/api/stats/users</span>
+              <span class="api-auth-badge auth-admin">仅管理员</span>
+            </div>
+            <div class="api-desc">获取系统中所有已注册创作者列表、当前角色与各自作品发布统计数据。</div>
           </div>
         </div>
       </section>

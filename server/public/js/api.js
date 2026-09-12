@@ -51,7 +51,21 @@ export const Api = {
         }
       }
 
-      const data = await res.json();
+      let data;
+      try {
+        data = await res.json();
+      } catch (e) {
+        data = { error: `HTTP ${res.status}: ${res.statusText || '请求异常'}` };
+      }
+
+      if (!res.ok) {
+        const errorMsg = (data && (data.error || data.message)) || `请求失败 (HTTP ${res.status})`;
+        const err = new Error(errorMsg);
+        err.status = res.status;
+        err.data = data;
+        throw err;
+      }
+
       return data;
     } catch (err) {
       console.error(`API 请求失败 [${url}]:`, err);
@@ -108,6 +122,14 @@ export const Api = {
     });
   },
 
+  // 审核引导任务 (仅管理员)
+  async auditGuide(id, status) {
+    return await this._request(`/api/guides/${id}/audit`, {
+      method: 'POST',
+      body: JSON.stringify({ status })
+    });
+  },
+
   // 获取所有悬停提示
   async getHints() {
     return await this._request('/api/hints/all');
@@ -118,6 +140,14 @@ export const Api = {
     return await this._request('/api/hints', {
       method: 'POST',
       body: JSON.stringify(data)
+    });
+  },
+
+  // 审核悬停提示 (仅管理员)
+  async auditHint(id, status) {
+    return await this._request(`/api/hints/${id}/audit`, {
+      method: 'POST',
+      body: JSON.stringify({ status })
     });
   },
 
