@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  server:
+    build: .
+    container_name: omaid-server
+    restart: always
+    ports:
+      - "8632:8632"
+    environment:
+      - PORT=8632
+      # 默认使用 SQLite
+      - DB_TYPE=sqlite
+      # 在容器内指定 SQLite 数据文件路径，配合挂载卷实现持久化
+      - SQLITE_FILENAME=./data/data.db
+      
+      # ================================
+      # 若使用 MySQL / PostgreSQL，请取消注释并配置：
+      # ================================
+      # - DB_TYPE=mysql
+      # - DB_HOST=your_db_host
+      # - DB_PORT=3306
+      # - DB_USER=root
+      # - DB_PASSWORD=your_password
+      # - DB_NAME=omaid
+    volumes:
+      # 将宿主机 ./data 目录挂载到容器 /app/data，持久化 SQLite 数据文件
+      - ./data:/app/data

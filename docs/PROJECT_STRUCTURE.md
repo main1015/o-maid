@@ -24,6 +24,9 @@ o-maid/
 │   │   └── 🔨 utils.js           
 │   └── 📚 vendor/                # 第三方库目录
 ├── server/                       # 后端服务目录 (Monorepo 后端)
+│   ├── 🐳 Dockerfile             # Docker 镜像构建文件
+│   ├── 🐳 docker-compose.yml     # Docker 容器编排配置文件
+│   ├── 📄 .dockerignore          # Docker 构建忽略规则
 │   ├── 📁 public/                # [NEW] Web 可视化管理控制台前端
 │   │   ├── 📄 index.html         # 控制台单页主结构
 │   │   ├── 📁 css/               # 控制台样式 (深色玻璃拟态)
@@ -403,6 +406,11 @@ o-maid/
 ---
 
 ## 🖥️ server/ 目录文件详解 (后端与 Web 控制台)
+
+### Docker 部署相关
+- **Dockerfile**: 基于 Node.js 18 (Alpine) 构建的轻量级镜像，在服务启动前自动执行数据库初始化，确保即插即用。
+- **docker-compose.yml**: 官方推荐的免环境部署方式，默认配置端口映射，并将 SQLite 数据文件挂载到 `./data` 目录以实现持久化。
+- **.dockerignore**: 排除源码中的 `node_modules` 及本地数据库文件，优化镜像体积。
 
 ### server.js
 **作用**: 后端核心入口。负责加载 Express 中间件、挂载 `/api/*` 模块化路由，并将 `server/public` 托管为静态 Web 控制台前端。
