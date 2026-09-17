@@ -355,5 +355,215 @@
   },
   "msgCloudBatchFetchFail": {
     "message": "Failed to fetch cloud rules in batch, degrading to single precise fetch"
+  },
+  "dynamicTitleMain": {
+    "message": "O-Maid"
+  },
+  "dynamicTitleCreate": {
+    "message": "Create"
+  },
+  "dynamicTitleSettings": {
+    "message": "Settings"
+  },
+  "dynamicTitleAuth": {
+    "message": "Cloud Account"
+  },
+  "dynamicTitleEditHint": {
+    "message": "Edit Hover Hint"
+  },
+  "dynamicTitleNewHint": {
+    "message": "New Hover Hint"
+  },
+  "dynamicTitleEditTour": {
+    "message": "Edit Guided Tour"
+  },
+  "dynamicTitleNewTour": {
+    "message": "New Guided Tour"
+  },
+  "dynamicTitleEditStep": {
+    "message": "Edit Step"
+  },
+  "dynamicScopeAll": {
+    "message": "All Rules"
+  },
+  "dynamicScopeCurrent": {
+    "message": "Current Page"
+  },
+  "dynamicBtnViewCurrent": {
+    "message": "View Current"
+  },
+  "dynamicBtnViewAll": {
+    "message": "View All"
+  },
+  "dynamicNoRulesAll": {
+    "message": "No saved rules in local."
+  },
+  "dynamicNoRulesCurrent": {
+    "message": "No local rules for current page."
+  },
+  "dynamicStatusLoggedIn": {
+    "message": "Logged in as: "
+  },
+  "dynamicBannerLoggedIn": {
+    "message": "👤 Logged in: <strong></strong>"
+  },
+  "dynamicBtnAccountSettings": {
+    "message": "Account Settings"
+  },
+  "dynamicStatusNotLoggedIn": {
+    "message": "Not logged in. Login to share rules."
+  },
+  "dynamicBannerNotLoggedIn": {
+    "message": "Cloud not logged in (Local only)"
+  },
+  "dynamicBtnLoginRegister": {
+    "message": "Login / Register"
+  },
+  "dynamicScopeCloudAll": {
+    "message": "Public Hall (All Sites)"
+  },
+  "dynamicBtnCloudViewCurrent": {
+    "message": "View Current Site"
+  },
+  "dynamicBtnCloudViewAll": {
+    "message": "View Public Hall"
+  },
+  "dynamicNoCloudRulesAll": {
+    "message": "No shared tasks in public hall."
+  },
+  "dynamicNoCloudRulesCurrent": {
+    "message": "No cloud tasks for site ()."
+  },
+  "msgSetSaveSuccess": {
+    "message": "Settings saved, applied to all pages."
+  },
+  "msgApiEmpty": {
+    "message": "API address cannot be empty"
+  },
+  "msgInputCredentials": {
+    "message": "Please enter username and password"
+  },
+  "msgLoginSuccess": {
+    "message": "Login successful"
+  },
+  "msgLoginFailed": {
+    "message": "Login failed: "
+  },
+  "msgRegisterSuccess": {
+    "message": "Registration successful, please login"
+  },
+  "msgRegisterFailed": {
+    "message": "Registration failed: "
+  },
+  "msgLogoutSuccess": {
+    "message": "Logged out successfully"
+  },
+  "msgExportSuccess": {
+    "message": "Data exported successfully!"
+  },
+  "msgExportFailed": {
+    "message": "Export failed"
+  },
+  "msgExportError": {
+    "message": "Export error: "
+  },
+  "msgImportSuccess": {
+    "message": "Data imported successfully!"
+  },
+  "msgImportFailed": {
+    "message": "Import failed: "
+  },
+  "msgParseError": {
+    "message": "Failed to parse JSON file: "
+  },
+  "msgNoLocalCloudRules": {
+    "message": "No local rules associated with cloud"
+  },
+  "msgSyncFailed": {
+    "message": "Sync failed, check network or backend"
+  },
+  "msgSyncConflictRecovered": {
+    "message": "Recovered  conflict rules to cloud latest version!"
+  },
+  "msgSyncConflictKept": {
+    "message": "Kept local modifications for  rules!"
+  },
+  "msgSyncUpdated": {
+    "message": "Successfully synced and updated  cloud rules!"
+  },
+  "msgSyncAllLatest": {
+    "message": "All cloud-associated rules are up-to-date"
+  },
+  "msgSyncError": {
+    "message": "Sync error: "
+  },
+  "msgFetchCloudFailed": {
+    "message": "Failed to fetch cloud data"
+  },
+  "msgDownloadSuccess": {
+    "message": "Downloaded to local!"
+  },
+  "msgDownloadOverwrite": {
+    "message": "Task exists locally, auto-updated to latest version!"
+  },
+  "msgDownloadOverwriteHint": {
+    "message": "Hint exists locally, auto-updated to latest version!"
+  },
+  "msgPublishNeedLogin": {
+    "message": "Login required to publish to cloud"
+  },
+  "msgPublishProtect": {
+    "message": "Rule shared by [], cannot overwrite. Create a new one to share."
+  },
+  "msgPublishFailed": {
+    "message": "Publish failed: "
+  },
+  "msgPublishPending": {
+    "message": "Submitted to cloud, pending admin approval"
+  },
+  "msgPublishSuccess": {
+    "message": "Published successfully! Now public in cloud."
+  },
+  "msgPublishException": {
+    "message": "Publish exception"
+  },
+  "msgTourResetSuccess": {
+    "message": "Completion status of tour \"\" reset."
+  },
+  "msgTourDeleteSuccess": {
+    "message": "Guided tour \"\" deleted!"
+  },
+  "msgDeleteFailed": {
+    "message": "Delete failed: "
+  },
+  "msgHintDeleteSuccess": {
+    "message": "Hover hint deleted!"
+  },
+  "msgElementNotFound": {
+    "message": "Element not found on current page."
+  },
+  "msgElementSelectedHint": {
+    "message": "Element selected! Please enter hint text above."
+  },
+  "msgElementSelectedTour": {
+    "message": "Element selected! Please enter step description."
+  },
+  "msgStepElementUpdated": {
+    "message": "Step target element updated!"
+  },
+  "msgSaveSuccess": {
+    "message": "Saved successfully"
+  },
+  "msgSaveFailedLog": {
+    "message": "Save failed, please check background logs."
+  },
+  "msgSaveError": {
+    "message": "Save error: "
+  },
+  "msgTourSaveSuccess": {
+    "message": "Tour saved successfully"
+  },
+  "msgStepUpdated": {
+    "message": "Step updated"
   }
 }

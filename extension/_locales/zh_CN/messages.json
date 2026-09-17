@@ -355,5 +355,215 @@
   },
   "msgCloudBatchFetchFail": {
     "message": "批量拉取云端规则异常，将自动降级单条精准拉取"
+  },
+  "dynamicTitleMain": {
+    "message": "页面助手"
+  },
+  "dynamicTitleCreate": {
+    "message": "创建"
+  },
+  "dynamicTitleSettings": {
+    "message": "设置"
+  },
+  "dynamicTitleAuth": {
+    "message": "云端账号"
+  },
+  "dynamicTitleEditHint": {
+    "message": "修改悬停提示"
+  },
+  "dynamicTitleNewHint": {
+    "message": "新建悬停提示"
+  },
+  "dynamicTitleEditTour": {
+    "message": "修改引导任务"
+  },
+  "dynamicTitleNewTour": {
+    "message": "新建引导任务"
+  },
+  "dynamicTitleEditStep": {
+    "message": "编辑步骤"
+  },
+  "dynamicScopeAll": {
+    "message": "全部规则"
+  },
+  "dynamicScopeCurrent": {
+    "message": "当前网页"
+  },
+  "dynamicBtnViewCurrent": {
+    "message": "只看当前"
+  },
+  "dynamicBtnViewAll": {
+    "message": "查看全部"
+  },
+  "dynamicNoRulesAll": {
+    "message": "本地暂无任何已保存的规则。"
+  },
+  "dynamicNoRulesCurrent": {
+    "message": "当前网页暂无本地规则。"
+  },
+  "dynamicStatusLoggedIn": {
+    "message": "当前登录: "
+  },
+  "dynamicBannerLoggedIn": {
+    "message": "👤 已登录: <strong></strong>"
+  },
+  "dynamicBtnAccountSettings": {
+    "message": "账号设置"
+  },
+  "dynamicStatusNotLoggedIn": {
+    "message": "未登录，登录后可分享规则至云端。"
+  },
+  "dynamicBannerNotLoggedIn": {
+    "message": "云端未登录（仅能使用本地）"
+  },
+  "dynamicBtnLoginRegister": {
+    "message": "立即登录 / 注册"
+  },
+  "dynamicScopeCloudAll": {
+    "message": "全网大厅 (所有网站)"
+  },
+  "dynamicBtnCloudViewCurrent": {
+    "message": "只看当前网站"
+  },
+  "dynamicBtnCloudViewAll": {
+    "message": "查看全网大厅"
+  },
+  "dynamicNoCloudRulesAll": {
+    "message": "全网云端大厅暂无任何共享任务。"
+  },
+  "dynamicNoCloudRulesCurrent": {
+    "message": "网站 () 暂无匹配的云端任务。"
+  },
+  "msgSetSaveSuccess": {
+    "message": "设置已保存，所有页面已同步生效。"
+  },
+  "msgApiEmpty": {
+    "message": "API 地址不能为空"
+  },
+  "msgInputCredentials": {
+    "message": "请输入账号密码"
+  },
+  "msgLoginSuccess": {
+    "message": "登录成功"
+  },
+  "msgLoginFailed": {
+    "message": "登录失败: "
+  },
+  "msgRegisterSuccess": {
+    "message": "注册成功，请登录"
+  },
+  "msgRegisterFailed": {
+    "message": "注册失败: "
+  },
+  "msgLogoutSuccess": {
+    "message": "已退出登录"
+  },
+  "msgExportSuccess": {
+    "message": "数据导出成功！"
+  },
+  "msgExportFailed": {
+    "message": "导出失败"
+  },
+  "msgExportError": {
+    "message": "导出错误: "
+  },
+  "msgImportSuccess": {
+    "message": "数据导入成功！"
+  },
+  "msgImportFailed": {
+    "message": "导入失败: "
+  },
+  "msgParseError": {
+    "message": "解析 JSON 文件失败: "
+  },
+  "msgNoLocalCloudRules": {
+    "message": "本地暂无与云端关联的规则"
+  },
+  "msgSyncFailed": {
+    "message": "同步刷新失败，请检查网络或后端连接"
+  },
+  "msgSyncConflictRecovered": {
+    "message": "已将  条冲突规则恢复覆盖为云端最新版！"
+  },
+  "msgSyncConflictKept": {
+    "message": "已保留  条规则的本地个性化修改！"
+  },
+  "msgSyncUpdated": {
+    "message": "已成功同步更新  项来自云端的规则！"
+  },
+  "msgSyncAllLatest": {
+    "message": "所有已关联云端的规则均已是最新版本"
+  },
+  "msgSyncError": {
+    "message": "同步刷新异常: "
+  },
+  "msgFetchCloudFailed": {
+    "message": "获取云端数据失败"
+  },
+  "msgDownloadSuccess": {
+    "message": "已下载到本地！"
+  },
+  "msgDownloadOverwrite": {
+    "message": "本地已存在该任务，已自动覆盖更新为最新版！"
+  },
+  "msgDownloadOverwriteHint": {
+    "message": "本地已存在该提示，已自动覆盖更新为最新版！"
+  },
+  "msgPublishNeedLogin": {
+    "message": "发布到云端需要先登录账号"
+  },
+  "msgPublishProtect": {
+    "message": "该规则由 [] 共享，不可直接覆盖原版。如需分享，请新建或另存为专属规则"
+  },
+  "msgPublishFailed": {
+    "message": "发布失败: "
+  },
+  "msgPublishPending": {
+    "message": "已提交云端，需等待管理员审核通过后公开可见"
+  },
+  "msgPublishSuccess": {
+    "message": "发布成功！已在云端公开生效。"
+  },
+  "msgPublishException": {
+    "message": "发布异常"
+  },
+  "msgTourResetSuccess": {
+    "message": "任务 \"\" 的完成状态已重置。"
+  },
+  "msgTourDeleteSuccess": {
+    "message": "引导任务 \"\" 已删除！"
+  },
+  "msgDeleteFailed": {
+    "message": "删除失败: "
+  },
+  "msgHintDeleteSuccess": {
+    "message": "悬停提示已删除！"
+  },
+  "msgElementNotFound": {
+    "message": "未能在当前页面找到该元素。"
+  },
+  "msgElementSelectedHint": {
+    "message": "已成功选取目标元素！请在上方输入提示文本。"
+  },
+  "msgElementSelectedTour": {
+    "message": "已成功选取目标元素！请输入步骤说明。"
+  },
+  "msgStepElementUpdated": {
+    "message": "已更新步骤的目标元素！"
+  },
+  "msgSaveSuccess": {
+    "message": "保存成功"
+  },
+  "msgSaveFailedLog": {
+    "message": "保存失败，请检查后台日志。"
+  },
+  "msgSaveError": {
+    "message": "保存出错: "
+  },
+  "msgTourSaveSuccess": {
+    "message": "任务保存成功"
+  },
+  "msgStepUpdated": {
+    "message": "步骤已更新"
   }
 }

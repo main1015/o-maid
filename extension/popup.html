@@ -56,6 +56,16 @@
       background: #0b5ed7;
       transform: translateY(-1px);
     }
+
+    .github-link {
+      color: #64748b;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .github-link:hover {
+      color: #0f172a;
+    }
   </style>
 </head>
 
@@ -75,8 +85,7 @@
 
   <div style="margin-top: 12px; text-align: center; font-size: 11px;">
     <a href="https://github.com/main1015/o-maid" target="_blank"
-      style="color: #64748b; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#0f172a'"
-      onmouseout="this.style.color='#64748b'" data-i18n="popupGithubLink"></a>
+      class="github-link" data-i18n="popupGithubLink"></a>
   </div>
 
   <script src="popup.js" type="module"></script>

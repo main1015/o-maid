@@ -50,7 +50,8 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "modules/*.js"
+        "modules/*.js",
+        "icons/*.png"
       ],
       "matches": [
         "<all_urls>"

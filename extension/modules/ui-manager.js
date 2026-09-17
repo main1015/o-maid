@@ -998,10 +998,10 @@ function wireUpPanelEvents() {
         const val = uiPanel.querySelector('#setting-api-base').value.trim();
         if(val) {
             CloudAPI.setApiBase(val);
-            showNotification('设置已保存，所有页面已同步生效。', 'success');
+            showNotification(chrome.i18n.getMessage('msgSetSaveSuccess'), 'success');
             switchToView('main');
         } else {
-            showNotification('API 地址不能为空', 'error');
+            showNotification(chrome.i18n.getMessage('msgApiEmpty'), 'error');
         }
     });
 
@@ -1014,34 +1014,34 @@ function wireUpPanelEvents() {
     uiPanel.querySelector('#login-btn')?.addEventListener('click', async () => {
         const u = uiPanel.querySelector('#auth-username').value;
         const p = uiPanel.querySelector('#auth-password').value;
-        if(!u || !p) return showNotification('请输入账号密码', 'error');
+        if(!u || !p) return showNotification(chrome.i18n.getMessage('msgInputCredentials'), 'error');
         const res = await CloudAPI.login(u, p);
         if(res.success) {
-            showNotification('登录成功', 'success');
+            showNotification(chrome.i18n.getMessage('msgLoginSuccess'), 'success');
             const pwdInput = uiPanel.querySelector('#auth-password');
             if (pwdInput) pwdInput.value = '';
             updateAuthUI();
         } else {
-            showNotification('登录失败: ' + res.error, 'error');
+            showNotification(chrome.i18n.getMessage('msgLoginFailed') + res.error, 'error');
         }
     });
 
     uiPanel.querySelector('#register-btn')?.addEventListener('click', async () => {
         const u = uiPanel.querySelector('#auth-username').value;
         const p = uiPanel.querySelector('#auth-password').value;
-        if(!u || !p) return showNotification('请输入账号密码', 'error');
+        if(!u || !p) return showNotification(chrome.i18n.getMessage('msgInputCredentials'), 'error');
         const res = await CloudAPI.register(u, p);
         if(res.success) {
-            showNotification('注册成功，请登录', 'success');
+            showNotification(chrome.i18n.getMessage('msgRegisterSuccess'), 'success');
         } else {
-            showNotification('注册失败: ' + res.error, 'error');
+            showNotification(chrome.i18n.getMessage('msgRegisterFailed') + res.error, 'error');
         }
     });
 
     uiPanel.querySelector('#logout-btn')?.addEventListener('click', () => {
         CloudAPI.logout();
         updateAuthUI();
-        showNotification('已退出登录', 'success');
+        showNotification(chrome.i18n.getMessage('msgLogoutSuccess'), 'success');
     });
 
     uiPanel.querySelector('#refresh-cloud-btn')?.addEventListener('click', fetchCloudDataAndRender);
@@ -1136,12 +1136,12 @@ async function handleExport() {
                 a.click();
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
-                showNotification("数据导出成功！", "success");
+                showNotification(chrome.i18n.getMessage('msgExportSuccess'), "success");
             } else {
-                showNotification("导出失败", "error");
+                showNotification(chrome.i18n.getMessage('msgExportFailed'), "error");
             }
         } catch (err) {
-            showNotification("导出错误: " + err.message, "error");
+            showNotification(chrome.i18n.getMessage('msgExportError') + err.message, "error");
         }
     });
 }
@@ -1168,14 +1168,14 @@ async function handleImportFile(event) {
             import('./communication.js').then(async (comm) => {
                 const res = await comm.importData(data);
                 if (res.success) {
-                    showNotification("数据导入成功！", "success");
+                    showNotification(chrome.i18n.getMessage('msgImportSuccess'), "success");
                     fetchAllAndRenderLists();
                 } else {
-                    showNotification("导入失败: " + (res.error || "未知错误"), "error");
+                    showNotification(chrome.i18n.getMessage('msgImportFailed') + (res.error || 'Unknown error'), "error");
                 }
             });
         } catch (err) {
-            showNotification("解析 JSON 文件失败: " + err.message, "error");
+            showNotification(chrome.i18n.getMessage('msgParseError') + err.message, "error");
         }
         // 重置 input 以便下次选择同一文件
         event.target.value = '';
@@ -1247,13 +1247,13 @@ export function switchToView(viewName, data = null) {
     // 主视图切换
     if (viewName === 'view' || viewName === 'cloud') {
         stopSelectionMode();
-        uiPanel.querySelector('#o-maid-header-title').textContent = '页面助手';
+        uiPanel.querySelector('#o-maid-header-title').textContent = chrome.i18n.getMessage('dynamicTitleMain');
         switchMainTab(viewName);
         return;
     }
     if (viewName === 'main') {
         stopSelectionMode();
-        uiPanel.querySelector('#o-maid-header-title').textContent = '页面助手';
+        uiPanel.querySelector('#o-maid-header-title').textContent = chrome.i18n.getMessage('dynamicTitleMain');
         switchMainTab(currentMainTab);
         return;
     }
@@ -1283,31 +1283,31 @@ export function switchToView(viewName, data = null) {
     switch (viewName) {
         case 'add-choice':
             stopSelectionMode();
-            uiPanel.querySelector('#o-maid-header-title').textContent = '创建';
+            uiPanel.querySelector('#o-maid-header-title').textContent = chrome.i18n.getMessage('dynamicTitleCreate');
             break;
         case 'settings':
             stopSelectionMode();
-            uiPanel.querySelector('#o-maid-header-title').textContent = '设置';
+            uiPanel.querySelector('#o-maid-header-title').textContent = chrome.i18n.getMessage('dynamicTitleSettings');
             break;
         case 'auth':
             stopSelectionMode();
-            uiPanel.querySelector('#o-maid-header-title').textContent = '云端账号';
+            uiPanel.querySelector('#o-maid-header-title').textContent = chrome.i18n.getMessage('dynamicTitleAuth');
             break;
         case 'edit-hint':
-            uiPanel.querySelector('#o-maid-header-title').textContent = data ? '修改悬停提示' : '新建悬停提示';
+            uiPanel.querySelector('#o-maid-header-title').textContent = data ? chrome.i18n.getMessage('dynamicTitleEditHint') : chrome.i18n.getMessage('dynamicTitleNewHint');
             uiPanel.querySelector('#o-maid-hint-text').value = data?.text || '';
             uiPanel.querySelector('#o-maid-hint-selector').value = data?.selector || '';
             if (!data) startSelectionMode({ type: 'hint' }, handleElementSelection);
             break;
         case 'edit-tour':
-            uiPanel.querySelector('#o-maid-header-title').textContent = data ? '修改引导任务' : '新建引导任务';
+            uiPanel.querySelector('#o-maid-header-title').textContent = data ? chrome.i18n.getMessage('dynamicTitleEditTour') : chrome.i18n.getMessage('dynamicTitleNewTour');
             tourBuilderState = data ? JSON.parse(JSON.stringify(data)) : { name: '', trigger: 'manual', steps: [] };
             uiPanel.querySelector('#o-maid-tour-name').value = tourBuilderState.name;
             uiPanel.querySelector('#o-maid-tour-trigger').value = tourBuilderState.trigger;
             renderTourBuilderSteps();
             break;
         case 'edit-tour-step':
-            uiPanel.querySelector('#o-maid-header-title').textContent = '编辑步骤';
+            uiPanel.querySelector('#o-maid-header-title').textContent = chrome.i18n.getMessage('dynamicTitleEditStep');
             uiPanel.querySelector('#o-maid-tour-step-text').value = data.step.text || '';
             uiPanel.querySelector('#o-maid-tour-step-selector').value = data.step.selector || '';
             break;
@@ -1402,8 +1402,8 @@ async function fetchAllAndRenderLists() {
 
     const localScopeLabel = uiPanel.querySelector('#local-scope-label');
     const toggleLocalScopeBtn = uiPanel.querySelector('#toggle-local-scope-btn');
-    if (localScopeLabel) localScopeLabel.textContent = isLocalShowAll ? '全部规则' : '当前网页';
-    if (toggleLocalScopeBtn) toggleLocalScopeBtn.textContent = isLocalShowAll ? '只看当前' : '查看全部';
+    if (localScopeLabel) localScopeLabel.textContent = isLocalShowAll ? chrome.i18n.getMessage('dynamicScopeAll') : chrome.i18n.getMessage('dynamicScopeCurrent');
+    if (toggleLocalScopeBtn) toggleLocalScopeBtn.textContent = isLocalShowAll ? chrome.i18n.getMessage('dynamicBtnViewCurrent') : chrome.i18n.getMessage('dynamicBtnViewAll');
 
     const hasData = (filteredTours.length > 0) || (filteredHints.length > 0);
     const noDataContainer = uiPanel.querySelector('#local-no-data-container');
@@ -1412,7 +1412,7 @@ async function fetchAllAndRenderLists() {
 
     if (noDataContainer) noDataContainer.style.display = hasData ? 'none' : 'block';
     if (noDataMsg) {
-        noDataMsg.textContent = isLocalShowAll ? '本地暂无任何已保存的规则。' : '当前网页暂无本地规则。';
+        noDataMsg.textContent = isLocalShowAll ? chrome.i18n.getMessage('dynamicNoRulesAll') : chrome.i18n.getMessage('dynamicNoRulesCurrent');
     }
     if (emptyLink) {
         emptyLink.style.display = isLocalShowAll ? 'none' : 'inline-block';
@@ -1506,14 +1506,14 @@ async function handleSyncRefresh() {
         const syncedHints = allHints.filter(h => h.cloudId);
 
         if (syncedTours.length === 0 && syncedHints.length === 0) {
-            showNotification('本地暂无与云端关联的规则', 'info');
+            showNotification(chrome.i18n.getMessage('msgNoLocalCloudRules'), 'info');
             return;
         }
 
         // 请求云端比对快照（分离纯净更新与冲突项）
         const syncResult = await CloudAPI.syncCloudRules(allTours, allHints);
         if (!syncResult || !syncResult.success) {
-            showNotification('同步刷新失败，请检查网络或后端连接', 'error');
+            showNotification(chrome.i18n.getMessage('msgSyncFailed'), 'error');
             return;
         }
 
@@ -1544,7 +1544,7 @@ async function handleSyncRefresh() {
                         resolution: 'overwrite'
                     }));
                     await refreshSyncedRules(conflictTours, conflictHints);
-                    showNotification(`已将 ${conflicts.length} 条冲突规则恢复覆盖为云端最新版！`, 'success');
+                    showNotification(chrome.i18n.getMessage('msgSyncConflictRecovered').replace('', conflicts.length), 'success');
                 } else {
                     // 保留本地修改：不覆写 steps/text/selector，维持用户定制修改
                     const conflictTours = conflicts.filter(c => c.type === 'tour').map(c => ({
@@ -1558,22 +1558,22 @@ async function handleSyncRefresh() {
                         resolution: 'keep'
                     }));
                     await refreshSyncedRules(conflictTours, conflictHints);
-                    showNotification(`已保留 ${conflicts.length} 条规则的本地个性化修改！`, 'info');
+                    showNotification(chrome.i18n.getMessage('msgSyncConflictKept').replace('', conflicts.length), 'info');
                 }
                 await fetchAllAndRenderLists();
             });
         } else {
             // 无任何冲突时的常规反馈
             if (syncResult.updatedCount > 0) {
-                showNotification(`已成功同步更新 ${syncResult.updatedCount} 项来自云端的规则！`, 'success');
+                showNotification(chrome.i18n.getMessage('msgSyncUpdated').replace('', syncResult.updatedCount), 'success');
             } else {
-                showNotification('所有已关联云端的规则均已是最新版本', 'info');
+                showNotification(chrome.i18n.getMessage('msgSyncAllLatest'), 'info');
             }
             await fetchAllAndRenderLists();
         }
     } catch (err) {
         console.error('O-Maid: 同步刷新失败:', err);
-        showNotification('同步刷新异常: ' + (err.message || '网络连接超时'), 'error');
+        showNotification(chrome.i18n.getMessage('msgSyncError') + (err.message || 'Timeout'), 'error');
     } finally {
         if (btn) {
             btn.disabled = false;
@@ -1596,17 +1596,17 @@ function updateAuthUI() {
     }
 
     if(user) {
-        if (status) status.textContent = `当前登录: ${user}`;
+        if (status) status.textContent = chrome.i18n.getMessage('dynamicStatusLoggedIn').replace('$1', user);
         if (form) form.style.display = 'none';
         if (logoutBtn) logoutBtn.style.display = 'block';
-        if (bannerText) bannerText.innerHTML = `👤 已登录: <strong>${user}</strong>`;
-        if (bannerBtn) bannerBtn.textContent = '账号设置';
+        if (bannerText) bannerText.innerHTML = chrome.i18n.getMessage('dynamicBannerLoggedIn').replace('$1', user);
+        if (bannerBtn) bannerBtn.textContent = chrome.i18n.getMessage('dynamicBtnAccountSettings');
     } else {
-        if (status) status.textContent = '未登录，登录后可分享规则至云端。';
+        if (status) status.textContent = chrome.i18n.getMessage('dynamicStatusNotLoggedIn');
         if (form) form.style.display = 'block';
         if (logoutBtn) logoutBtn.style.display = 'none';
-        if (bannerText) bannerText.textContent = '云端未登录（仅能使用本地）';
-        if (bannerBtn) bannerBtn.textContent = '立即登录 / 注册';
+        if (bannerText) bannerText.textContent = chrome.i18n.getMessage('dynamicBannerNotLoggedIn');
+        if (bannerBtn) bannerBtn.textContent = chrome.i18n.getMessage('dynamicBtnLoginRegister');
     }
 }
 
@@ -1616,8 +1616,8 @@ async function fetchCloudDataAndRender() {
     const domain = new URL(window.location.href).hostname;
     const scopeLabel = uiPanel.querySelector('#cloud-scope-label');
     const scopeBtn = uiPanel.querySelector('#toggle-cloud-scope-btn');
-    if (scopeLabel) scopeLabel.textContent = isCloudShowAll ? '全网大厅 (所有网站)' : domain;
-    if (scopeBtn) scopeBtn.textContent = isCloudShowAll ? '只看当前网站' : '查看全网大厅';
+    if (scopeLabel) scopeLabel.textContent = isCloudShowAll ? chrome.i18n.getMessage('dynamicScopeCloudAll') : domain;
+    if (scopeBtn) scopeBtn.textContent = isCloudShowAll ? chrome.i18n.getMessage('dynamicBtnCloudViewCurrent') : chrome.i18n.getMessage('dynamicBtnCloudViewAll');
 
     try {
         const guideRes = isCloudShowAll ? await CloudAPI.fetchAllCloudGuides() : await CloudAPI.fetchCloudGuides(domain);
@@ -1636,13 +1636,13 @@ async function fetchCloudDataAndRender() {
         const isEmpty = (guides.length === 0 && hints.length === 0);
         if (noDataContainer) noDataContainer.style.display = isEmpty ? 'block' : 'none';
         if (noDataMsg) {
-            noDataMsg.textContent = isCloudShowAll ? '全网云端大厅暂无任何共享任务。' : `网站 (${domain}) 暂无匹配的云端任务。`;
+            noDataMsg.textContent = isCloudShowAll ? chrome.i18n.getMessage('dynamicNoCloudRulesAll') : chrome.i18n.getMessage('dynamicNoCloudRulesCurrent').replace('$1', domain);
         }
         if (emptyLink) {
             emptyLink.style.display = isCloudShowAll ? 'none' : 'inline-block';
         }
     } catch(e) {
-        showNotification('获取云端数据失败', 'error');
+        showNotification(chrome.i18n.getMessage('msgFetchCloudFailed'), 'error');
     }
 }
 
@@ -1677,7 +1677,7 @@ function renderCloudToursList(tours) {
             const res = await addTour({...tour, id: undefined, cloudId: tour.id, isDownloaded: true, isSynced: true, trigger: 'manual'});
             if(res.success) {
                 CloudAPI.downloadGuide(tour.id);
-                showNotification(res.updated ? '本地已存在该任务，已自动覆盖更新为最新版！' : '已下载到本地！', 'success');
+                showNotification(res.updated ? chrome.i18n.getMessage('msgDownloadOverwrite') : chrome.i18n.getMessage('msgDownloadSuccess'), 'success');
                 window.dispatchEvent(new CustomEvent('o-maid-data-changed'));
                 fetchAllAndRenderLists();
             }
@@ -1717,7 +1717,7 @@ function renderCloudHintsList(hints) {
             const res = await addHoverHint({...hint, id: undefined, cloudId: hint.id, isDownloaded: true, isSynced: true});
             if(res.success) {
                 CloudAPI.downloadHint(hint.id);
-                showNotification(res.updated ? '本地已存在该提示，已自动覆盖更新为最新版！' : '已下载到本地！', 'success');
+                showNotification(res.updated ? chrome.i18n.getMessage('msgDownloadOverwriteHint') : chrome.i18n.getMessage('msgDownloadSuccess'), 'success');
                 window.dispatchEvent(new CustomEvent('o-maid-data-changed'));
                 fetchAllAndRenderLists();
             }
@@ -1873,7 +1873,7 @@ function renderToursList(tours, isShowAll = false) {
         publishBtn.addEventListener('click', async (e) => {
             e.stopPropagation();
             if(!CloudAPI.getUsername()) {
-                showNotification('发布到云端需要先登录账号', 'error');
+                showNotification(chrome.i18n.getMessage('msgPublishNeedLogin'), 'error');
                 updateAuthUI();
                 switchToView('auth');
                 return;
@@ -1895,18 +1895,18 @@ function renderToursList(tours, isShowAll = false) {
                     steps: tour.steps
                 };
                 const res = await CloudAPI.publishGuide(cloudTour);
-                if(res.error) showNotification('发布失败: ' + res.error, 'error');
+                if(res.error) showNotification(chrome.i18n.getMessage('msgPublishFailed') + res.error, 'error');
                 else {
                     if (res.status === 'pending') {
-                        showNotification(res.message || '已提交云端，需等待管理员审核通过后公开可见', 'warning', 4000);
+                        showNotification(res.message || chrome.i18n.getMessage('msgPublishPending'), 'warning', 4000);
                     } else {
-                        showNotification('发布成功！已在云端公开生效。', 'success');
+                        showNotification(chrome.i18n.getMessage('msgPublishSuccess'), 'success');
                     }
                     await updateTour({ ...tour, cloudId: res.id || tour.cloudId || tour.id, isSynced: true });
                     fetchAllAndRenderLists();
                 }
             } catch(e) {
-                showNotification('发布异常', 'error');
+                showNotification(chrome.i18n.getMessage('msgPublishException'), 'error');
             }
         });
 
@@ -1917,7 +1917,7 @@ function renderToursList(tours, isShowAll = false) {
             console.log(`O-Maid: [UI] Resetting completion for tour: ${tour.id}`);
             const res = await resetTourCompletion(tour.id);
             if (res.success) {
-                showNotification(`任务 "${tour.name}" 的完成状态已重置。`, 'success');
+                showNotification(chrome.i18n.getMessage('msgTourResetSuccess').replace('', tour.name), 'success');
                 window.dispatchEvent(new CustomEvent('o-maid-data-changed'));
                 fetchAllAndRenderLists();
             } else {
@@ -2008,7 +2008,7 @@ function renderToursList(tours, isShowAll = false) {
         setupDeleteConfirm(li.querySelector('.delete-btn'), '任务', async () => {
             const res = await deleteTour(tour.id);
             if (res && res.success) {
-                showNotification(`引导任务 "${tour.name}" 已删除！`, 'success');
+                showNotification(chrome.i18n.getMessage('msgTourDeleteSuccess').replace('', tour.name), 'success');
                 window.dispatchEvent(new CustomEvent('o-maid-data-changed'));
                 fetchAllAndRenderLists();
             } else {
@@ -2079,7 +2079,7 @@ function renderHintsList(hints, isShowAll = false) {
         li.querySelector('.publish-btn').addEventListener('click', async (e) => {
             e.stopPropagation();
             if(!CloudAPI.getUsername()) {
-                showNotification('发布到云端需要先登录账号', 'error');
+                showNotification(chrome.i18n.getMessage('msgPublishNeedLogin'), 'error');
                 updateAuthUI();
                 switchToView('auth');
                 return;
@@ -2101,18 +2101,18 @@ function renderHintsList(hints, isShowAll = false) {
                     text: hint.text
                 };
                 const res = await CloudAPI.publishHint(cloudHint);
-                if(res.error) showNotification('发布失败: ' + res.error, 'error');
+                if(res.error) showNotification(chrome.i18n.getMessage('msgPublishFailed') + res.error, 'error');
                 else {
                     if (res.status === 'pending') {
-                        showNotification(res.message || '已提交云端，需等待管理员审核通过后公开可见', 'warning', 4000);
+                        showNotification(res.message || chrome.i18n.getMessage('msgPublishPending'), 'warning', 4000);
                     } else {
-                        showNotification('发布成功！已在云端公开生效。', 'success');
+                        showNotification(chrome.i18n.getMessage('msgPublishSuccess'), 'success');
                     }
                     await updateHoverHint({ ...hint, cloudId: res.id || hint.cloudId || hint.id, isSynced: true });
                     fetchAllAndRenderLists();
                 }
             } catch(e) {
-                showNotification('发布异常', 'error');
+                showNotification(chrome.i18n.getMessage('msgPublishException'), 'error');
             }
         });
         li.querySelector('.edit-btn').addEventListener('click', (e) => {
@@ -2122,7 +2122,7 @@ function renderHintsList(hints, isShowAll = false) {
         setupDeleteConfirm(li.querySelector('.delete-btn'), '提示', async () => {
             const res = await deleteHoverHint(hint.id);
             if (res && res.success) {
-                showNotification(`悬停提示已删除！`, 'success');
+                showNotification(chrome.i18n.getMessage('msgHintDeleteSuccess'), 'success');
                 window.dispatchEvent(new CustomEvent('o-maid-data-changed'));
                 fetchAllAndRenderLists();
             } else {
@@ -2166,7 +2166,7 @@ function renderHintsList(hints, isShowAll = false) {
                     }, 200);
                 }).start();
             } else {
-                showNotification('未能在当前页面找到该元素。', 'info');
+                showNotification(chrome.i18n.getMessage('msgElementNotFound'), 'info');
             }
         });
 
@@ -2256,14 +2256,14 @@ function handleElementSelection(selector, url, context) {
         hintData.selector = selector;
         hintData.url = cleanUrl;
         switchToView('edit-hint', hintData);
-        showNotification('已成功选取目标元素！请在上方输入提示文本。', 'success');
+        showNotification(chrome.i18n.getMessage('msgElementSelectedHint'), 'success');
     } else if (type === 'tour_step') {
         const newStep = { selector, url: cleanUrl, text: '' };
         tourBuilderState.steps.push(newStep);
         const newIndex = tourBuilderState.steps.length - 1;
         // 跳转到步骤编辑视图以输入文本
         switchToView('edit-tour-step', { index: newIndex, step: newStep });
-        showNotification('已成功选取目标元素！请输入步骤说明。', 'success');
+        showNotification(chrome.i18n.getMessage('msgElementSelectedTour'), 'success');
     } else if (type === 'tour_step_update') {
         const stepIndex = context.stepIndex;
         if (tourBuilderState && tourBuilderState.steps[stepIndex]) {
@@ -2271,7 +2271,7 @@ function handleElementSelection(selector, url, context) {
             tourBuilderState.steps[stepIndex].url = cleanUrl;
             // 重新进入编辑步骤视图，更新显示
             switchToView('edit-tour-step', { index: stepIndex, step: tourBuilderState.steps[stepIndex] });
-            showNotification('已更新步骤的目标元素！', 'success');
+            showNotification(chrome.i18n.getMessage('msgStepElementUpdated'), 'success');
         }
     }
 }
@@ -2298,15 +2298,15 @@ async function saveHint() {
         console.log('O-Maid: 存储 Action 响应:', res);
         if (res && res.success) {
             switchToView('view');
-            showNotification('保存成功', 'success');
+            showNotification(chrome.i18n.getMessage('msgSaveSuccess'), 'success');
             window.dispatchEvent(new CustomEvent('o-maid-data-changed'));
         } else {
             console.error('O-Maid: 保存失败', res);
-            showNotification('保存失败，请检查后台日志。', 'error');
+            showNotification(chrome.i18n.getMessage('msgSaveFailedLog'), 'error');
         }
     } catch (err) {
         console.error('O-Maid: 保存过程中发生错误', err);
-        showNotification('保存出错: ' + err.message, 'error');
+        showNotification(chrome.i18n.getMessage('msgSaveError') + err.message, 'error');
     }
 }
 
@@ -2327,7 +2327,7 @@ async function saveTour() {
     const res = await action(tourBuilderState);
     if (res.success) {
         switchToView('view');
-        showNotification('任务保存成功', 'success');
+        showNotification(chrome.i18n.getMessage('msgTourSaveSuccess'), 'success');
         window.dispatchEvent(new CustomEvent('o-maid-data-changed'));
     }
 }
@@ -2348,7 +2348,7 @@ function saveTourStep() {
         tourBuilderState.steps[itemToEdit.index].text = text;
         tourBuilderState.steps[itemToEdit.index].selector = selector;
         switchToView('edit-tour', tourBuilderState);
-        showNotification('步骤已更新', 'success');
+        showNotification(chrome.i18n.getMessage('msgStepUpdated'), 'success');
     }
 }
 
