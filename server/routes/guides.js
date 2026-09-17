@@ -17,7 +17,7 @@ router.post('/', authenticateToken, async (req, res) => {
 
         const { name, startUrl, domain, steps } = req.body;
         if (!name) {
-            return res.status(400).json({ error: '任务名称不能为空' });
+            return res.status(400).json({ error: req.t('errGuideNameRequired') });
         }
         const stepsStr = typeof steps === 'string' ? steps : JSON.stringify(steps || []);
 
@@ -29,7 +29,7 @@ router.post('/', authenticateToken, async (req, res) => {
             const existing = await db('guides').where({ id: req.body.id }).first();
             if (existing) {
                 if (!isAdmin && existing.authorId !== req.user.id) {
-                    return res.status(403).json({ error: '权限不足：您不是该规则的原作者，无法覆写云端原版规则' });
+                    return res.status(403).json({ error: req.t('errNotOriginalAuthorGuide') });
                 }
                 await db('guides').where({ id: req.body.id }).update({
                     name,
@@ -44,7 +44,7 @@ router.post('/', authenticateToken, async (req, res) => {
                     success: true, 
                     id: req.body.id,
                     status: targetStatus,
-                    message: isAdmin ? '发布成功' : '已提交修改，需等待管理员审核通过后公开可见'
+                    message: isAdmin ? req.t('msgPublishSuccess') : req.t('msgPublishPending')
                 });
             }
         }
@@ -65,10 +65,10 @@ router.post('/', authenticateToken, async (req, res) => {
             success: true, 
             id, 
             status: targetStatus,
-            message: isAdmin ? '发布成功' : '已提交成功，需等待管理员审核通过后公开可见'
+            message: isAdmin ? req.t('msgPublishSuccess') : req.t('msgSubmitSuccess')
         });
     } catch (err) {
-        res.status(500).json({ error: '发布失败: ' + err.message });
+        res.status(500).json({ error: req.t('errPublishFailed') + err.message });
     }
 });
 
@@ -78,13 +78,13 @@ router.post('/:id/audit', authenticateToken, requireAdmin, async (req, res) => {
     const { status } = req.body;
 
     if (!['approved', 'rejected', 'pending'].includes(status)) {
-        return res.status(400).json({ error: '审核状态无效，支持: approved, rejected, pending' });
+        return res.status(400).json({ error: req.t('errInvalidStatus') });
     }
 
     try {
         const guide = await db('guides').where({ id }).first();
         if (!guide) {
-            return res.status(404).json({ error: '未找到该引导任务' });
+            return res.status(404).json({ error: req.t('errGuideNotFound') });
         }
 
         await db('guides').where({ id }).update({ status });
@@ -92,10 +92,10 @@ router.post('/:id/audit', authenticateToken, requireAdmin, async (req, res) => {
             success: true,
             id,
             status,
-            message: status === 'approved' ? '审核通过，已全网公开' : (status === 'rejected' ? '已驳回该任务' : '已重置为待审核')
+            message: status === 'approved' ? req.t('msgAuditApproved') : (status === 'rejected' ? req.t('msgAuditRejected') : req.t('msgAuditReset'))
         });
     } catch (err) {
-        res.status(500).json({ error: '审核操作失败: ' + err.message });
+        res.status(500).json({ error: req.t('errAuditFailed') + err.message });
     }
 });
 
@@ -158,7 +158,7 @@ router.get('/all', optionalAuth, async (req, res) => {
 
         res.json({ success: true, guides });
     } catch (err) {
-        res.status(500).json({ error: '查询失败: ' + err.message });
+        res.status(500).json({ error: req.t('errQueryFailed') + err.message });
     }
 });
 
@@ -166,7 +166,7 @@ router.get('/all', optionalAuth, async (req, res) => {
 router.get('/', optionalAuth, async (req, res) => {
     const { domain } = req.query;
     if (!domain) {
-        return res.status(400).json({ error: '缺少 domain 域名参数' });
+        return res.status(400).json({ error: req.t('errMissingDomain') });
     }
 
     const user = req.user;
@@ -219,7 +219,7 @@ router.get('/', optionalAuth, async (req, res) => {
 
         res.json({ success: true, guides });
     } catch (err) {
-        res.status(500).json({ error: '查询失败: ' + err.message });
+        res.status(500).json({ error: req.t('errQueryFailed') + err.message });
     }
 });
 
@@ -247,14 +247,14 @@ router.get('/:id', optionalAuth, async (req, res) => {
             .where('g.id', id)
             .first();
 
-        if (!row) return res.status(404).json({ error: '未找到该引导任务' });
+        if (!row) return res.status(404).json({ error: req.t('errGuideNotFound') });
 
         const status = row.status || 'approved';
         // 若不是已发布状态，只允许管理员或作者本人查阅
         if (status !== 'approved') {
             const isAuthor = user && user.id === row.authorId;
             if (!isAdmin && !isAuthor) {
-                return res.status(403).json({ error: '权限不足：该引导任务正在审核中或未通过审核' });
+                return res.status(403).json({ error: req.t('errNotApprovedGuide') });
             }
         }
 
@@ -266,7 +266,7 @@ router.get('/:id', optionalAuth, async (req, res) => {
 
         res.json({ success: true, guide: { ...row, status } });
     } catch (err) {
-        res.status(500).json({ error: '查询失败: ' + err.message });
+        res.status(500).json({ error: req.t('errQueryFailed') + err.message });
     }
 });
 
@@ -286,7 +286,7 @@ router.delete('/:id', authenticateToken, async (req, res) => {
     const { id } = req.params;
     try {
         const guide = await db('guides').where({ id }).first();
-        if (!guide) return res.status(404).json({ error: '任务不存在' });
+        if (!guide) return res.status(404).json({ error: req.t('errGuideNotFound') });
 
         // 权限判断：管理员或作者本人
         if (req.user.role !== 'admin' && guide.authorId !== req.user.id) {
@@ -294,9 +294,9 @@ router.delete('/:id', authenticateToken, async (req, res) => {
         }
 
         await db('guides').where({ id }).del();
-        res.json({ success: true, message: '删除成功' });
+        res.json({ success: true, message: req.t('msgDeleteSuccess') });
     } catch (err) {
-        res.status(500).json({ error: '删除失败: ' + err.message });
+        res.status(500).json({ error: req.t('errDeleteFailed') + err.message });
     }
 });
 

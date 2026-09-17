@@ -14,7 +14,7 @@ router.get('/me', authenticateToken, async (req, res) => {
             .where({ id: req.user.id })
             .first();
 
-        if (!user) return res.status(404).json({ error: '用户不存在' });
+        if (!user) return res.status(404).json({ error: req.t('errUserNotFound') });
         res.json({ success: true, user: { ...user, role: user.role || 'user' } });
     } catch (err) {
         res.status(500).json({ error: '服务器错误: ' + err.message });
@@ -124,7 +124,7 @@ router.delete('/users/:id', authenticateToken, requireAdmin, async (req, res) =>
             const deletedCount = await trx('users').where({ id }).del();
 
             if (deletedCount === 0) {
-                return res.status(404).json({ error: '用户不存在' });
+                return res.status(404).json({ error: req.t('errUserNotFound') });
             }
             res.json({ success: true, message: '用户已删除' });
         });
@@ -144,7 +144,7 @@ router.post('/users/:id/reset-password', authenticateToken, requireAdmin, async 
     try {
         const hashedPassword = await bcrypt.hash(newPassword, 10);
         const updatedCount = await db('users').where({ id }).update({ password: hashedPassword });
-        if (updatedCount === 0) return res.status(404).json({ error: '用户不存在' });
+        if (updatedCount === 0) return res.status(404).json({ error: req.t('errUserNotFound') });
         res.json({ success: true, message: '密码重置成功' });
     } catch (err) {
         res.status(500).json({ error: '重置密码失败: ' + err.message });
@@ -166,7 +166,7 @@ router.post('/users/:id/role', authenticateToken, requireAdmin, async (req, res)
 
     try {
         const updatedCount = await db('users').where({ id }).update({ role });
-        if (updatedCount === 0) return res.status(404).json({ error: '用户不存在' });
+        if (updatedCount === 0) return res.status(404).json({ error: req.t('errUserNotFound') });
         res.json({ success: true, message: '角色修改成功' });
     } catch (err) {
         res.status(500).json({ error: '修改角色失败: ' + err.message });

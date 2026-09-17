@@ -6,10 +6,10 @@ const SECRET_KEY = process.env.SECRET_KEY || 'o-maid-secret-key-dev';
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
-    if (token == null) return res.status(401).json({ error: '未提供 Token' });
+    if (token == null) return res.status(401).json({ error: req.t('errNoToken') });
 
     jwt.verify(token, SECRET_KEY, (err, user) => {
-        if (err) return res.status(403).json({ error: 'Token 无效或已过期' });
+        if (err) return res.status(403).json({ error: req.t('errInvalidToken') });
         req.user = user;
         next();
     });
@@ -39,7 +39,7 @@ const requireAdmin = (req, res, next) => {
     if (req.user && req.user.role === 'admin') {
         return next();
     }
-    return res.status(403).json({ error: '权限不足：仅管理员允许执行此操作' });
+    return res.status(403).json({ error: req.t('errAdminOnly') });
 };
 
 module.exports = {

@@ -76,7 +76,7 @@ router.get('/overview', authenticateToken, async (req, res) => {
             }
         });
     } catch (err) {
-        res.status(500).json({ error: '获取概览统计失败: ' + err.message });
+        res.status(500).json({ error: req.t('errOverviewStatsFailed') + err.message });
     }
 });
 
@@ -104,7 +104,7 @@ router.get('/users', authenticateToken, requireAdmin, async (req, res) => {
             }))
         });
     } catch (err) {
-        res.status(500).json({ error: '查询用户列表失败: ' + err.message });
+        res.status(500).json({ error: req.t('errUserListStatsFailed') + err.message });
     }
 });
 

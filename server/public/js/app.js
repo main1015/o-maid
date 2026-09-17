@@ -107,20 +107,20 @@ function renderPaginationControls({ containerId, total, page, pageSize, onPageCh
 
   container.innerHTML = `
     <div class="pagination-info">
-      <span>共 <strong>${total}</strong> 条，显示 ${startItem}-${endItem}</span>
-      <select class="pagination-size-select" title="每页显示条数">
-        <option value="10" ${pageSize === 10 ? 'selected' : ''}>10 条/页</option>
-        <option value="20" ${pageSize === 20 ? 'selected' : ''}>20 条/页</option>
-        <option value="50" ${pageSize === 50 ? 'selected' : ''}>50 条/页</option>
+      <span>${window.i18n.t('page_info', { total: total, start: startItem, end: endItem })}</span>
+      <select class="pagination-size-select" title="${window.i18n.t('page_size_title') || '每页显示条数'}">
+        <option value="10" ${pageSize === 10 ? 'selected' : ''}>${window.i18n.t('page_size_10')}</option>
+        <option value="20" ${pageSize === 20 ? 'selected' : ''}>${window.i18n.t('page_size_20')}</option>
+        <option value="50" ${pageSize === 50 ? 'selected' : ''}>${window.i18n.t('page_size_50')}</option>
       </select>
     </div>
     <div class="pagination-controls">
-      <button class="page-btn prev-page-btn" ${currentPage <= 1 ? 'disabled' : ''} title="上一页">上一页</button>
+      <button class="page-btn prev-page-btn" ${currentPage <= 1 ? 'disabled' : ''} title="${window.i18n.t('btn_prev_page')}">${window.i18n.t('btn_prev_page')}</button>
       ${pages.map(p => {
         if (p === '...') return `<span class="page-ellipsis">...</span>`;
         return `<button class="page-btn num-page-btn ${p === currentPage ? 'active' : ''}" data-page="${p}">${p}</button>`;
       }).join('')}
-      <button class="page-btn next-page-btn" ${currentPage >= totalPages ? 'disabled' : ''} title="下一页">下一页</button>
+      <button class="page-btn next-page-btn" ${currentPage >= totalPages ? 'disabled' : ''} title="${window.i18n.t('btn_next_page')}">${window.i18n.t('btn_next_page')}</button>
     </div>
   `;
 
@@ -162,7 +162,7 @@ function applyRolePermissions() {
 function switchTab(tabId) {
   // 权限防穿透：非管理员试图进入用户管理或系统监控时强制拦截
   if (['users', 'system'].includes(tabId) && !Auth.isAdmin()) {
-    showToast('权限不足：仅超级管理员允许访问此模块', 'error');
+    showToast(window.i18n.t('msg_err_admin_only'), 'error');
     tabId = 'overview';
   }
 
@@ -180,11 +180,11 @@ function switchTab(tabId) {
 
   // 更新顶部标题
   const titles = {
-    overview: '平台概览',
-    guides: '引导任务管理',
-    hints: '悬停提示管理',
-    users: '注册用户管理',
-    system: '系统监控与 API 文档'
+    overview: window.i18n.t('header_overview'),
+    guides: window.i18n.t('header_guides'),
+    hints: window.i18n.t('header_hints'),
+    users: window.i18n.t('header_users'),
+    system: window.i18n.t('header_system')
   };
   document.getElementById('header-title').textContent = titles[tabId] || '管理控制台';
 
@@ -256,9 +256,9 @@ async function loadOverview() {
             <div class="activity-info">
               <div class="activity-name" title="${escapeHtml(item.title)}">${escapeHtml(item.title)}</div>
               <div class="activity-meta">
-                <span>作者: ${escapeHtml(item.author || '系统录入')}</span> · 
-                <span>域名: ${escapeHtml(item.domain || '-')}</span> · 
-                <span>${formatTime(item.created_at)}</span>
+                <span>${window.i18n.t('lbl_author')} ${escapeHtml(item.author || '系统录入')}</span> · 
+                <span>${window.i18n.t('lbl_domain')} ${escapeHtml(item.domain || '-')}</span> · 
+                <span style="color:var(--text-dim);">${formatTime(item.created_at)}</span>
               </div>
             </div>
           `;
@@ -286,16 +286,16 @@ async function loadOverview() {
       }
     }
   } catch (err) {
-    showToast('加载概览数据失败: ' + err.message, 'error');
+    showToast(window.i18n.t('msg_err_load_overview') + err.message, 'error');
   }
 }
 
 // 辅助函数：渲染状态徽标
 function renderStatusBadge(status) {
   const map = {
-    approved: '<span class="status-badge approved">● 已发布</span>',
-    pending: '<span class="status-badge pending">⏳ 待审核</span>',
-    rejected: '<span class="status-badge rejected">✕ 已驳回</span>'
+    approved: '<span class="status-badge approved">● ' + window.i18n.t('filter_approved') + '</span>',
+    pending: '<span class="status-badge pending">⏳ ' + window.i18n.t('filter_pending') + '</span>',
+    rejected: '<span class="status-badge rejected">✕ ' + window.i18n.t('filter_rejected') + '</span>'
   };
   return map[status] || map.pending;
 }
@@ -309,7 +309,7 @@ async function loadGuides() {
       filterAndRenderGuides();
     }
   } catch (err) {
-    showToast('加载引导列表失败: ' + err.message, 'error');
+    showToast(window.i18n.t('msg_err_load_guides') + err.message, 'error');
   }
 }
 
@@ -383,15 +383,15 @@ function renderGuidesTable(list) {
       <td style="color:var(--text-dim); font-size:12px;">${formatTime(item.created_at)}</td>
       <td>
         <div class="action-btn-group">
-          <button class="btn-sm btn-primary-sm view-guide-btn" data-id="${escapeHtml(item.id)}">详情</button>
+          <button class="btn-sm btn-primary-sm view-guide-btn" data-id="${escapeHtml(item.id)}">${window.i18n.t('btn_detail')}</button>
           ${isAdmin && status === 'pending' ? `
-            <button class="btn-sm btn-audit-approve audit-guide-btn" data-id="${escapeHtml(item.id)}" data-action="approved">通过</button>
-            <button class="btn-sm btn-audit-reject audit-guide-btn" data-id="${escapeHtml(item.id)}" data-action="rejected">驳回</button>
+            <button class="btn-sm btn-audit-approve audit-guide-btn" data-id="${escapeHtml(item.id)}" data-action="approved">${window.i18n.t('btn_approve')}</button>
+            <button class="btn-sm btn-audit-reject audit-guide-btn" data-id="${escapeHtml(item.id)}" data-action="rejected">${window.i18n.t('btn_reject')}</button>
           ` : ''}
           ${isAdmin && status === 'rejected' ? `
-            <button class="btn-sm btn-audit-approve audit-guide-btn" data-id="${escapeHtml(item.id)}" data-action="approved">重新通过</button>
+            <button class="btn-sm btn-audit-approve audit-guide-btn" data-id="${escapeHtml(item.id)}" data-action="approved">${window.i18n.t('btn_reapprove')}</button>
           ` : ''}
-          ${canDelete ? `<button class="btn-sm btn-danger-sm delete-guide-btn" data-id="${escapeHtml(item.id)}" data-name="${escapeHtml(item.name)}">删除</button>` : (!isAdmin ? '<span style="color:var(--text-dim); font-size:12px;">只读</span>' : '')}
+          ${canDelete ? `<button class="btn-sm btn-danger-sm delete-guide-btn" data-id="${escapeHtml(item.id)}" data-name="${escapeHtml(item.name)}">${window.i18n.t('btn_delete')}</button>` : (!isAdmin ? `<span style="color:var(--text-dim); font-size:12px;">${window.i18n.t('label_readonly')}</span>` : '')}
         </div>
       </td>
     `;
@@ -415,14 +415,14 @@ function renderGuidesTable(list) {
       try {
         const res = await Api.auditGuide(id, action);
         if (res.success) {
-          showToast(res.message || '审核操作成功', 'success');
+          showToast(res.message || window.i18n.t('msg_audit_success'), 'success');
           await loadGuides();
           loadOverview();
         } else {
-          showToast(res.error || '审核操作未完成', 'error');
+          showToast(res.error || window.i18n.t('msg_audit_incomplete'), 'error');
         }
       } catch (err) {
-        showToast('审核失败: ' + err.message, 'error');
+        showToast(window.i18n.t('msg_err_audit') + err.message, 'error');
       } finally {
         currentBtn.disabled = false;
         currentBtn.textContent = originalText;
@@ -443,7 +443,7 @@ async function loadHints() {
       filterAndRenderHints();
     }
   } catch (err) {
-    showToast('加载提示列表失败: ' + err.message, 'error');
+    showToast(window.i18n.t('msg_err_load_hints') + err.message, 'error');
   }
 }
 
@@ -518,13 +518,13 @@ function renderHintsTable(list) {
       <td>
         <div class="action-btn-group">
           ${isAdmin && status === 'pending' ? `
-            <button class="btn-sm btn-audit-approve audit-hint-btn" data-id="${escapeHtml(item.id)}" data-action="approved">通过</button>
-            <button class="btn-sm btn-audit-reject audit-hint-btn" data-id="${escapeHtml(item.id)}" data-action="rejected">驳回</button>
+            <button class="btn-sm btn-audit-approve audit-hint-btn" data-id="${escapeHtml(item.id)}" data-action="approved">${window.i18n.t('btn_approve')}</button>
+            <button class="btn-sm btn-audit-reject audit-hint-btn" data-id="${escapeHtml(item.id)}" data-action="rejected">${window.i18n.t('btn_reject')}</button>
           ` : ''}
           ${isAdmin && status === 'rejected' ? `
-            <button class="btn-sm btn-audit-approve audit-hint-btn" data-id="${escapeHtml(item.id)}" data-action="approved">重新通过</button>
+            <button class="btn-sm btn-audit-approve audit-hint-btn" data-id="${escapeHtml(item.id)}" data-action="approved">${window.i18n.t('btn_reapprove')}</button>
           ` : ''}
-          ${canDelete ? `<button class="btn-sm btn-danger-sm delete-hint-btn" data-id="${escapeHtml(item.id)}">删除</button>` : (!isAdmin ? '<span style="color:var(--text-dim); font-size:12px;">只读</span>' : '')}
+          ${canDelete ? `<button class="btn-sm btn-danger-sm delete-hint-btn" data-id="${escapeHtml(item.id)}">${window.i18n.t('btn_delete')}</button>` : (!isAdmin ? `<span style="color:var(--text-dim); font-size:12px;">${window.i18n.t('label_readonly')}</span>` : '')}
         </div>
       </td>
     `;
@@ -545,14 +545,14 @@ function renderHintsTable(list) {
       try {
         const res = await Api.auditHint(id, action);
         if (res.success) {
-          showToast(res.message || '审核操作成功', 'success');
+          showToast(res.message || window.i18n.t('msg_audit_success'), 'success');
           await loadHints();
           loadOverview();
         } else {
-          showToast(res.error || '审核操作未完成', 'error');
+          showToast(res.error || window.i18n.t('msg_audit_incomplete'), 'error');
         }
       } catch (err) {
-        showToast('审核失败: ' + err.message, 'error');
+        showToast(window.i18n.t('msg_err_audit') + err.message, 'error');
       } finally {
         currentBtn.disabled = false;
         currentBtn.textContent = originalText;
@@ -575,7 +575,7 @@ async function loadUsers() {
       updateAuthorSelectOptions();
     }
   } catch (err) {
-    showToast('加载用户列表失败: ' + err.message, 'error');
+    showToast(window.i18n.t('msg_err_load_users') + err.message, 'error');
   }
 }
 
@@ -606,7 +606,7 @@ function renderUsersTable(list) {
       <td>
         <strong>${escapeHtml(item.username)}</strong>
         <span class="header-user-role ${isItemAdmin ? 'role-admin' : 'role-creator'}" style="margin-left:8px; font-size:10px;">
-          ${isItemAdmin ? '管理员' : '创作者'}
+          ${isItemAdmin ? window.i18n.t('label_admin') : window.i18n.t('role_creator')}
         </span>
       </td>
       <td><span class="badge-guide activity-badge">${item.guidesCount || 0} 个</span></td>
@@ -614,11 +614,11 @@ function renderUsersTable(list) {
       <td style="color:var(--text-dim);">${formatTime(item.created_at)}</td>
       <td>
         <div class="action-btn-group">
-          ${isSelf ? '' : `<button class="btn-sm toggle-role-btn" data-id="${item.id}" data-role="${isItemAdmin ? 'user' : 'admin'}" style="background:rgba(255,255,255,0.08); border:1px solid var(--border-color); color:var(--text-main); font-size:11px;">${isItemAdmin ? '降为创作者' : '升为管理员'}</button>`}
-          <button class="btn-sm btn-primary-sm reset-pwd-btn" data-id="${item.id}" data-name="${escapeHtml(item.username)}">修改密码</button>
+          ${isSelf ? '' : `<button class="btn-sm toggle-role-btn" data-id="${item.id}" data-role="${isItemAdmin ? 'user' : 'admin'}" style="background:rgba(255,255,255,0.08); border:1px solid var(--border-color); color:var(--text-main); font-size:11px;">${isItemAdmin ? window.i18n.t('btn_demote_user') : window.i18n.t('btn_promote_admin')}</button>`}
+          <button class="btn-sm btn-primary-sm reset-pwd-btn" data-id="${item.id}" data-name="${escapeHtml(item.username)}">${window.i18n.t('btn_change_pwd')}</button>
           ${isSelf ? 
-            `<button class="btn-sm" style="opacity:0.4; cursor:not-allowed;" title="不能删除当前正在使用的账号" disabled>本人</button>` : 
-            `<button class="btn-sm btn-danger-sm delete-user-btn" data-id="${item.id}" data-name="${escapeHtml(item.username)}">删除</button>`}
+            `<button class="btn-sm" style="opacity:0.4; cursor:not-allowed;" title="${window.i18n.t('msg_self_delete')}" disabled>${window.i18n.t('label_self')}</button>` : 
+            `<button class="btn-sm btn-danger-sm delete-user-btn" data-id="${item.id}" data-name="${escapeHtml(item.username)}">${window.i18n.t('btn_delete')}</button>`}
         </div>
       </td>
     `;
@@ -629,18 +629,18 @@ function renderUsersTable(list) {
   tbody.querySelectorAll('.toggle-role-btn').forEach(btn => {
     btn.addEventListener('click', async () => {
       const targetRole = btn.dataset.role;
-      const roleName = targetRole === 'admin' ? '超级管理员' : '普通创作者';
-      if (confirm(`确定要将该用户角色调整为「${roleName}」吗？`)) {
+      const roleName = targetRole === 'admin' ? window.i18n.t('role_admin_full') : window.i18n.t('role_creator_full');
+      if (confirm(window.i18n.t('confirm_role_change', { role: roleName }) || `确定要将该用户角色调整为「${roleName}」吗？`)) {
         try {
           const res = await Api.updateUserRole(btn.dataset.id, targetRole);
           if (res.success) {
-            showToast('用户角色已成功更新！');
+            showToast(window.i18n.t('msg_role_success') || '用户角色已成功更新！');
             await loadUsers();
           } else {
-            showToast(res.error || '角色修改失败', 'error');
+            showToast(res.error || window.i18n.t('msg_role_fail'), 'error');
           }
         } catch (e) {
-          showToast('修改异常: ' + e.message, 'error');
+          showToast(window.i18n.t('msg_err_modify') + e.message, 'error');
         }
       }
     });
@@ -700,7 +700,7 @@ function updateAuthorSelectOptions() {
     state.users.forEach(u => {
       const opt = document.createElement('option');
       opt.value = u.id;
-      opt.textContent = `${u.username} (${u.role === 'admin' ? '管理员' : '创作者'})`;
+      opt.textContent = `${u.username} (${u.role === 'admin' ? window.i18n.t('label_admin') : window.i18n.t('role_creator')})`;
       select.appendChild(opt);
     });
     select.value = currentVal;
@@ -720,7 +720,7 @@ async function loadSystem() {
       document.getElementById('sys-time').textContent = formatTime(system.serverTime);
     }
   } catch (err) {
-    showToast('获取系统信息失败: ' + err.message, 'error');
+    showToast(window.i18n.t('msg_err_load_sys') + err.message, 'error');
   }
 }
 
@@ -761,51 +761,51 @@ async function openGuideDetailsModal(id) {
 
 // 删除确认
 async function confirmDeleteGuide(id, name) {
-  if (confirm(`确定要从云端删除引导任务「${name}」吗？`)) {
+  if (confirm(window.i18n.t('confirm_delete', { type: window.i18n.t('type_guide'), name: name }) || `确定要从云端删除引导任务「${name}」吗？`)) {
     try {
       const res = await Api.deleteGuide(id);
       if (res.success) {
-        showToast('任务已成功删除');
+        showToast(window.i18n.t('msg_del_success') || '任务已成功删除');
         await loadGuides();
       } else {
-        showToast(res.error || '删除失败', 'error');
+        showToast(res.error || window.i18n.t('msg_del_fail'), 'error');
       }
     } catch (err) {
-      showToast('删除请求异常: ' + err.message, 'error');
+      showToast(window.i18n.t('msg_err_del_req') + err.message, 'error');
     }
   }
 }
 
 async function confirmDeleteHint(id) {
-  if (confirm(`确定要从云端删除该条提示规则吗？`)) {
+  if (confirm(window.i18n.t('confirm_delete', { type: window.i18n.t('type_hint'), name: id }) || `确定要从云端删除该条提示规则吗？`)) {
     try {
       const res = await Api.deleteHint(id);
       if (res.success) {
-        showToast('提示已成功删除');
+        showToast(window.i18n.t('msg_del_success') || '提示已成功删除');
         await loadHints();
       } else {
-        showToast(res.error || '删除失败', 'error');
+        showToast(res.error || window.i18n.t('msg_del_fail'), 'error');
       }
     } catch (err) {
-      showToast('删除请求异常: ' + err.message, 'error');
+      showToast(window.i18n.t('msg_err_del_req') + err.message, 'error');
     }
   }
 }
 
 // 删除用户确认
 async function confirmDeleteUser(id, name) {
-  if (confirm(`确定要彻底删除用户账号「${name}」吗？删除后该用户将无法登录。`)) {
+  if (confirm(window.i18n.t('confirm_delete', { type: window.i18n.t('type_user'), name: name }) || `确定要删除 用户「${name}」吗？此操作不可恢复！`)) {
     try {
       const res = await Api.deleteUser(id);
       if (res.success) {
-        showToast(`用户「${name}」已删除`);
+        showToast(window.i18n.t('msg_del_success') || `用户「${name}」已删除`);
         await loadUsers();
         await loadOverview();
       } else {
-        showToast(res.error || '删除失败', 'error');
+        showToast(res.error || window.i18n.t('msg_del_fail'), 'error');
       }
     } catch (err) {
-      showToast('删除请求异常: ' + err.message, 'error');
+      showToast(window.i18n.t('msg_err_del_req') + err.message, 'error');
     }
   }
 }
@@ -823,18 +823,18 @@ function openResetPasswordModal(id, username) {
 async function submitResetPassword() {
   if (!currentResetUserId) return;
   const newPassword = document.getElementById('reset-pwd-input').value.trim();
-  if (!newPassword) return showToast('请输入新密码', 'error');
+  if (!newPassword) return showToast(window.i18n.t('msg_req_new_pwd'), 'error');
 
   try {
     const res = await Api.resetUserPassword(currentResetUserId, newPassword);
     if (res.success) {
-      showToast('密码已成功修改！');
+      showToast(window.i18n.t('msg_pwd_changed'));
       closeModal('reset-password-modal');
     } else {
-      showToast(res.error || '重置失败', 'error');
+      showToast(res.error || window.i18n.t('msg_err_reset'), 'error');
     }
   } catch (err) {
-    showToast('重置密码异常: ' + err.message, 'error');
+    showToast(window.i18n.t('msg_err_reset_req') + err.message, 'error');
   }
 }
 
@@ -873,8 +873,8 @@ async function submitCreateGuide() {
   const startUrl = document.getElementById('new-guide-url').value.trim();
   const authorId = document.getElementById('new-guide-author').value || null;
 
-  if (!name) return showToast('请输入任务名称', 'error');
-  if (!domain) return showToast('请输入目标域名（如 github.com）', 'error');
+  if (!name) return showToast(window.i18n.t('msg_req_task_name'), 'error');
+  if (!domain) return showToast(window.i18n.t('msg_req_domain_guide'), 'error');
 
   const stepRows = document.querySelectorAll('#new-guide-steps-container .step-input-row');
   const steps = [];
@@ -896,7 +896,7 @@ async function submitCreateGuide() {
     });
 
     if (res.success) {
-      showToast('引导任务录入成功！');
+      showToast(window.i18n.t('msg_guide_add_success'));
       closeModal('create-guide-modal');
       // 清空表单
       document.getElementById('new-guide-name').value = '';
@@ -906,10 +906,10 @@ async function submitCreateGuide() {
       await loadGuides();
       await loadOverview();
     } else {
-      showToast(res.error || '录入失败', 'error');
+      showToast(res.error || window.i18n.t('msg_err_add'), 'error');
     }
   } catch (err) {
-    showToast('提交异常: ' + err.message, 'error');
+    showToast(window.i18n.t('msg_err_submit') + err.message, 'error');
   }
 }
 
@@ -921,9 +921,9 @@ async function submitCreateHint() {
   const selector = document.getElementById('new-hint-selector').value.trim();
   const authorId = document.getElementById('new-hint-author').value || null;
 
-  if (!text) return showToast('请输入提示内容', 'error');
-  if (!domain) return showToast('请输入目标域名', 'error');
-  if (!selector) return showToast('请输入目标元素 CSS 选择器', 'error');
+  if (!text) return showToast(window.i18n.t('msg_req_hint_text'), 'error');
+  if (!domain) return showToast(window.i18n.t('msg_req_domain'), 'error');
+  if (!selector) return showToast(window.i18n.t('msg_req_css'), 'error');
 
   try {
     const res = await Api.createHint({
@@ -935,7 +935,7 @@ async function submitCreateHint() {
     });
 
     if (res.success) {
-      showToast('悬停提示录入成功！');
+      showToast(window.i18n.t('msg_hint_add_success'));
       closeModal('create-hint-modal');
       document.getElementById('new-hint-text').value = '';
       document.getElementById('new-hint-domain').value = '';
@@ -944,10 +944,10 @@ async function submitCreateHint() {
       await loadHints();
       await loadOverview();
     } else {
-      showToast(res.error || '录入失败', 'error');
+      showToast(res.error || window.i18n.t('msg_err_add'), 'error');
     }
   } catch (err) {
-    showToast('提交异常: ' + err.message, 'error');
+    showToast(window.i18n.t('msg_err_submit') + err.message, 'error');
   }
 }
 
@@ -957,23 +957,23 @@ async function submitCreateUser() {
   const password = document.getElementById('new-user-password').value.trim();
   const role = document.getElementById('new-user-role')?.value || 'user';
 
-  if (!username) return showToast('请输入用户名', 'error');
-  if (!password) return showToast('请输入初始密码', 'error');
+  if (!username) return showToast(window.i18n.t('msg_req_username'), 'error');
+  if (!password) return showToast(window.i18n.t('msg_req_init_pwd'), 'error');
 
   try {
     const res = await Api.createUser(username, password, role);
     if (res.success) {
-      showToast(`用户「${username}」注册成功！`);
+      showToast(window.i18n.t('msg_user_reg_success', { username: username }) || `用户「${username}」注册成功！`);
       closeModal('create-user-modal');
       document.getElementById('new-user-name').value = '';
       document.getElementById('new-user-password').value = '';
       await loadUsers();
       await loadOverview();
     } else {
-      showToast(res.error || '注册失败', 'error');
+      showToast(res.error || window.i18n.t('msg_err_register'), 'error');
     }
   } catch (err) {
-    showToast('注册请求异常: ' + err.message, 'error');
+    showToast(window.i18n.t('msg_err_register_req') + err.message, 'error');
   }
 }
 
@@ -1003,7 +1003,9 @@ function initSearchListeners() {
 }
 
 // 初始化应用
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  await window.i18n.init();
+
   // 导航项点击切换
   document.querySelectorAll('.nav-item').forEach(item => {
     item.addEventListener('click', () => switchTab(item.dataset.tab));
@@ -1084,7 +1086,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 手动刷新按钮
   document.getElementById('manual-refresh-btn').addEventListener('click', () => {
     loadCurrentTabData();
-    showToast('数据已刷新');
+    showToast(window.i18n.t('msg_data_refreshed'));
   });
 
   // 通用关闭模态框绑定

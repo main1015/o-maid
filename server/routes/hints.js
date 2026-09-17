@@ -16,7 +16,7 @@ router.post('/', authenticateToken, async (req, res) => {
 
         const { url, domain, selector, text } = req.body;
         if (!text) {
-            return res.status(400).json({ error: '提示内容不能为空' });
+            return res.status(400).json({ error: req.t('errHintContentRequired') });
         }
 
         // 审核状态判定：管理员免审直接 approved，普通用户需审核 pending
@@ -27,7 +27,7 @@ router.post('/', authenticateToken, async (req, res) => {
             const existing = await db('hints').where({ id: req.body.id }).first();
             if (existing) {
                 if (!isAdmin && existing.authorId !== req.user.id) {
-                    return res.status(403).json({ error: '权限不足：您不是该规则的原作者，无法覆写云端原版规则' });
+                    return res.status(403).json({ error: req.t('errNotOriginalAuthorHint') });
                 }
                 await db('hints').where({ id: req.body.id }).update({
                     url: url || '',
@@ -41,7 +41,7 @@ router.post('/', authenticateToken, async (req, res) => {
                     success: true, 
                     id: req.body.id,
                     status: targetStatus,
-                    message: isAdmin ? '发布成功' : '已提交修改，需等待管理员审核通过后公开可见'
+                    message: isAdmin ? req.t('msgPublishSuccess') : req.t('msgPublishPending')
                 });
             }
         }
@@ -62,10 +62,10 @@ router.post('/', authenticateToken, async (req, res) => {
             success: true, 
             id, 
             status: targetStatus,
-            message: isAdmin ? '发布成功' : '已提交成功，需等待管理员审核通过后公开可见'
+            message: isAdmin ? req.t('msgPublishSuccess') : req.t('msgSubmitSuccess')
         });
     } catch (err) {
-        res.status(500).json({ error: '发布失败: ' + err.message });
+        res.status(500).json({ error: req.t('errPublishFailed') + err.message });
     }
 });
 
@@ -75,13 +75,13 @@ router.post('/:id/audit', authenticateToken, requireAdmin, async (req, res) => {
     const { status } = req.body;
 
     if (!['approved', 'rejected', 'pending'].includes(status)) {
-        return res.status(400).json({ error: '审核状态无效，支持: approved, rejected, pending' });
+        return res.status(400).json({ error: req.t('errInvalidStatus') });
     }
 
     try {
         const hint = await db('hints').where({ id }).first();
         if (!hint) {
-            return res.status(404).json({ error: '未找到该悬停提示' });
+            return res.status(404).json({ error: req.t('errHintNotFound') });
         }
 
         await db('hints').where({ id }).update({ status });
@@ -89,10 +89,10 @@ router.post('/:id/audit', authenticateToken, requireAdmin, async (req, res) => {
             success: true,
             id,
             status,
-            message: status === 'approved' ? '审核通过，已全网公开' : (status === 'rejected' ? '已驳回该提示' : '已重置为待审核')
+            message: status === 'approved' ? req.t('msgAuditApproved') : (status === 'rejected' ? req.t('msgAuditRejectedHint') : req.t('msgAuditReset'))
         });
     } catch (err) {
-        res.status(500).json({ error: '审核操作失败: ' + err.message });
+        res.status(500).json({ error: req.t('errAuditFailed') + err.message });
     }
 });
 
@@ -141,7 +141,7 @@ router.get('/all', optionalAuth, async (req, res) => {
             hints: rows.map(r => ({ ...r, status: r.status || 'pending' })) 
         });
     } catch (err) {
-        res.status(500).json({ error: '查询失败: ' + err.message });
+        res.status(500).json({ error: req.t('errQueryFailed') + err.message });
     }
 });
 
@@ -149,7 +149,7 @@ router.get('/all', optionalAuth, async (req, res) => {
 router.get('/', optionalAuth, async (req, res) => {
     const { domain } = req.query;
     if (!domain) {
-        return res.status(400).json({ error: '缺少 domain 域名参数' });
+        return res.status(400).json({ error: req.t('errMissingDomain') });
     }
 
     const user = req.user;
@@ -189,7 +189,7 @@ router.get('/', optionalAuth, async (req, res) => {
             hints: rows.map(r => ({ ...r, status: r.status || 'approved' })) 
         });
     } catch (err) {
-        res.status(500).json({ error: '查询失败: ' + err.message });
+        res.status(500).json({ error: req.t('errQueryFailed') + err.message });
     }
 });
 
@@ -217,19 +217,19 @@ router.get('/:id', optionalAuth, async (req, res) => {
             .where('h.id', id)
             .first();
 
-        if (!row) return res.status(404).json({ error: '未找到该悬停提示' });
+        if (!row) return res.status(404).json({ error: req.t('errHintNotFound') });
 
         const status = row.status || 'approved';
         if (status !== 'approved') {
             const isAuthor = user && user.id === row.authorId;
             if (!isAdmin && !isAuthor) {
-                return res.status(403).json({ error: '权限不足：该悬停提示正在审核中或未通过审核' });
+                return res.status(403).json({ error: req.t('errNotApprovedHint') });
             }
         }
 
         res.json({ success: true, hint: { ...row, status } });
     } catch (err) {
-        res.status(500).json({ error: '查询失败: ' + err.message });
+        res.status(500).json({ error: req.t('errQueryFailed') + err.message });
     }
 });
 
@@ -240,7 +240,7 @@ router.post('/:id/download', async (req, res) => {
         await db('hints').where({ id }).increment('downloads', 1);
         res.json({ success: true });
     } catch (err) {
-        res.status(500).json({ error: '计数失败: ' + err.message });
+        res.status(500).json({ error: req.t('errCountFailed') + err.message });
     }
 });
 
@@ -249,17 +249,17 @@ router.delete('/:id', authenticateToken, async (req, res) => {
     const { id } = req.params;
     try {
         const hint = await db('hints').where({ id }).first();
-        if (!hint) return res.status(404).json({ error: '提示不存在' });
+        if (!hint) return res.status(404).json({ error: req.t('errHintNotFound') });
 
         // 权限判断：管理员或作者本人
         if (req.user.role !== 'admin' && hint.authorId !== req.user.id) {
-            return res.status(403).json({ error: '权限不足：无法删除他人创建的悬停提示' });
+            return res.status(403).json({ error: req.t('errDeleteNotAuthorHint') });
         }
 
         await db('hints').where({ id }).del();
-        res.json({ success: true, message: '删除成功' });
+        res.json({ success: true, message: req.t('msgDeleteSuccess') });
     } catch (err) {
-        res.status(500).json({ error: '删除失败: ' + err.message });
+        res.status(500).json({ error: req.t('errDeleteFailed') + err.message });
     }
 });
 

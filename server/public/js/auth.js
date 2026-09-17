@@ -117,7 +117,7 @@ class AuthManager {
     this.currentUser = null;
     localStorage.removeItem(STORAGE_KEY_TOKEN);
     localStorage.removeItem(STORAGE_KEY_USER);
-    this.showLoginOverlay('登录已过期或未授权，请重新登录');
+    this.showLoginOverlay(window.i18n.t('auth_exp_title'));
     this.notifyState(false);
   }
 
@@ -145,12 +145,12 @@ class AuthManager {
         this.notifyState(true);
         return { success: true };
       } else {
-        const msg = res.error || '登录失败，请检查账号密码';
+        const msg = res.error || window.i18n.t('auth_err_log');
         this.showError(msg);
         return { success: false, error: msg };
       }
     } catch (err) {
-      const msg = err.message || '网络连接异常';
+      const msg = err.message || window.i18n.t('auth_err_net');
       this.showError(msg);
       return { success: false, error: msg };
     } finally {
@@ -170,12 +170,12 @@ class AuthManager {
         // 注册成功后直接自动登录
         return await this.login(username, password);
       } else {
-        const msg = regRes.error || '注册失败';
+        const msg = regRes.error || window.i18n.t('auth_err_reg');
         this.showError(msg);
         return { success: false, error: msg };
       }
     } catch (err) {
-      const msg = err.message || '网络连接异常';
+      const msg = err.message || window.i18n.t('auth_err_net');
       this.showError(msg);
       return { success: false, error: msg };
     } finally {
@@ -222,7 +222,7 @@ class AuthManager {
         const password = passwordInput ? passwordInput.value.trim() : '';
 
         if (!username || !password) {
-          this.showError('请输入用户名和密码');
+          this.showError(window.i18n.t('auth_err_empty'));
           return;
         }
 
@@ -262,15 +262,15 @@ class AuthManager {
     const toggleBtn = document.getElementById('auth-toggle-mode-btn');
 
     if (this.isRegisterMode) {
-      if (titleEl) titleEl.textContent = '注册管理员账号';
-      if (subtitleEl) subtitleEl.textContent = '创建新账号以管理 O-Maid 云端规则';
-      if (submitBtn) submitBtn.textContent = '立即注册并登录';
-      if (toggleBtn) toggleBtn.textContent = '已有账号？返回登录';
+      if (titleEl) titleEl.textContent = window.i18n.t('auth_reg_title');
+      if (subtitleEl) subtitleEl.textContent = window.i18n.t('auth_reg_sub');
+      if (submitBtn) submitBtn.textContent = window.i18n.t('auth_reg_btn');
+      if (toggleBtn) toggleBtn.textContent = window.i18n.t('auth_reg_toggle');
     } else {
-      if (titleEl) titleEl.textContent = '登录 O-Maid 控制台';
-      if (subtitleEl) subtitleEl.textContent = '请输入管理员账号以访问控制台';
-      if (submitBtn) submitBtn.textContent = '登 录';
-      if (toggleBtn) toggleBtn.textContent = '没有账号？立即注册';
+      if (titleEl) titleEl.textContent = window.i18n.t('auth_log_title');
+      if (subtitleEl) subtitleEl.textContent = window.i18n.t('auth_log_sub');
+      if (submitBtn) submitBtn.textContent = window.i18n.t('auth_log_btn');
+      if (toggleBtn) toggleBtn.textContent = window.i18n.t('auth_log_toggle');
     }
   }
 
@@ -316,9 +316,9 @@ class AuthManager {
       submitBtn.disabled = isLoading;
       submitBtn.dataset.originalText = submitBtn.dataset.originalText || submitBtn.textContent;
       if (isLoading) {
-        submitBtn.textContent = '处理中...';
+        submitBtn.textContent = window.i18n.t('auth_btn_loading');
       } else {
-        submitBtn.textContent = this.isRegisterMode ? '立即注册并登录' : '登 录';
+        submitBtn.textContent = this.isRegisterMode ? window.i18n.t('auth_reg_btn') : window.i18n.t('auth_log_btn');
       }
     }
   }
@@ -354,7 +354,7 @@ class AuthManager {
     if (this.currentUser && this.currentUser.username) {
       const uname = this.currentUser.username;
       const isAdmin = this.isAdmin();
-      const roleText = isAdmin ? '管理员' : '创作者';
+      const roleText = isAdmin ? window.i18n.t('role_admin') : window.i18n.t('role_creator');
       const roleClass = isAdmin ? 'role-admin' : 'role-creator';
 
       if (sidebarUserCard && sidebarNameEl) {

@@ -15,6 +15,9 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
+const i18nMiddleware = require('./middleware/i18n');
+app.use(i18nMiddleware);
+
 // 静态资源目录（托管管理控制台前端）
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -34,7 +37,7 @@ app.get('*', (req, res, next) => {
 
 // API 404 错误兜底（保证所有未匹配的 API 返回 JSON 而非 HTML）
 app.use('/api', (req, res) => {
-    res.status(404).json({ error: `接口不存在: ${req.method} ${req.originalUrl}` });
+    res.status(404).json({ error: `${req.t('errNotFound')}${req.method} ${req.originalUrl}` });
 });
 
 const db = require('./database');
