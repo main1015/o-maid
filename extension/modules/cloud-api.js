@@ -89,7 +89,7 @@ export async function login(username, password) {
     } catch (err) {
         return {
             success: false,
-            error: `无法连接服务器 (${getApiBase()})，请确认后端已启动且端口一致！`
+            error: chrome.i18n.getMessage('msgServerConnectFail') ? chrome.i18n.getMessage('msgServerConnectFail').replace('$1', getApiBase()) : `无法连接服务器 (${getApiBase()})，请确认后端已启动且端口一致！`
         };
     }
 }
@@ -105,7 +105,7 @@ export async function register(username, password) {
     } catch (err) {
         return {
             success: false,
-            error: `无法连接服务器 (${getApiBase()})，请确认后端已启动且端口一致！`
+            error: chrome.i18n.getMessage('msgServerConnectFail').replace('$1', getApiBase())
         };
     }
 }
@@ -235,7 +235,7 @@ export async function syncCloudRules(tours = [], hints = []) {
             hintsRes.value.hints.forEach(h => cloudHintsMap.set(String(h.id), h));
         }
     } catch (e) {
-        console.warn('O-Maid: 批量拉取云端规则异常，将自动降级单条精准拉取', e);
+        console.warn('O-Maid: ' + chrome.i18n.getMessage('msgCloudBatchFetchFail'), e);
     }
 
     // 处理 Guides
@@ -302,7 +302,7 @@ export async function syncCloudRules(tours = [], hints = []) {
                     type: 'hint',
                     id: h.id,
                     cloudId: h.cloudId,
-                    name: h.text ? (h.text.length > 15 ? h.text.slice(0, 15) + '...' : h.text) : '悬停提示',
+                    name: h.text ? (h.text.length > 15 ? h.text.slice(0, 15) + '...' : h.text) : chrome.i18n.getMessage('titleHints'),
                     author: cloudItem.author || h.author,
                     localItem: h,
                     cloudItem: cloudItem

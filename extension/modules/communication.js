@@ -83,10 +83,10 @@ export async function sendMessage(message) {
 
         // 特殊处理：扩展上下文失效（通常是因为插件重新加载了）
         if (e.message.includes('context invalidated')) {
-            const msg = "O-Maid 插件已在后台更新或重新加载。请刷新当前页面以继续使用。";
+            const msg = chrome.i18n.getMessage('msgPluginReloaded') || "O-Maid 插件已在后台更新或重新加载。请刷新当前页面以继续使用。";
             console.error(`O-Maid: ${msg}`);
             // 弹出提示（可选，为了不干扰用户可以只在控制台显示，但既然报错了，弹窗更明确）
-            if (window.confirm(`${msg}\n是否现在刷新页面？`)) {
+            if (window.confirm(`${msg}\n${chrome.i18n.getMessage('msgConfirmRefresh') || '是否现在刷新页面？'}`)) {
                 window.location.reload();
             }
         }

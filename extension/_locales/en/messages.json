@@ -1,0 +1,359 @@
+{
+  "appName": {
+    "message": "O-Maid - Web Operation Guide & Smart Hint Assistant"
+  },
+  "appDesc": {
+    "message": "Smart assistant for web operation guides. Add hover hints, business annotations, and onboarding flows to any website to boost productivity."
+  },
+  "popupTitle": {
+    "message": "O-Maid Smart Assistant"
+  },
+  "popupHeader": {
+    "message": "O-Maid Assistant"
+  },
+  "togglePanelBtn": {
+    "message": "📋 Toggle Panel"
+  },
+  "popupNotConnectedTip": {
+    "message": "💡 Tip: Current page not connected"
+  },
+  "popupReloadTip": {
+    "message": "Please refresh the page to reconnect after extension reload."
+  },
+  "popupReloadBtn": {
+    "message": "Refresh current page (F5)"
+  },
+  "popupGithubLink": {
+    "message": "🔗 Open Source GitHub"
+  },
+  "popupSystemPageError": {
+    "message": "<span>⚠️ Scripts cannot run on browser system pages. Please switch to a normal web page!</span>"
+  },
+  "sidepanelTitle": {
+    "message": "O-Maid Assistant"
+  },
+  "btnCloudAuth": {
+    "message": "Cloud Account"
+  },
+  "btnSettings": {
+    "message": "Settings"
+  },
+  "btnExport": {
+    "message": "Export Data"
+  },
+  "btnImport": {
+    "message": "Import Data"
+  },
+  "btnAdd": {
+    "message": "Add New Hint"
+  },
+  "tabLocal": {
+    "message": "Local Library"
+  },
+  "tabCloud": {
+    "message": "Cloud Discover"
+  },
+  "titleTours": {
+    "message": "Guided Tours"
+  },
+  "titleHints": {
+    "message": "Hover Hints"
+  },
+  "msgNoData": {
+    "message": "No hints or tours currently."
+  },
+  "titleCloudTours": {
+    "message": "Shared Tours"
+  },
+  "titleCloudHints": {
+    "message": "Shared Hints"
+  },
+  "btnRefreshCloud": {
+    "message": "Refresh Cloud Data"
+  },
+  "msgCloudNoData": {
+    "message": "No matching hints or tours found in cloud."
+  },
+  "titleAuth": {
+    "message": "Cloud Account"
+  },
+  "placeholderUsername": {
+    "message": "Username"
+  },
+  "placeholderPassword": {
+    "message": "Password"
+  },
+  "btnLogin": {
+    "message": "Login"
+  },
+  "btnRegister": {
+    "message": "Register"
+  },
+  "btnLogout": {
+    "message": "Logout"
+  },
+  "btnClose": {
+    "message": "Close"
+  },
+  "titleSettings": {
+    "message": "Settings"
+  },
+  "labelApiBase": {
+    "message": "Backend API URL:"
+  },
+  "btnSaveSettings": {
+    "message": "Save Settings"
+  },
+  "btnCloseSettings": {
+    "message": "Close"
+  },
+  "titleAddChoice": {
+    "message": "What do you want to create?"
+  },
+  "btnCreateHint": {
+    "message": "Hover Hint"
+  },
+  "btnCreateTour": {
+    "message": "Guided Tour"
+  },
+  "btnCancel": {
+    "message": "Cancel"
+  },
+  "labelHintText": {
+    "message": "Hint Text:"
+  },
+  "labelCssSelector": {
+    "message": "CSS Selector:"
+  },
+  "btnReselect": {
+    "message": "Reselect"
+  },
+  "btnSave": {
+    "message": "Save"
+  },
+  "labelTourName": {
+    "message": "Tour Name:"
+  },
+  "labelTourTrigger": {
+    "message": "Trigger:"
+  },
+  "optionManual": {
+    "message": "Manual"
+  },
+  "optionAuto": {
+    "message": "Auto"
+  },
+  "titleSteps": {
+    "message": "Steps"
+  },
+  "btnAddStep": {
+    "message": "+ Add Step"
+  },
+  "btnSaveTour": {
+    "message": "Save Tour"
+  },
+  "labelStepText": {
+    "message": "Step Hint Text:"
+  },
+  "labelStepSelector": {
+    "message": "CSS Selector:"
+  },
+  "btnStepReselect": {
+    "message": "Reselect"
+  },
+  "btnSaveStep": {
+    "message": "Save Step"
+  },
+  "spTourItemToggleSteps": {
+    "message": "Click to toggle steps"
+  },
+  "spTourItemResetStatus": {
+    "message": "Reset completion status"
+  },
+  "spTriggerAuto": {
+    "message": "Auto"
+  },
+  "spTriggerManual": {
+    "message": "Manual"
+  },
+  "spUnnamedStep": {
+    "message": "Unnamed Step"
+  },
+  "spMsgTourReset": {
+    "message": "Tour \"\" completion status has been reset."
+  },
+  "spMsgTourDeleted": {
+    "message": "Tour deleted"
+  },
+  "spMsgHintDeleted": {
+    "message": "Hint deleted"
+  },
+  "spTitleEditHint": {
+    "message": "Edit Hover Hint"
+  },
+  "spTitleNewHint": {
+    "message": "New Hover Hint"
+  },
+  "spTitleEditTour": {
+    "message": "Edit Guided Tour"
+  },
+  "spTitleNewTour": {
+    "message": "New Guided Tour"
+  },
+  "spStepPrefix": {
+    "message": "Step"
+  },
+  "spUnnamed": {
+    "message": "Unnamed"
+  },
+  "spMsgFillCompleteInfo": {
+    "message": "Please fill in complete information"
+  },
+  "spMsgHintSaved": {
+    "message": "Hint saved"
+  },
+  "spMsgFillTourInfo": {
+    "message": "Please fill in tour name and add at least one step"
+  },
+  "spMsgTourSaved": {
+    "message": "Tour saved"
+  },
+  "spMsgExportSuccess": {
+    "message": "Data exported successfully!"
+  },
+  "spMsgImportSuccess": {
+    "message": "Data imported successfully!"
+  },
+  "spMsgImportFail": {
+    "message": "Import failed: "
+  },
+  "spMsgParseFail": {
+    "message": "Failed to parse JSON file: "
+  },
+  "uiTitle": {
+    "message": "O-Maid Assistant"
+  },
+  "btnCollapsePanel": {
+    "message": "Collapse Panel"
+  },
+  "btnClosePanel": {
+    "message": "Close Panel"
+  },
+  "tabLocalRules": {
+    "message": "Local Rules"
+  },
+  "tabCloudShared": {
+    "message": "Cloud Shared"
+  },
+  "msgCloudNotLoggedIn": {
+    "message": "☁️ Cloud Not Logged In"
+  },
+  "btnLoginNow": {
+    "message": "Login Now"
+  },
+  "labelScope": {
+    "message": "Scope:"
+  },
+  "scopeCurrentPage": {
+    "message": "Current Page"
+  },
+  "btnRefresh": {
+    "message": "Refresh"
+  },
+  "titleSyncRefresh": {
+    "message": "Fetch and update local rules with latest cloud data"
+  },
+  "btnViewAll": {
+    "message": "View All"
+  },
+  "btnQuickAdd": {
+    "message": "+ New"
+  },
+  "titleQuickAddTour": {
+    "message": "Quick Add Guided Tour"
+  },
+  "titleQuickAddHint": {
+    "message": "Quick Add Hover Hint"
+  },
+  "msgNoLocalRules": {
+    "message": "No local rules for current page."
+  },
+  "linkViewAllLocal": {
+    "message": "View all local rules >>"
+  },
+  "scopeCurrentSite": {
+    "message": "Current Site"
+  },
+  "linkViewAllCloud": {
+    "message": "View Public Hall"
+  },
+  "msgNoCloudRulesSite": {
+    "message": "No matching cloud rules for current site."
+  },
+  "linkViewAllCloudRules": {
+    "message": "View all public rules >>"
+  },
+  "labelServerAddress": {
+    "message": "Server Address:"
+  },
+  "linkChangePort": {
+    "message": "Change Port"
+  },
+  "titleSysSettings": {
+    "message": "⚙️ System Settings"
+  },
+  "btnSaveApiSettings": {
+    "message": "Save API Settings"
+  },
+  "labelLocalDataBackup": {
+    "message": "Local Data Backup & Migration:"
+  },
+  "btnExportJson": {
+    "message": "📤 Export JSON"
+  },
+  "btnImportJson": {
+    "message": "📥 Import JSON"
+  },
+  "msgInvalidDataFormat": {
+    "message": "Invalid data format"
+  },
+  "msgFillRequiredFields": {
+    "message": "Please fill all required fields"
+  },
+  "msgSelectingElement": {
+    "message": "🎯 <strong>Selecting Element</strong>: Please click a target element on the page &nbsp;<span style=\"opacity:0.85; font-size:11px; background:rgba(255,255,255,0.25); padding:2px 7px; border-radius:4px; margin-left:6px; cursor:pointer;\" id=\"o-maid-banner-esc-btn\">Press ESC to exit</span>"
+  },
+  "msgCannotAccessIframe": {
+    "message": "Cannot access cross-origin iframe"
+  },
+  "msgAccessTopUrlRestricted": {
+    "message": "Access to top URL restricted, using current page URL"
+  },
+  "defaultStepTitle": {
+    "message": "Step "
+  },
+  "msgStepElementNotFound": {
+    "message": "Element for tour step  not found on current page, cannot continue."
+  },
+  "introNextLabel": {
+    "message": "Next →"
+  },
+  "introPrevLabel": {
+    "message": "← Back"
+  },
+  "introDoneLabel": {
+    "message": "Done"
+  },
+  "msgPluginReloaded": {
+    "message": "O-Maid plugin has been updated or reloaded in the background. Please refresh the current page to continue."
+  },
+  "msgConfirmRefresh": {
+    "message": "Refresh page now?"
+  },
+  "msgServerConnectFail": {
+    "message": "Cannot connect to server (), please ensure the backend is running and the port is correct!"
+  },
+  "msgCloudBatchFetchFail": {
+    "message": "Failed to fetch cloud rules in batch, degrading to single precise fetch"
+  }
+}

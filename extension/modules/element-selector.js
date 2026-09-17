@@ -73,7 +73,7 @@ function showSelectionBanner() {
     if (selectionBanner || window.self !== window.top) return;
     selectionBanner = document.createElement('div');
     selectionBanner.id = 'o-maid-selection-banner';
-    selectionBanner.innerHTML = `🎯 <strong>正在选择元素</strong>：请在页面上点击目标元素 &nbsp;<span style="opacity:0.85; font-size:11px; background:rgba(255,255,255,0.25); padding:2px 7px; border-radius:4px; margin-left:6px; cursor:pointer;" id="o-maid-banner-esc-btn">按 ESC 退出</span>`;
+    selectionBanner.innerHTML = chrome.i18n.getMessage('msgSelectingElement');
     selectionBanner.style.cssText = `
         position: fixed;
         top: 14px;
@@ -190,7 +190,7 @@ function initRecursive(doc, bind) {
                 }
             } catch (e) {
                 // 跨域 iframe 会在此报错，优雅跳过
-                console.warn('O-Maid: 无法访问跨域 iframe', iframe.src);
+                console.warn('O-Maid: ' + chrome.i18n.getMessage('msgCannotAccessIframe'), iframe.src);
             }
         }
     } catch (e) {
@@ -378,7 +378,7 @@ export function selectElementForAction(e) {
             targetUrl = targetDoc.location.href;
         }
     } catch (e) {
-        console.warn('O-Maid: 访问顶层 URL 受限，使用当前页面 URL', e);
+        console.warn('O-Maid: ' + chrome.i18n.getMessage('msgAccessTopUrlRestricted'), e);
         targetUrl = isInsideIframe ? targetDoc.location.href : window.location.href;
     }
 

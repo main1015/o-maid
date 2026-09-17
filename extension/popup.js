@@ -1,4 +1,8 @@
 // popup.js
+import { localizeHtml } from './modules/i18n.js';
+
+// 初始化本地化
+localizeHtml();
 
 const toggleBtn = document.getElementById('toggle-panel-btn');
 const statusTip = document.getElementById('status-tip');
@@ -13,7 +17,7 @@ toggleBtn.addEventListener('click', () => {
     if (activeTab.url && (activeTab.url.startsWith('chrome://') || activeTab.url.startsWith('edge://') || activeTab.url.startsWith('about:'))) {
       if (statusTip) {
         statusTip.style.display = 'block';
-        statusTip.innerHTML = `<span>⚠️ 浏览器系统内置页面无法运行脚本，请切换到正常网页（如具体网站或 http://localhost:8632）！</span>`;
+        statusTip.innerHTML = chrome.i18n.getMessage('popupSystemPageError');
       }
       return;
     }

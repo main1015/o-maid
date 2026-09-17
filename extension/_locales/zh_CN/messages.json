@@ -1,10 +1,359 @@
 {
   "appName": {
-    "message": "O-Maid - 网页操作引导与智能提示助手",
-    "description": "应用名称"
+    "message": "O-Maid - 网页操作引导与智能提示助手"
   },
   "appDesc": {
-    "message": "专为网页操作指引设计的智能助手。支持为任意网站添加悬浮提示、业务注解与新手操作引导，提升企业办公与网页浏览效率。",
-    "description": "应用描述"
+    "message": "专为网页操作指引设计的智能助手。支持为任意网站添加悬浮提示、业务注解与新手操作引导，提升企业办公与网页浏览效率。"
+  },
+  "popupTitle": {
+    "message": "O-Maid 页面智能助手"
+  },
+  "popupHeader": {
+    "message": "O-Maid 页面助手"
+  },
+  "togglePanelBtn": {
+    "message": "📋 显示/隐藏面板"
+  },
+  "popupNotConnectedTip": {
+    "message": "💡 提示：当前页面未连接"
+  },
+  "popupReloadTip": {
+    "message": "扩展重载后需刷新网页方可重新连接助手脚本。"
+  },
+  "popupReloadBtn": {
+    "message": "立即刷新当前网页 (F5)"
+  },
+  "popupGithubLink": {
+    "message": "🔗 开源项目 GitHub 地址"
+  },
+  "popupSystemPageError": {
+    "message": "<span>⚠️ 浏览器系统内置页面无法运行脚本，请切换到正常网页（如具体网站或 http://localhost:8632）！</span>"
+  },
+  "sidepanelTitle": {
+    "message": "页面助手"
+  },
+  "btnCloudAuth": {
+    "message": "云端账号"
+  },
+  "btnSettings": {
+    "message": "设置"
+  },
+  "btnExport": {
+    "message": "导出数据"
+  },
+  "btnImport": {
+    "message": "导入数据"
+  },
+  "btnAdd": {
+    "message": "添加新提示"
+  },
+  "tabLocal": {
+    "message": "本地库"
+  },
+  "tabCloud": {
+    "message": "云端发现"
+  },
+  "titleTours": {
+    "message": "引导任务"
+  },
+  "titleHints": {
+    "message": "悬停提示"
+  },
+  "msgNoData": {
+    "message": "当前没有任何提示或任务。"
+  },
+  "titleCloudTours": {
+    "message": "共享引导任务"
+  },
+  "titleCloudHints": {
+    "message": "共享悬停提示"
+  },
+  "btnRefreshCloud": {
+    "message": "刷新云端数据"
+  },
+  "msgCloudNoData": {
+    "message": "云端当前没有任何匹配的提示或任务。"
+  },
+  "titleAuth": {
+    "message": "云端账号"
+  },
+  "placeholderUsername": {
+    "message": "用户名"
+  },
+  "placeholderPassword": {
+    "message": "密码"
+  },
+  "btnLogin": {
+    "message": "登录"
+  },
+  "btnRegister": {
+    "message": "注册"
+  },
+  "btnLogout": {
+    "message": "退出登录"
+  },
+  "btnClose": {
+    "message": "关闭"
+  },
+  "titleSettings": {
+    "message": "设置"
+  },
+  "labelApiBase": {
+    "message": "后端 API 地址:"
+  },
+  "btnSaveSettings": {
+    "message": "保存设置"
+  },
+  "btnCloseSettings": {
+    "message": "关闭"
+  },
+  "titleAddChoice": {
+    "message": "您想创建什么？"
+  },
+  "btnCreateHint": {
+    "message": "悬停提示"
+  },
+  "btnCreateTour": {
+    "message": "引导任务"
+  },
+  "btnCancel": {
+    "message": "取消"
+  },
+  "labelHintText": {
+    "message": "提示文本:"
+  },
+  "labelCssSelector": {
+    "message": "CSS 选择器:"
+  },
+  "btnReselect": {
+    "message": "重选"
+  },
+  "btnSave": {
+    "message": "保存"
+  },
+  "labelTourName": {
+    "message": "任务名称:"
+  },
+  "labelTourTrigger": {
+    "message": "触发方式:"
+  },
+  "optionManual": {
+    "message": "手动"
+  },
+  "optionAuto": {
+    "message": "自动"
+  },
+  "titleSteps": {
+    "message": "步骤"
+  },
+  "btnAddStep": {
+    "message": "+ 添加步骤"
+  },
+  "btnSaveTour": {
+    "message": "保存任务"
+  },
+  "labelStepText": {
+    "message": "步骤提示文本:"
+  },
+  "labelStepSelector": {
+    "message": "CSS 选择器:"
+  },
+  "btnStepReselect": {
+    "message": "重选"
+  },
+  "btnSaveStep": {
+    "message": "保存步骤"
+  },
+  "spTourItemToggleSteps": {
+    "message": "点击展开/折叠步骤"
+  },
+  "spTourItemResetStatus": {
+    "message": "重置完成状态"
+  },
+  "spTriggerAuto": {
+    "message": "自动"
+  },
+  "spTriggerManual": {
+    "message": "手动"
+  },
+  "spUnnamedStep": {
+    "message": "未命名步骤"
+  },
+  "spMsgTourReset": {
+    "message": "任务 \"\" 的完成状态已重置。"
+  },
+  "spMsgTourDeleted": {
+    "message": "任务已删除"
+  },
+  "spMsgHintDeleted": {
+    "message": "提示已删除"
+  },
+  "spTitleEditHint": {
+    "message": "修改悬停提示"
+  },
+  "spTitleNewHint": {
+    "message": "新建悬停提示"
+  },
+  "spTitleEditTour": {
+    "message": "修改引导任务"
+  },
+  "spTitleNewTour": {
+    "message": "新建引导任务"
+  },
+  "spStepPrefix": {
+    "message": "步骤"
+  },
+  "spUnnamed": {
+    "message": "未命名"
+  },
+  "spMsgFillCompleteInfo": {
+    "message": "请填写完整信息"
+  },
+  "spMsgHintSaved": {
+    "message": "提示已保存"
+  },
+  "spMsgFillTourInfo": {
+    "message": "请填写任务名称并添加至少一个步骤"
+  },
+  "spMsgTourSaved": {
+    "message": "任务已保存"
+  },
+  "spMsgExportSuccess": {
+    "message": "数据导出成功!"
+  },
+  "spMsgImportSuccess": {
+    "message": "数据导入成功!"
+  },
+  "spMsgImportFail": {
+    "message": "导入失败: "
+  },
+  "spMsgParseFail": {
+    "message": "解析 JSON 文件失败: "
+  },
+  "uiTitle": {
+    "message": "O-Maid 智能助手"
+  },
+  "btnCollapsePanel": {
+    "message": "折叠侧边栏"
+  },
+  "btnClosePanel": {
+    "message": "关闭面板"
+  },
+  "tabLocalRules": {
+    "message": "本地规则"
+  },
+  "tabCloudShared": {
+    "message": "云端共享"
+  },
+  "msgCloudNotLoggedIn": {
+    "message": "☁️ 云端未登录"
+  },
+  "btnLoginNow": {
+    "message": "立即登录"
+  },
+  "labelScope": {
+    "message": "范围:"
+  },
+  "scopeCurrentPage": {
+    "message": "当前网页"
+  },
+  "btnRefresh": {
+    "message": "刷新"
+  },
+  "titleSyncRefresh": {
+    "message": "拉取并更新本地所有已同步规则的最新云端数据"
+  },
+  "btnViewAll": {
+    "message": "查看全部"
+  },
+  "btnQuickAdd": {
+    "message": "+ 新建"
+  },
+  "titleQuickAddTour": {
+    "message": "一键新建引导任务"
+  },
+  "titleQuickAddHint": {
+    "message": "一键新建悬停提示"
+  },
+  "msgNoLocalRules": {
+    "message": "当前网页暂无本地规则。"
+  },
+  "linkViewAllLocal": {
+    "message": "查看全部本地规则 >>"
+  },
+  "scopeCurrentSite": {
+    "message": "当前网站"
+  },
+  "linkViewAllCloud": {
+    "message": "查看全网大厅"
+  },
+  "msgNoCloudRulesSite": {
+    "message": "当前网站暂无匹配的云端任务。"
+  },
+  "linkViewAllCloudRules": {
+    "message": "查看全网大厅所有规则 >>"
+  },
+  "labelServerAddress": {
+    "message": "服务地址:"
+  },
+  "linkChangePort": {
+    "message": "更改端口"
+  },
+  "titleSysSettings": {
+    "message": "⚙️ 系统设置"
+  },
+  "btnSaveApiSettings": {
+    "message": "保存 API 设置"
+  },
+  "labelLocalDataBackup": {
+    "message": "本地数据备份与迁移:"
+  },
+  "btnExportJson": {
+    "message": "📤 导出 JSON"
+  },
+  "btnImportJson": {
+    "message": "📥 导入 JSON"
+  },
+  "msgInvalidDataFormat": {
+    "message": "数据格式不正确"
+  },
+  "msgFillRequiredFields": {
+    "message": "请填写所有必填字段"
+  },
+  "msgSelectingElement": {
+    "message": "🎯 <strong>正在选择元素</strong>：请在页面上点击目标元素 &nbsp;<span style=\"opacity:0.85; font-size:11px; background:rgba(255,255,255,0.25); padding:2px 7px; border-radius:4px; margin-left:6px; cursor:pointer;\" id=\"o-maid-banner-esc-btn\">按 ESC 退出</span>"
+  },
+  "msgCannotAccessIframe": {
+    "message": "无法访问跨域 iframe"
+  },
+  "msgAccessTopUrlRestricted": {
+    "message": "访问顶层 URL 受限，使用当前页面 URL"
+  },
+  "defaultStepTitle": {
+    "message": "第  步"
+  },
+  "msgStepElementNotFound": {
+    "message": "引导步骤  的元素在当前页面未找到，无法继续。"
+  },
+  "introNextLabel": {
+    "message": "下一步 →"
+  },
+  "introPrevLabel": {
+    "message": "← 上一步"
+  },
+  "introDoneLabel": {
+    "message": "完成"
+  },
+  "msgPluginReloaded": {
+    "message": "O-Maid 插件已在后台更新或重新加载。请刷新当前页面以继续使用。"
+  },
+  "msgConfirmRefresh": {
+    "message": "是否现在刷新页面？"
+  },
+  "msgServerConnectFail": {
+    "message": "无法连接服务器 ()，请确认后端已启动且端口一致！"
+  },
+  "msgCloudBatchFetchFail": {
+    "message": "批量拉取云端规则异常，将自动降级单条精准拉取"
   }
 }

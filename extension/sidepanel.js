@@ -1,4 +1,6 @@
 // sidepanel.js - Side Panel 主逻辑
+import { localizeHtml } from './modules/i18n.js';
+
 let currentTabId = null;
 let currentView = 'main';
 let itemToEdit = null;
@@ -13,6 +15,9 @@ async function getCurrentTab() {
 // 初始化
 async function init() {
     console.log('Side Panel initializing...');
+
+    // 初始化本地化
+    localizeHtml();
 
     const tab = await getCurrentTab();
     currentTabId = tab.id;
@@ -78,25 +83,25 @@ function createTourItem(tour) {
     const li = document.createElement('li');
     li.innerHTML = `
     <div class="item-header">
-      <div class="item-info toggle-steps" style="cursor: pointer;" title="点击展开/折叠步骤">
+      <div class="item-info toggle-steps" style="cursor: pointer;" title="${chrome.i18n.getMessage('spTourItemToggleSteps')}">
         <span class="step-arrow">▶</span>
         <div class="name">${tour.name}</div>
       </div>
       <div class="item-actions">
-        <button class="btn btn-outline-secondary btn-sm reset-btn" title="重置完成状态">↺</button>
+        <button class="btn btn-outline-secondary btn-sm reset-btn" title="${chrome.i18n.getMessage('spTourItemResetStatus')}">↺</button>
         <button class="btn btn-success btn-sm start-btn">▶</button>
         <button class="btn btn-outline-primary btn-sm edit-btn">✎</button>
         <button class="btn btn-outline-danger btn-sm delete-btn">🗑</button>
       </div>
     </div>
     <div class="item-meta">
-      <span class="details">${tour.steps.length} 步, ${tour.trigger === 'auto' ? '自动' : '手动'}</span>
+      <span class="details">${tour.steps.length} ${chrome.i18n.getMessage('spTourItemStepCount') || '步'}, ${tour.trigger === 'auto' ? chrome.i18n.getMessage('spTriggerAuto') : chrome.i18n.getMessage('spTriggerManual')}</span>
     </div>
     <ul class="steps-list" style="display: none;">
       ${tour.steps.map((step, index) => `
         <li class="step-item" data-index="${index}">
           <span class="step-num">${index + 1}</span>
-          <span class="step-text">${step.text || '未命名步骤'}</span>
+          <span class="step-text">${step.text || chrome.i18n.getMessage('spUnnamedStep')}</span>
         </li>
       `).join('')}
     </ul>
@@ -130,7 +135,7 @@ function createTourItem(tour) {
             action: 'resetTourCompletion',
             tourId: tour.id
         });
-        showNotification(`任务 "${tour.name}" 的完成状态已重置。`, 'success');
+        showNotification(chrome.i18n.getMessage('spMsgTourReset').replace('$1', tour.name), 'success');
         await loadData();
     });
 
@@ -147,7 +152,7 @@ function createTourItem(tour) {
             action: 'deleteTour',
             tourId: tour.id
         });
-        showNotification(`任务已删除`, 'success');
+        showNotification(chrome.i18n.getMessage('spMsgTourDeleted'), 'success');
         await loadData();
     });
 
@@ -222,7 +227,7 @@ function createHintItem(hint) {
             action: 'deleteHoverHint',
             hintId: hint.id
         });
-        showNotification(`提示已删除`, 'success');
+        showNotification(chrome.i18n.getMessage('spMsgHintDeleted'), 'success');
         await loadData();
     });
 
@@ -250,16 +255,16 @@ function switchToView(viewName, data = null) {
 
     switch (viewName) {
         case 'main':
-            title.textContent = '页面助手';
+            title.textContent = chrome.i18n.getMessage('sidepanelTitle');
             addBtn.style.display = 'block';
             loadData();
             break;
         case 'add-choice':
-            title.textContent = '创建';
+            title.textContent = chrome.i18n.getMessage('titleAddChoice');
             addBtn.style.display = 'none';
             break;
         case 'edit-hint':
-            title.textContent = data ? '修改悬停提示' : '新建悬停提示';
+            title.textContent = data ? chrome.i18n.getMessage('spTitleEditHint') : chrome.i18n.getMessage('spTitleNewHint');
             addBtn.style.display = 'none';
             document.getElementById('hint-text').value = data?.text || '';
             document.getElementById('hint-selector').value = data?.selector || '';
@@ -269,7 +274,7 @@ function switchToView(viewName, data = null) {
             }
             break;
         case 'edit-tour':
-            title.textContent = data ? '修改引导任务' : '新建引导任务';
+            title.textContent = data ? chrome.i18n.getMessage('spTitleEditTour') : chrome.i18n.getMessage('spTitleNewTour');
             addBtn.style.display = 'none';
             tourBuilderState = data ? JSON.parse(JSON.stringify(data)) : { name: '', trigger: 'manual', steps: [] };
             document.getElementById('tour-name').value = tourBuilderState.name;
@@ -294,7 +299,7 @@ function renderTourBuilderSteps() {
         li.innerHTML = `
       <div class="item-header">
         <div class="item-info">
-          <div class="name">步骤 ${index + 1}: ${step.text || '未命名'}</div>
+          <div class="name">${chrome.i18n.getMessage('spStepPrefix')} ${index + 1}: ${step.text || chrome.i18n.getMessage('spUnnamed')}</div>
           <div class="details">${step.selector}</div>
         </div>
         <div class="item-actions">
@@ -419,7 +424,7 @@ async function saveHint() {
     const selector = document.getElementById('hint-selector').value;
 
     if (!text || !selector) {
-        showNotification('请填写完整信息', 'error');
+        showNotification(chrome.i18n.getMessage('spMsgFillCompleteInfo'), 'error');
         return;
     }
 
@@ -437,7 +442,7 @@ async function saveHint() {
         hint
     });
 
-    showNotification('提示已保存', 'success');
+    showNotification(chrome.i18n.getMessage('spMsgHintSaved'), 'success');
     switchToView('main');
 }
 
@@ -447,7 +452,7 @@ async function saveTour() {
     tourBuilderState.trigger = document.getElementById('tour-trigger').value;
 
     if (!tourBuilderState.name || tourBuilderState.steps.length === 0) {
-        showNotification('请填写任务名称并添加至少一个步骤', 'error');
+        showNotification(chrome.i18n.getMessage('spMsgFillTourInfo'), 'error');
         return;
     }
 
@@ -462,7 +467,7 @@ async function saveTour() {
         tour
     });
 
-    showNotification('任务已保存', 'success');
+    showNotification(chrome.i18n.getMessage('spMsgTourSaved'), 'success');
     switchToView('main');
 }
 
@@ -479,7 +484,7 @@ async function handleExport() {
         a.download = `o-maid-data-${new Date().toISOString().split('T')[0]}.json`;
         a.click();
         URL.revokeObjectURL(url);
-        showNotification('数据导出成功!', 'success');
+        showNotification(chrome.i18n.getMessage('spMsgExportSuccess'), 'success');
     }
 }
 
@@ -498,13 +503,13 @@ async function handleImportFile(event) {
             });
 
             if (response.success) {
-                showNotification('数据导入成功!', 'success');
+                showNotification(chrome.i18n.getMessage('spMsgImportSuccess'), 'success');
                 await loadData();
             } else {
-                showNotification('导入失败: ' + (response.error || '未知错误'), 'error');
+                showNotification(chrome.i18n.getMessage('spMsgImportFail') + (response.error || 'Unknown error'), 'error');
             }
         } catch (err) {
-            showNotification('解析 JSON 文件失败: ' + err.message, 'error');
+            showNotification(chrome.i18n.getMessage('spMsgParseFail') + err.message, 'error');
         }
         event.target.value = '';
     };

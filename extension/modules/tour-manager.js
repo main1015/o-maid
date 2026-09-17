@@ -28,7 +28,7 @@ export function startTour(tour, startStepNumber = 1, onHidePanel = null) {
     const introJsSteps = tour.steps.map((step, index) => {
         return {
             element: null, // 初始设为 null，在 onbeforechange 中动态查找
-            title: step.title || `第 ${index + 1} 步`,
+            title: step.title || chrome.i18n.getMessage('defaultStepTitle').replace('$1', index + 1),
             intro: step.text || step.content || step.intro || '', // 确保内容字段正确匹配
             position: step.position || 'bottom'
         };
@@ -45,7 +45,7 @@ export function startTour(tour, startStepNumber = 1, onHidePanel = null) {
 
     if (startStepIndex === -1) {
         console.error(`O-Maid: [Tour] Could not find step ${startStepNumber} (Index: ${startStepIndex}) in tour "${tour.name}"`);
-        alert(`引导步骤 ${startStepNumber} 的元素在当前页面未找到，无法继续。`);
+        alert(chrome.i18n.getMessage('msgStepElementNotFound').replace('$1', startStepNumber));
         stopTourState();
         return;
     }
@@ -100,9 +100,9 @@ export function startTour(tour, startStepNumber = 1, onHidePanel = null) {
 
         const options = {
             steps: introJsSteps,
-            nextLabel: '下一步 →',
-            prevLabel: '← 上一步',
-            doneLabel: '完成',
+            nextLabel: chrome.i18n.getMessage('introNextLabel'),
+            prevLabel: chrome.i18n.getMessage('introPrevLabel'),
+            doneLabel: chrome.i18n.getMessage('introDoneLabel'),
             showStepNumbers: true,
             exitOnOverlayClick: false,
             initialStep: startStepIndex,

@@ -45,181 +45,181 @@ export function createUIPanel() {
     panel.id = 'o-maid-panel';
     panel.style.display = 'none'; // 明确预设初始状态为隐藏，彻底解决第一次点击失效的Bug
     panel.innerHTML = `
-    <div class="o-maid-resize-handle" title="拖拽调整宽度"></div>
-    <div class="o-maid-collapse-tab" title="展开侧边栏">
+    <div class="o-maid-resize-handle" title="${chrome.i18n.getMessage('btnCollapsePanel')}"></div>
+    <div class="o-maid-collapse-tab" title="${chrome.i18n.getMessage('btnCollapsePanel')}">
       <div class="o-maid-collapse-tab-icon">📋</div>
     </div>
     <div id="o-maid-panel-header">
-      <span id="o-maid-header-title" style="font-weight: bold; display: inline-flex; align-items: center; gap: 6px;"><img src="${chrome.runtime.getURL('icons/icon16.png')}" style="width: 16px; height: 16px; border-radius: 3px;" alt=""> O-Maid 智能助手</span>
+      <span id="o-maid-header-title" style="font-weight: bold; display: inline-flex; align-items: center; gap: 6px;"><img src="${chrome.runtime.getURL('icons/icon16.png')}" style="width: 16px; height: 16px; border-radius: 3px;" alt=""> ${chrome.i18n.getMessage('uiTitle')}</span>
       <div id="o-maid-header-buttons">
-        <button id="auth-btn" title="云端账号">👤</button>
-        <button id="settings-btn" title="设置">⚙️</button>
-        <button id="o-maid-collapse-btn" title="折叠侧边栏">◀</button>
-        <button id="o-maid-export-btn" title="导出数据">📤</button>
-        <button id="o-maid-import-btn" title="导入数据">📥</button>
-        <button id="o-maid-add-new-btn" title="添加新提示">+</button>
-        <button id="o-maid-close-btn" title="关闭面板">×</button>
+        <button id="auth-btn" title="${chrome.i18n.getMessage('btnCloudAuth')}">👤</button>
+        <button id="settings-btn" title="${chrome.i18n.getMessage('btnSettings')}">⚙️</button>
+        <button id="o-maid-collapse-btn" title="${chrome.i18n.getMessage('btnCollapsePanel')}">◀</button>
+        <button id="o-maid-export-btn" title="${chrome.i18n.getMessage('btnExport')}">📤</button>
+        <button id="o-maid-import-btn" title="${chrome.i18n.getMessage('btnImport')}">📥</button>
+        <button id="o-maid-add-new-btn" title="${chrome.i18n.getMessage('btnAdd')}">+</button>
+        <button id="o-maid-close-btn" title="${chrome.i18n.getMessage('btnClosePanel')}">×</button>
       </div>
     </div>
     <div id="o-maid-notification" style="display:none;"></div>
     <div id="o-maid-panel-content">
       <!-- 现代一体化分段切换器 (Segmented Control) -->
       <div class="o-maid-segment-bar">
-        <button class="tab-btn active" data-tab="view">本地规则</button>
-        <button class="tab-btn" data-tab="cloud">云端共享</button>
+        <button class="tab-btn active" data-tab="view">${chrome.i18n.getMessage('tabLocalRules')}</button>
+        <button class="tab-btn" data-tab="cloud">${chrome.i18n.getMessage('tabCloudShared')}</button>
       </div>
       <div id="auth-compact-bar" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding: 0 4px; font-size: 11px; color: #64748b;">
-        <span id="auth-banner-text">☁️ 云端未登录</span>
-        <a href="javascript:void(0)" id="auth-banner-btn" style="color: #6366f1; text-decoration: none; font-weight: 500; cursor: pointer;">立即登录</a>
+        <span id="auth-banner-text">${chrome.i18n.getMessage('msgCloudNotLoggedIn')}</span>
+        <a href="javascript:void(0)" id="auth-banner-btn" style="color: #6366f1; text-decoration: none; font-weight: 500; cursor: pointer;">${chrome.i18n.getMessage('btnLoginNow')}</a>
       </div>
 
       <!-- View: Main list view -->
       <div id="o-maid-view-view" class="tab-content active">
         <div style="background: #f1f5f9; padding: 6px 10px; border-radius: 6px; margin-bottom: 10px; font-size: 12px; display: flex; justify-content: space-between; align-items: center; white-space: nowrap;">
-            <span style="flex-shrink: 0;">范围: <strong id="local-scope-label">当前网页</strong></span>
+            <span style="flex-shrink: 0;">${chrome.i18n.getMessage('labelScope')} <strong id="local-scope-label">${chrome.i18n.getMessage('scopeCurrentPage')}</strong></span>
             <div style="display: flex; gap: 6px; align-items: center; flex-shrink: 0;">
-                <button id="sync-refresh-btn" style="background: #e0e7ff; color: #4338ca; border: none; padding: 2px 6px; border-radius: 4px; font-size: 11px; cursor: pointer; display: flex; align-items: center; gap: 3px; font-weight: 500; white-space: nowrap; flex-shrink: 0;" title="拉取并更新本地所有已同步规则的最新云端数据">
-                    <span class="sync-icon">🔄</span> 刷新
+                <button id="sync-refresh-btn" style="background: #e0e7ff; color: #4338ca; border: none; padding: 2px 6px; border-radius: 4px; font-size: 11px; cursor: pointer; display: flex; align-items: center; gap: 3px; font-weight: 500; white-space: nowrap; flex-shrink: 0;" title="${chrome.i18n.getMessage('titleSyncRefresh')}">
+                    <span class="sync-icon">🔄</span> ${chrome.i18n.getMessage('btnRefresh')}
                 </button>
-                <a href="javascript:void(0)" id="toggle-local-scope-btn" style="color: #6366f1; text-decoration: underline; font-size: 11px; cursor: pointer; white-space: nowrap; flex-shrink: 0;">查看全部</a>
+                <a href="javascript:void(0)" id="toggle-local-scope-btn" style="color: #6366f1; text-decoration: underline; font-size: 11px; cursor: pointer; white-space: nowrap; flex-shrink: 0;">${chrome.i18n.getMessage('btnViewAll')}</a>
             </div>
         </div>
         <div class="o-maid-list-section">
           <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; border-bottom: 1px solid #eee; background: #fafafa;">
-            <h4 class="o-maid-collapsible active" data-target="o-maid-tours-list" style="margin: 0; padding: 0; border: none; background: transparent;">引导任务 <span class="arrow"></span></h4>
-            <button id="quick-create-tour-btn" class="o-maid-quick-add-btn" title="一键新建引导任务">+ 新建</button>
+            <h4 class="o-maid-collapsible active" data-target="o-maid-tours-list" style="margin: 0; padding: 0; border: none; background: transparent;">${chrome.i18n.getMessage('titleTours')} <span class="arrow"></span></h4>
+            <button id="quick-create-tour-btn" class="o-maid-quick-add-btn" title="${chrome.i18n.getMessage('titleQuickAddTour')}">${chrome.i18n.getMessage('btnQuickAdd')}</button>
           </div>
           <ul id="o-maid-tours-list"></ul>
         </div>
         <div class="o-maid-list-section">
           <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; border-bottom: 1px solid #eee; background: #fafafa;">
-            <h4 class="o-maid-collapsible active" data-target="o-maid-hints-list" style="margin: 0; padding: 0; border: none; background: transparent;">悬停提示 <span class="arrow"></span></h4>
-            <button id="quick-create-hint-btn" class="o-maid-quick-add-btn" title="一键新建悬停提示">+ 新建</button>
+            <h4 class="o-maid-collapsible active" data-target="o-maid-hints-list" style="margin: 0; padding: 0; border: none; background: transparent;">${chrome.i18n.getMessage('titleHints')} <span class="arrow"></span></h4>
+            <button id="quick-create-hint-btn" class="o-maid-quick-add-btn" title="${chrome.i18n.getMessage('titleQuickAddHint')}">${chrome.i18n.getMessage('btnQuickAdd')}</button>
           </div>
           <ul id="o-maid-hints-list"></ul>
         </div>
         <div id="local-no-data-container" style="display:none; text-align:center; padding:15px; color:#64748b; font-size:12px;">
-            <p id="o-maid-no-data-msg" style="margin:0;">当前网页暂无本地规则。</p>
-            <a href="javascript:void(0)" id="local-empty-view-all-link" style="color:#6366f1; text-decoration:underline; display:inline-block; margin-top:6px; cursor:pointer;">查看全部本地规则 &gt;&gt;</a>
+            <p id="o-maid-no-data-msg" style="margin:0;">${chrome.i18n.getMessage('msgNoLocalRules')}</p>
+            <a href="javascript:void(0)" id="local-empty-view-all-link" style="color:#6366f1; text-decoration:underline; display:inline-block; margin-top:6px; cursor:pointer;">${chrome.i18n.getMessage('linkViewAllLocal')}</a>
         </div>
       </div>
 
       <!-- View: Cloud Discover -->
       <div id="view-cloud" class="tab-content" style="display:none;">
           <div style="background: #f1f5f9; padding: 6px 10px; border-radius: 6px; margin-bottom: 10px; font-size: 12px; display: flex; justify-content: space-between; align-items: center;">
-              <span>范围: <strong id="cloud-scope-label">当前网站</strong></span>
-              <a href="javascript:void(0)" id="toggle-cloud-scope-btn" style="color: #6366f1; text-decoration: underline; font-size: 11px; cursor: pointer;">查看全网大厅</a>
+              <span>${chrome.i18n.getMessage('labelScope')} <strong id="cloud-scope-label">${chrome.i18n.getMessage('scopeCurrentSite')}</strong></span>
+              <a href="javascript:void(0)" id="toggle-cloud-scope-btn" style="color: #6366f1; text-decoration: underline; font-size: 11px; cursor: pointer;">${chrome.i18n.getMessage('linkViewAllCloud')}</a>
           </div>
           <div class="o-maid-list-section">
-              <h4 class="o-maid-collapsible active" data-target="cloud-tours-list">共享引导任务 <span class="arrow"></span></h4>
+              <h4 class="o-maid-collapsible active" data-target="cloud-tours-list">${chrome.i18n.getMessage('titleCloudTours')} <span class="arrow"></span></h4>
               <ul id="cloud-tours-list"></ul>
           </div>
           <div class="o-maid-list-section">
-              <h4 class="o-maid-collapsible active" data-target="cloud-hints-list">共享悬停提示 <span class="arrow"></span></h4>
+              <h4 class="o-maid-collapsible active" data-target="cloud-hints-list">${chrome.i18n.getMessage('titleCloudHints')} <span class="arrow"></span></h4>
               <ul id="cloud-hints-list"></ul>
           </div>
-          <button id="refresh-cloud-btn" class="choice-btn">刷新云端数据</button>
+          <button id="refresh-cloud-btn" class="choice-btn">${chrome.i18n.getMessage('btnRefreshCloud')}</button>
           <div id="cloud-no-data-container" style="display:none; text-align:center; padding:15px; color:#64748b; font-size:12px;">
-              <p id="cloud-no-data-msg">当前网站暂无匹配的云端任务。</p>
-              <a href="javascript:void(0)" id="cloud-empty-view-all-link" style="color:#6366f1; text-decoration:underline; display:inline-block; margin-top:6px; cursor:pointer;">查看全网大厅所有规则 &gt;&gt;</a>
+              <p id="cloud-no-data-msg">${chrome.i18n.getMessage('msgNoCloudRulesSite')}</p>
+              <a href="javascript:void(0)" id="cloud-empty-view-all-link" style="color:#6366f1; text-decoration:underline; display:inline-block; margin-top:6px; cursor:pointer;">${chrome.i18n.getMessage('linkViewAllCloudRules')}</a>
           </div>
       </div>
 
       <!-- View: Auth -->
       <div id="view-auth" style="display:none;">
-          <h5 style="margin-top:0; font-size:14px; font-weight:600; margin-bottom:12px; border-bottom:1px solid #eee; padding-bottom:6px;">👤 云端账号</h5>
+          <h5 style="margin-top:0; font-size:14px; font-weight:600; margin-bottom:12px; border-bottom:1px solid #eee; padding-bottom:6px;">${chrome.i18n.getMessage('titleAuth')}</h5>
           <div id="auth-status" style="margin-bottom: 10px; font-size: 13px; color: #475569;"></div>
           <div id="auth-form-container">
-              <input type="text" id="auth-username" placeholder="用户名" style="width: 100%; margin-bottom: 8px; padding: 7px 10px; box-sizing: border-box; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px;">
-              <input type="password" id="auth-password" placeholder="密码" style="width: 100%; margin-bottom: 8px; padding: 7px 10px; box-sizing: border-box; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px;">
+              <input type="text" id="auth-username" placeholder="${chrome.i18n.getMessage('placeholderUsername')}" style="width: 100%; margin-bottom: 8px; padding: 7px 10px; box-sizing: border-box; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px;">
+              <input type="password" id="auth-password" placeholder="${chrome.i18n.getMessage('placeholderPassword')}" style="width: 100%; margin-bottom: 8px; padding: 7px 10px; box-sizing: border-box; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px;">
               <div style="display: flex; gap: 10px; margin-bottom: 10px;">
-                  <button id="login-btn" class="choice-btn" style="flex: 1; margin: 0; padding: 7px; border-radius: 6px; background: #6366f1; color: #fff; border: none; font-weight: 500; cursor: pointer;">登录</button>
-                  <button id="register-btn" class="choice-btn" style="flex: 1; margin: 0; padding: 7px; border-radius: 6px; background: #f8fafc; color: #475569; border: 1px solid #cbd5e1; font-weight: 500; cursor: pointer;">注册</button>
+                  <button id="login-btn" class="choice-btn" style="flex: 1; margin: 0; padding: 7px; border-radius: 6px; background: #6366f1; color: #fff; border: none; font-weight: 500; cursor: pointer;">${chrome.i18n.getMessage('btnLogin')}</button>
+                  <button id="register-btn" class="choice-btn" style="flex: 1; margin: 0; padding: 7px; border-radius: 6px; background: #f8fafc; color: #475569; border: 1px solid #cbd5e1; font-weight: 500; cursor: pointer;">${chrome.i18n.getMessage('btnRegister')}</button>
               </div>
           </div>
-          <button id="logout-btn" class="choice-btn" style="display:none; width: 100%; margin-bottom: 12px; background: #fef2f2; color: #ef4444; border: 1px solid #fecaca; border-radius: 6px; padding: 8px; cursor: pointer; font-weight: 500; font-size: 13px;">退出登录</button>
+          <button id="logout-btn" class="choice-btn" style="display:none; width: 100%; margin-bottom: 12px; background: #fef2f2; color: #ef4444; border: 1px solid #fecaca; border-radius: 6px; padding: 8px; cursor: pointer; font-weight: 500; font-size: 13px;">${chrome.i18n.getMessage('btnLogout')}</button>
           <div style="font-size: 11px; color: #64748b; margin-top: 10px; display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed #eee; padding-top: 8px;">
-            <span>服务地址: <code id="auth-current-server" style="color: #6366f1;">http://localhost:3000/api</code></span>
-            <a href="javascript:void(0)" id="auth-change-server-link" style="color: #6366f1; text-decoration: underline; cursor: pointer;">更改端口</a>
+            <span>${chrome.i18n.getMessage('labelServerAddress')} <code id="auth-current-server" style="color: #6366f1;">http://localhost:3000/api</code></span>
+            <a href="javascript:void(0)" id="auth-change-server-link" style="color: #6366f1; text-decoration: underline; cursor: pointer;">${chrome.i18n.getMessage('linkChangePort')}</a>
           </div>
           <hr style="border:none; border-top:1px solid #eee; margin:16px 0;">
-          <button id="close-auth-btn" class="cancel-btn" style="width:100%; padding:7px; border:1px solid #cbd5e1; background:#fff; border-radius:6px; cursor:pointer; font-size:13px; color:#334155;">关闭</button>
+          <button id="close-auth-btn" class="cancel-btn" style="width:100%; padding:7px; border:1px solid #cbd5e1; background:#fff; border-radius:6px; cursor:pointer; font-size:13px; color:#334155;">${chrome.i18n.getMessage('btnClose')}</button>
       </div>
 
       <!-- View: Settings -->
       <div id="view-settings" style="display:none;">
-          <h5 style="margin-top:0; font-size:14px; font-weight:600; margin-bottom:12px; border-bottom:1px solid #eee; padding-bottom:6px;">⚙️ 系统设置</h5>
-          <label style="font-size:12px; font-weight:600; color:#475569;">云端后端 API 地址:</label>
+          <h5 style="margin-top:0; font-size:14px; font-weight:600; margin-bottom:12px; border-bottom:1px solid #eee; padding-bottom:6px;">${chrome.i18n.getMessage('titleSysSettings')}</h5>
+          <label style="font-size:12px; font-weight:600; color:#475569;">${chrome.i18n.getMessage('labelApiBase')}</label>
           <input type="text" id="setting-api-base" placeholder="http://localhost:3000/api" style="width: 100%; margin-top:4px; margin-bottom: 10px; padding: 7px 10px; box-sizing: border-box; border:1px solid #cbd5e1; border-radius:6px; font-size:13px;">
-          <button id="save-settings-btn" class="save-btn" style="width: 100%; padding:8px; border-radius:6px; background:#6366f1; color:#fff; border:none; font-weight:600; cursor:pointer; margin-bottom: 16px;">保存 API 设置</button>
+          <button id="save-settings-btn" class="save-btn" style="width: 100%; padding:8px; border-radius:6px; background:#6366f1; color:#fff; border:none; font-weight:600; cursor:pointer; margin-bottom: 16px;">${chrome.i18n.getMessage('btnSaveApiSettings')}</button>
           
           <div style="border-top:1px dashed #e2e8f0; padding-top:12px; margin-bottom:12px;">
-            <span style="font-size:12px; font-weight:600; color:#475569; display:block; margin-bottom:8px;">本地数据备份与迁移:</span>
+            <span style="font-size:12px; font-weight:600; color:#475569; display:block; margin-bottom:8px;">${chrome.i18n.getMessage('labelLocalDataBackup')}</span>
             <div style="display:flex; gap:8px;">
-              <button id="o-maid-export-btn" class="btn" style="flex:1; border:1px solid #cbd5e1; background:#f8fafc; padding:6px; border-radius:6px; font-size:12px; cursor:pointer;">📤 导出 JSON</button>
-              <button id="o-maid-import-btn" class="btn" style="flex:1; border:1px solid #cbd5e1; background:#f8fafc; padding:6px; border-radius:6px; font-size:12px; cursor:pointer;">📥 导入 JSON</button>
+              <button id="o-maid-export-btn" class="btn" style="flex:1; border:1px solid #cbd5e1; background:#f8fafc; padding:6px; border-radius:6px; font-size:12px; cursor:pointer;">${chrome.i18n.getMessage('btnExportJson')}</button>
+              <button id="o-maid-import-btn" class="btn" style="flex:1; border:1px solid #cbd5e1; background:#f8fafc; padding:6px; border-radius:6px; font-size:12px; cursor:pointer;">${chrome.i18n.getMessage('btnImportJson')}</button>
             </div>
           </div>
           <hr style="border:none; border-top:1px solid #eee; margin:16px 0;">
-          <button id="close-settings-btn" class="cancel-btn" style="width:100%; padding:7px; border:1px solid #cbd5e1; background:#fff; border-radius:6px; cursor:pointer; font-size:13px; color:#334155;">关闭</button>
+          <button id="close-settings-btn" class="cancel-btn" style="width:100%; padding:7px; border:1px solid #cbd5e1; background:#fff; border-radius:6px; cursor:pointer; font-size:13px; color:#334155;">${chrome.i18n.getMessage('btnClose')}</button>
       </div>
 
       <!-- View: Add Choice -->
       <div id="o-maid-view-add-choice" style="display:none;">
-        <h5>您想创建什么？</h5>
-        <button id="o-maid-create-hint-btn" class="choice-btn">悬停提示</button>
-        <button id="o-maid-create-tour-btn" class="choice-btn">引导任务</button>
+        <h5>${chrome.i18n.getMessage('titleAddChoice')}</h5>
+        <button id="o-maid-create-hint-btn" class="choice-btn">${chrome.i18n.getMessage('btnCreateHint')}</button>
+        <button id="o-maid-create-tour-btn" class="choice-btn">${chrome.i18n.getMessage('btnCreateTour')}</button>
         <hr style="border:none; border-top:1px solid #eee; margin:16px 0;">
-        <button id="o-maid-cancel-creation-btn" class="cancel-btn" style="width:100%;">取消</button>
+        <button id="o-maid-cancel-creation-btn" class="cancel-btn" style="width:100%;">${chrome.i18n.getMessage('btnCancel')}</button>
       </div>
 
       <!-- View: Hint Editor -->
       <div id="o-maid-view-edit-hint" style="display:none;">
-        <label>提示文本:</label>
+        <label>${chrome.i18n.getMessage('labelHintText')}</label>
         <textarea id="o-maid-hint-text" rows="4"></textarea>
-        <label>CSS 选择器:</label>
+        <label>${chrome.i18n.getMessage('labelCssSelector')}</label>
         <div class="selector-wrapper">
           <input type="text" id="o-maid-hint-selector" readonly>
-          <button id="o-maid-hint-reselect-btn">重选</button>
+          <button id="o-maid-hint-reselect-btn">${chrome.i18n.getMessage('btnReselect')}</button>
         </div>
         <div class="form-actions">
-          <button id="o-maid-save-hint-btn" class="save-btn">保存</button>
-          <button id="o-maid-cancel-edit-hint-btn" class="cancel-btn">取消</button>
+          <button id="o-maid-save-hint-btn" class="save-btn">${chrome.i18n.getMessage('btnSave')}</button>
+          <button id="o-maid-cancel-edit-hint-btn" class="cancel-btn">${chrome.i18n.getMessage('btnCancel')}</button>
         </div>
       </div>
 
       <!-- View: Tour Editor -->
       <div id="o-maid-view-edit-tour" style="display:none;">
-        <label>任务名称:</label>
+        <label>${chrome.i18n.getMessage('labelTourName')}</label>
         <input type="text" id="o-maid-tour-name">
-        <label>触发方式:</label>
+        <label>${chrome.i18n.getMessage('labelTourTrigger')}</label>
         <select id="o-maid-tour-trigger">
-          <option value="manual">手动</option>
-          <option value="auto">自动</option>
+          <option value="manual">${chrome.i18n.getMessage('optionManual')}</option>
+          <option value="auto">${chrome.i18n.getMessage('optionAuto')}</option>
         </select>
         <div class="o-maid-list-section">
-          <h5>步骤 (<span id="o-maid-tour-step-count">0</span>)</h5>
+          <h5>${chrome.i18n.getMessage('titleSteps')} (<span id="o-maid-tour-step-count">0</span>)</h5>
           <ul id="o-maid-tour-steps-list"></ul>
         </div>
-        <button id="o-maid-tour-add-step-btn" class="choice-btn">+ 添加步骤</button>
+        <button id="o-maid-tour-add-step-btn" class="choice-btn">${chrome.i18n.getMessage('btnAddStep')}</button>
         <div class="form-actions">
-          <button id="o-maid-save-tour-btn" class="save-btn">保存任务</button>
-          <button id="o-maid-cancel-edit-tour-btn" class="cancel-btn">取消</button>
+          <button id="o-maid-save-tour-btn" class="save-btn">${chrome.i18n.getMessage('btnSaveTour')}</button>
+          <button id="o-maid-cancel-edit-tour-btn" class="cancel-btn">${chrome.i18n.getMessage('btnCancel')}</button>
         </div>
       </div>
 
       <!-- View: Tour Step Editor -->
       <div id="o-maid-view-edit-tour-step" style="display:none;">
-        <label>步骤提示文本:</label>
+        <label>${chrome.i18n.getMessage('labelStepText')}</label>
         <textarea id="o-maid-tour-step-text" rows="4"></textarea>
-        <label>CSS 选择器:</label>
+        <label>${chrome.i18n.getMessage('labelCssSelector')}</label>
         <div class="selector-wrapper">
           <input type="text" id="o-maid-tour-step-selector" readonly>
-          <button id="o-maid-tour-step-reselect-btn">重选</button>
+          <button id="o-maid-tour-step-reselect-btn">${chrome.i18n.getMessage('btnReselect')}</button>
         </div>
         <div class="form-actions">
-          <button id="o-maid-save-tour-step-btn" class="save-btn">保存步骤</button>
-          <button id="o-maid-cancel-edit-tour-step-btn" class="cancel-btn">取消</button>
+          <button id="o-maid-save-tour-step-btn" class="save-btn">${chrome.i18n.getMessage('btnSaveStep')}</button>
+          <button id="o-maid-cancel-edit-tour-step-btn" class="cancel-btn">${chrome.i18n.getMessage('btnCancel')}</button>
         </div>
       </div>
     `;
@@ -1160,7 +1160,8 @@ async function handleImportFile(event) {
         try {
             const data = JSON.parse(e.target.result);
             if (!data.guided_tours && !data.hover_hints) {
-                throw new Error("无效的数据格式");
+                showNotification(chrome.i18n.getMessage('msgInvalidDataFormat'), 'error');
+                return;
             }
 
             // 导入数据
@@ -2284,7 +2285,7 @@ async function saveHint() {
     console.log('O-Maid: 准备保存提示', { text, selector, itemToEdit });
 
     if (!text || !selector) {
-        showNotification('提示文本和选择器不能为空。', 'error');
+        showNotification(chrome.i18n.getMessage('msgFillRequiredFields'), 'error');
         return;
     }
 
@@ -2314,13 +2315,13 @@ async function saveHint() {
  */
 async function saveTour() {
     const name = uiPanel.querySelector('#o-maid-tour-name').value;
-    if (!name) {
-        showNotification('任务名称不能为空。', 'error');
-        return;
-    }
-
     tourBuilderState.name = name;
     tourBuilderState.trigger = uiPanel.querySelector('#o-maid-tour-trigger').value;
+
+    if (!tourBuilderState.name || tourBuilderState.steps.length === 0) {
+        showNotification(chrome.i18n.getMessage('msgFillRequiredFields'), 'error');
+        return;
+    }
 
     const action = tourBuilderState.id ? updateTour : addTour;
     const res = await action(tourBuilderState);
@@ -2339,7 +2340,7 @@ function saveTourStep() {
     const selector = uiPanel.querySelector('#o-maid-tour-step-selector').value;
 
     if (!text || !selector) {
-        showNotification('步骤文本和选择器不能为空。', 'error');
+        showNotification(chrome.i18n.getMessage('msgFillRequiredFields'), 'error');
         return;
     }
 
