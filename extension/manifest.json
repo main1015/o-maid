@@ -1,9 +1,11 @@
 {
   "manifest_version": 3,
-  "name": "O-Maid 页面智能助手",
+  "name": "__MSG_appName__",
+  "short_name": "O-Maid",
   "version": "1.2",
-  "description": "网页元素智能标注、悬停提示与自动化业务流程引导助手。",
-  "homepage_url": "https://github.com/your-username/o-maid",
+  "description": "__MSG_appDesc__",
+  "default_locale": "zh_CN",
+  "homepage_url": "https://github.com/main1015/o-maid",
   "icons": {
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
