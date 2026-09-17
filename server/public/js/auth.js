@@ -277,6 +277,7 @@ class AuthManager {
   showLoginOverlay(tipMessage = '') {
     const overlay = document.getElementById('login-overlay');
     if (overlay) {
+      document.documentElement.classList.add('needs-login');
       overlay.classList.remove('hidden');
       if (tipMessage) {
         this.showError(tipMessage);
@@ -287,6 +288,7 @@ class AuthManager {
   hideLoginOverlay() {
     const overlay = document.getElementById('login-overlay');
     if (overlay) {
+      document.documentElement.classList.remove('needs-login');
       overlay.classList.add('hidden');
       this.clearError();
       const form = document.getElementById('auth-form');

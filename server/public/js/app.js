@@ -241,22 +241,23 @@ async function loadOverview() {
       const activityList = document.getElementById('recent-activities-list');
       activityList.innerHTML = '';
       if (!stats.recentActivities || stats.recentActivities.length === 0) {
-        activityList.innerHTML = '<li class="empty-state"><div class="empty-icon">📭</div>暂无最新发布活动</li>';
+        activityList.innerHTML = `<li class="empty-state"><div class="empty-icon">📭</div>${window.i18n.t('no_latest_activity')}</li>`;
       } else {
         stats.recentActivities.forEach(item => {
           const isGuide = item.type === 'guide';
+          const typeText = isGuide ? window.i18n.t('type_guide') : window.i18n.t('type_hint');
           const li = document.createElement('li');
           li.className = 'activity-item';
           li.style.cursor = 'pointer';
-          li.title = `点击前往查看此${isGuide ? '引导任务' : '悬停提示'}`;
+          li.title = `${window.i18n.t('btn_detail')} ${typeText}`;
           li.innerHTML = `
             <span class="activity-badge ${isGuide ? 'badge-guide' : 'badge-hint'}">
-              ${isGuide ? '任务' : '提示'}
+              ${typeText}
             </span>
             <div class="activity-info">
               <div class="activity-name" title="${escapeHtml(item.title)}">${escapeHtml(item.title)}</div>
               <div class="activity-meta">
-                <span>${window.i18n.t('lbl_author')} ${escapeHtml(item.author || '系统录入')}</span> · 
+                <span>${window.i18n.t('lbl_author')} ${escapeHtml(item.author || 'System')}</span> · 
                 <span>${window.i18n.t('lbl_domain')} ${escapeHtml(item.domain || '-')}</span> · 
                 <span style="color:var(--text-dim);">${formatTime(item.created_at)}</span>
               </div>
@@ -358,7 +359,7 @@ function renderGuidesTable(list) {
   const tbody = document.getElementById('guides-table-body');
   tbody.innerHTML = '';
   if (list.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="8" class="empty-state"><div class="empty-icon">📂</div>暂无符合条件的引导任务，可点击上方「+ 新建引导任务」录入</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="8" class="empty-state"><div class="empty-icon">📂</div>${window.i18n.t('empty_guides')}</td></tr>`;
     return;
   }
 
@@ -492,7 +493,7 @@ function renderHintsTable(list) {
   const tbody = document.getElementById('hints-table-body');
   tbody.innerHTML = '';
   if (list.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="8" class="empty-state"><div class="empty-icon">💬</div>暂无符合条件的悬停提示，可点击上方「+ 新建悬停提示」录入</td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="8" class="empty-state"><div class="empty-icon">💬</div>${window.i18n.t('empty_hints')}</td></tr>`;
     return;
   }
 
@@ -746,10 +747,11 @@ async function openGuideDetailsModal(id) {
       guide.steps.forEach((step, index) => {
         const div = document.createElement('div');
         div.className = 'step-card';
+        const stepLabel = (window.i18n.t('label_step_index') || '第 {index} 步').replace('{index}', index + 1);
         div.innerHTML = `
-          <div class="step-index">第 ${index + 1} 步</div>
-          <div class="step-desc">${escapeHtml(step.text || '无提示文本')}</div>
-          <div><code class="selector-tag" style="max-width:100%;">${escapeHtml(step.selector || '无目标选择器')}</code></div>
+          <div class="step-index">${stepLabel}</div>
+          <div class="step-desc">${escapeHtml(step.text || '-')}</div>
+          <div><code class="selector-tag" style="max-width:100%;">${escapeHtml(step.selector || '-')}</code></div>
         `;
         content.appendChild(div);
       });
@@ -847,13 +849,18 @@ function addGuideStepInput(stepText = '', stepSelector = '') {
   const div = document.createElement('div');
   div.className = 'step-input-row';
   div.style.cssText = 'background:rgba(255,255,255,0.03); border:1px solid var(--border-color); border-radius:var(--radius-md); padding:10px; display:flex; flex-direction:column; gap:8px; position:relative;';
+  
+  const stepLabel = (window.i18n.t('label_step_index') || '第 {index} 步').replace('{index}', index);
+  const phDesc = window.i18n.t('ph_step_desc') || '步骤说明，如：点击此处进行登录';
+  const phSelector = window.i18n.t('ph_step_selector') || 'CSS 选择器，如：#login-btn 或 .header-nav a';
+
   div.innerHTML = `
     <div style="display:flex; justify-content:space-between; align-items:center;">
-      <span style="font-size:12px; font-weight:600; color:var(--accent-primary);">第 ${index} 步</span>
+      <span class="step-index-label" style="font-size:12px; font-weight:600; color:var(--accent-primary);">${stepLabel}</span>
       <button type="button" class="remove-step-btn" style="background:transparent; border:none; color:var(--text-dim); cursor:pointer; font-size:16px;">&times;</button>
     </div>
-    <input type="text" class="step-text-input form-input" placeholder="步骤说明，如：点击此处进行登录" value="${escapeHtml(stepText)}">
-    <input type="text" class="step-selector-input form-input" placeholder="CSS 选择器，如：#login-btn 或 .header-nav a" value="${escapeHtml(stepSelector)}">
+    <input type="text" class="step-text-input form-input" placeholder="${phDesc}" value="${escapeHtml(stepText)}">
+    <input type="text" class="step-selector-input form-input" placeholder="${phSelector}" value="${escapeHtml(stepSelector)}">
   `;
   container.appendChild(div);
 
@@ -861,7 +868,8 @@ function addGuideStepInput(stepText = '', stepSelector = '') {
     div.remove();
     // 重新排序序号
     Array.from(container.children).forEach((child, i) => {
-      child.querySelector('span').textContent = `第 ${i + 1} 步`;
+      const newLabel = (window.i18n.t('label_step_index') || '第 {index} 步').replace('{index}', i + 1);
+      child.querySelector('.step-index-label').textContent = newLabel;
     });
   });
 }
@@ -1003,6 +1011,45 @@ function initSearchListeners() {
 }
 
 // 初始化应用
+
+  // ---------------- Theme Switcher ----------------
+  // ---------------- Theme Switcher ----------------
+  function initTheme() {
+    const savedTheme = localStorage.getItem('omaid_theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  }
+  
+  function toggleTheme() {
+    const current = document.documentElement.getAttribute('data-theme') || 'dark';
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('omaid_theme', next);
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const themeToggleBtn = document.getElementById('btn-theme-toggle');
+    if (themeToggleBtn) {
+      themeToggleBtn.addEventListener('click', toggleTheme);
+    }
+    
+    const loginThemeToggleBtn = document.getElementById('btn-login-theme-toggle');
+    if (loginThemeToggleBtn) {
+      loginThemeToggleBtn.addEventListener('click', toggleTheme);
+    }
+
+    const loginLangSelector = document.getElementById('login-lang-selector');
+    if (loginLangSelector) {
+      loginLangSelector.value = window.i18n.currentLang;
+      loginLangSelector.addEventListener('change', (e) => {
+        window.i18n.setLang(e.target.value);
+        window.location.reload();
+      });
+    }
+
+    initTheme();
+  });
+  // ---------------- DOM Loaded ----------------
+
 document.addEventListener('DOMContentLoaded', async () => {
   await window.i18n.init();
 

@@ -1,9 +1,51 @@
+
+html[data-theme="light"] {
+  --bg-main: #f8fafc;
+  --bg-sidebar: #ffffff;
+  --bg-card: rgba(255, 255, 255, 0.7);
+  --bg-card-hover: rgba(255, 255, 255, 1);
+  --bg-input: #f1f5f9;
+  --bg-overlay: rgba(241, 245, 249, 0.7);
+  --bg-hover: rgba(0, 0, 0, 0.03);
+  
+  --border-color: rgba(15, 23, 42, 0.08);
+  --border-color-focus: rgba(99, 102, 241, 0.6);
+
+  --accent-primary: #4f46e5;
+  --accent-primary-hover: #4338ca;
+  --accent-primary-light: rgba(99, 102, 241, 0.12);
+
+  --accent-secondary: #0284c7;
+  --accent-success: #059669;
+  --accent-warning: #d97706;
+  --accent-danger: #dc2626;
+  --accent-danger-hover: #b91c1c;
+
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --text-dim: #64748b;
+
+  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 12px 32px rgba(15, 23, 42, 0.08);
+  --shadow-glow: 0 0 24px rgba(99, 102, 241, 0.2);
+}
+
+/* Base transitions for smooth theme switching */
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.sidebar, .panel-card, .stat-card, .table-container, .top-header {
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
 :root {
   --bg-main: #0a0e17;
   --bg-sidebar: #0f172a;
   --bg-card: rgba(30, 41, 59, 0.6);
   --bg-card-hover: rgba(30, 41, 59, 0.85);
   --bg-input: #1e293b;
+  --bg-overlay: rgba(10, 15, 29, 0.88);
+  --bg-hover: rgba(255, 255, 255, 0.03);
   
   --border-color: rgba(255, 255, 255, 0.08);
   --border-color-focus: rgba(99, 102, 241, 0.5);
@@ -165,7 +207,7 @@ body {
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid var(--border-color);
-  background: rgba(15, 23, 42, 0.5);
+  background: var(--bg-card);
   backdrop-filter: blur(12px);
 }
 
@@ -317,7 +359,7 @@ body {
   width: 32px;
   height: 32px;
   border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--bg-input);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -371,7 +413,7 @@ body {
   align-items: center;
   gap: 12px;
   padding: 10px 12px;
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--bg-card);
   border: 1px solid rgba(255, 255, 255, 0.04);
   border-radius: var(--radius-md);
 }
@@ -510,7 +552,7 @@ body {
 }
 
 .data-table th {
-  background: rgba(15, 23, 42, 0.7);
+  background: var(--bg-card);
   padding: 14px 16px;
   font-weight: 600;
   color: var(--text-muted);
@@ -523,7 +565,7 @@ body {
 
 .data-table td {
   padding: 14px 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid var(--border-color);
   color: var(--text-main);
   vertical-align: middle;
   white-space: nowrap;
@@ -540,7 +582,7 @@ body {
 }
 
 .data-table tr:hover td {
-  background-color: rgba(255, 255, 255, 0.02);
+  background-color: var(--bg-hover);
 }
 
 .domain-tag {
@@ -652,7 +694,7 @@ body {
 }
 
 .page-btn {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--bg-input);
   border: 1px solid var(--border-color);
   color: var(--text-main);
   min-width: 30px;
@@ -687,7 +729,7 @@ body {
   opacity: 0.35;
   cursor: not-allowed;
   border-color: transparent;
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--bg-card);
 }
 
 .page-ellipsis {
@@ -732,7 +774,7 @@ body {
   width: 90%;
   max-width: 650px;
   max-height: 85vh;
-  background: #111827;
+  background: var(--bg-sidebar);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
@@ -779,7 +821,7 @@ body {
   display: flex;
   justify-content: flex-end;
   gap: 12px;
-  background: rgba(15, 23, 42, 0.4);
+  background: var(--bg-hover);
 }
 
 /* 表单控件样式 */
@@ -813,7 +855,7 @@ body {
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--bg-hover);
   color: var(--text-main);
   padding: 8px 16px;
   border-radius: var(--radius-md);
@@ -905,7 +947,7 @@ body {
 }
 
 .toast {
-  background: #1e293b;
+  background: var(--bg-card);
   color: var(--text-main);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
@@ -935,7 +977,7 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(10, 15, 29, 0.88);
+  background: var(--bg-overlay);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   z-index: 9999;
@@ -953,8 +995,8 @@ body {
 .login-modal-card {
   width: 100%;
   max-width: 420px;
-  background: rgba(17, 24, 39, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
   border-radius: 16px;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 30px rgba(59, 130, 246, 0.15);
   padding: 36px 32px;
@@ -1171,7 +1213,7 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--bg-input);
   border: 1px solid var(--border-color);
   border-radius: 99px;
   padding: 4px 12px 4px 6px;
@@ -1179,8 +1221,8 @@ body {
 }
 
 .header-user-pill:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.2);
+  background: var(--bg-hover);
+  border-color: var(--border-color);
 }
 
 .header-user-avatar {
@@ -1332,7 +1374,7 @@ body {
 
 /* 筛选下拉框 */
 .filter-select {
-  background: #1f2937;
+  background: var(--bg-input);
   border: 1px solid var(--border-color);
   color: var(--text-main);
   padding: 8px 12px;
@@ -1445,3 +1487,21 @@ body {
 }
 
 
+
+.btn-theme-toggle:hover { background: var(--bg-card-hover) !important; }
+[data-theme="light"] #icon-moon { display: none !important; }
+[data-theme="light"] #icon-sun { display: block !important; }
+[data-theme="dark"] #icon-moon { display: block !important; }
+[data-theme="dark"] #icon-sun { display: none !important; }
+[data-theme="light"] #login-icon-moon { display: none !important; }
+[data-theme="light"] #login-icon-sun { display: block !important; }
+[data-theme="dark"] #login-icon-moon { display: block !important; }
+[data-theme="dark"] #login-icon-sun { display: none !important; }
+
+/* 防止登录前闪烁主界面 (FOUC) */
+html.needs-login body > *:not(#login-overlay):not(#toast-container) {
+  display: none !important;
+}
+html.needs-login #login-overlay {
+  display: flex !important;
+}

@@ -85,6 +85,16 @@ document.addEventListener('DOMContentLoaded', () => {
         langSelect.innerHTML = `
             <option style="color: #333;" value="zh" ${window.i18n.currentLang === 'zh' ? 'selected' : ''}>🌐 中文</option>
             <option style="color: #333;" value="en" ${window.i18n.currentLang === 'en' ? 'selected' : ''}>🌐 EN</option>
+            <option style="color: #333;" value="ja" ${window.i18n.currentLang === 'ja' ? 'selected' : ''}>🌐 日本語</option>
+            <option style="color: #333;" value="ko" ${window.i18n.currentLang === 'ko' ? 'selected' : ''}>🌐 한국어</option>
+            <option style="color: #333;" value="ru" ${window.i18n.currentLang === 'ru' ? 'selected' : ''}>🌐 Русский</option>
+            <option style="color: #333;" value="de" ${window.i18n.currentLang === 'de' ? 'selected' : ''}>🌐 Deutsch</option>
+            <option style="color: #333;" value="fr" ${window.i18n.currentLang === 'fr' ? 'selected' : ''}>🌐 Français</option>
+            <option style="color: #333;" value="es" ${window.i18n.currentLang === 'es' ? 'selected' : ''}>🌐 Español</option>
+            <option style="color: #333;" value="pt" ${window.i18n.currentLang === 'pt' ? 'selected' : ''}>🌐 Português</option>
+            <option style="color: #333;" value="hi" ${window.i18n.currentLang === 'hi' ? 'selected' : ''}>🌐 हिंदी</option>
+            <option style="color: #333;" value="bn" ${window.i18n.currentLang === 'bn' ? 'selected' : ''}>🌐 বাংলা</option>
+            <option style="color: #333;" value="ar" ${window.i18n.currentLang === 'ar' ? 'selected' : ''}>🌐 العربية</option>
         `;
 
         langSelect.addEventListener('change', (e) => {

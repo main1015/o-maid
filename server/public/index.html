@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title data-i18n="app_title_full">O-Maid 云端服务控制台</title>
   <link rel="stylesheet" href="css/dashboard.css">
+  <script>
+    if (!localStorage.getItem('omaid_token')) {
+      document.documentElement.classList.add('needs-login');
+    }
+  </script>
 </head>
 <body>
   <!-- 侧边导航栏 -->
@@ -64,6 +69,10 @@
     <header class="top-header">
       <h2 id="header-title" class="page-title" data-i18n="header_overview">平台概览</h2>
       <div class="header-meta">
+        <button id="btn-theme-toggle" class="btn-theme-toggle" title="切换亮/暗色主题" style="background:transparent; border:none; color:inherit; cursor:pointer; padding: 6px; border-radius: 50%; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; margin-right: 12px; outline: none; transition: background 0.2s ease;">
+          <svg id="icon-sun" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg id="icon-moon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
         <div class="status-badge">
           <span class="status-indicator"></span>
           <span data-i18n="status_online">服务在线</span>
@@ -144,7 +153,7 @@
               <div class="stat-icon">⏳</div>
             </div>
             <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px;">
-              <div id="stat-pending-count" class="stat-value" style="color: #f59e0b;">0</div>
+              <div id="stat-pending-count" class="stat-value" style="color: var(--accent-warning);">0</div>
               <div class="pending-sub-badges" style="display: flex; gap: 6px;">
                 <button type="button" id="btn-jump-pending-guides" class="btn-pending-sub" title="查看待审核的引导任务" data-i18n-title="title_view_pending_guides">
                   <span data-i18n="badge_guides">🗺️ 引导</span> <strong id="stat-pending-guides-badge">0</strong>
@@ -411,7 +420,7 @@
           </div>
 
           <!-- 模块 2：引导任务 -->
-          <h4 style="margin: 24px 0 10px; color: #818cf8; font-size: 13px; display: flex; align-items: center; gap: 6px;">
+          <h4 style="margin: 24px 0 10px; color: var(--accent-primary); font-size: 13px; display: flex; align-items: center; gap: 6px;">
             <span>🗺️</span> <span data-i18n="api_sec_guides">业务引导任务管理 (/api/guides)</span>
           </h4>
           <div class="api-card">
@@ -472,7 +481,7 @@
           </div>
 
           <!-- 模块 3：悬停提示 -->
-          <h4 style="margin: 24px 0 10px; color: #fbbf24; font-size: 13px; display: flex; align-items: center; gap: 6px;">
+          <h4 style="margin: 24px 0 10px; color: var(--accent-warning); font-size: 13px; display: flex; align-items: center; gap: 6px;">
             <span>💡</span> <span data-i18n="api_sec_hints">DOM 悬停提示管理 (/api/hints)</span>
           </h4>
           <div class="api-card">
@@ -533,7 +542,7 @@
           </div>
 
           <!-- 模块 4：平台监控与统计 -->
-          <h4 style="margin: 24px 0 10px; color: #34d399; font-size: 13px; display: flex; align-items: center; gap: 6px;">
+          <h4 style="margin: 24px 0 10px; color: var(--accent-success); font-size: 13px; display: flex; align-items: center; gap: 6px;">
             <span>📊</span> <span data-i18n="api_sec_stats">数据大盘与监控统计 (/api/stats)</span>
           </h4>
           <div class="api-card">
@@ -711,6 +720,27 @@
 
   <!-- 6. 全屏毛玻璃登录 / 注册模态框 -->
   <div id="login-overlay" class="login-overlay hidden">
+    <!-- 独立于主界面的登录页开关栏 -->
+    <div style="position: absolute; top: 24px; right: 32px; display: flex; align-items: center; gap: 12px; z-index: 10;">
+      <button id="btn-login-theme-toggle" class="btn-theme-toggle" title="切换亮/暗色主题" style="background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:var(--text-main); cursor:pointer; padding: 6px; border-radius: 50%; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; outline: none; transition: background 0.2s ease;">
+        <svg id="login-icon-sun" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+        <svg id="login-icon-moon" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      </button>
+      <select id="login-lang-selector" style="padding: 4px 8px; border-radius: 4px; background: rgba(255,255,255,0.1); color: var(--text-main); border: 1px solid rgba(255,255,255,0.2); cursor: pointer; outline: none;">
+        <option style="color: #333;" value="zh">🌐 中文</option>
+        <option style="color: #333;" value="en">🌐 EN</option>
+        <option style="color: #333;" value="ja">🌐 日本語</option>
+        <option style="color: #333;" value="ko">🌐 한국어</option>
+        <option style="color: #333;" value="ru">🌐 Русский</option>
+        <option style="color: #333;" value="de">🌐 Deutsch</option>
+        <option style="color: #333;" value="fr">🌐 Français</option>
+        <option style="color: #333;" value="es">🌐 Español</option>
+        <option style="color: #333;" value="pt">🌐 Português</option>
+        <option style="color: #333;" value="hi">🌐 हिंदी</option>
+        <option style="color: #333;" value="bn">🌐 বাংলা</option>
+        <option style="color: #333;" value="ar">🌐 العربية</option>
+      </select>
+    </div>
     <div class="login-modal-card">
       <div class="login-modal-header">
         <div class="login-logo-badge">⚡</div>
