@@ -1,10 +1,12 @@
 // extension/modules/cloud-api.js
 // 使用 chrome.storage.local 实现真正跨网页、跨域名的持久化共享
 
+const DEFAULT_API_BASE = 'http://localhost:3000/api';
+
 let cloudState = {
     token: '',
     username: '',
-    apiBase: 'http://localhost:3000/api'
+    apiBase: DEFAULT_API_BASE
 };
 
 // 初始化加载全局存储
@@ -14,6 +16,7 @@ function initCloudStorage() {
             if (res['o-maid-token']) cloudState.token = res['o-maid-token'];
             if (res['o-maid-username']) cloudState.username = res['o-maid-username'];
             if (res['o-maid-api-base']) cloudState.apiBase = res['o-maid-api-base'];
+            else cloudState.apiBase = DEFAULT_API_BASE;
             // 通知当前页面 UI 刷新状态
             window.dispatchEvent(new CustomEvent('o-maid-auth-changed'));
         });
@@ -23,14 +26,14 @@ function initCloudStorage() {
             if (area === 'local') {
                 if (changes['o-maid-token']) cloudState.token = changes['o-maid-token'].newValue || '';
                 if (changes['o-maid-username']) cloudState.username = changes['o-maid-username'].newValue || '';
-                if (changes['o-maid-api-base']) cloudState.apiBase = changes['o-maid-api-base'].newValue || 'http://localhost:3000/api';
+                if (changes['o-maid-api-base']) cloudState.apiBase = changes['o-maid-api-base'].newValue || DEFAULT_API_BASE;
                 window.dispatchEvent(new CustomEvent('o-maid-auth-changed'));
             }
         });
     } else {
         cloudState.token = localStorage.getItem('o-maid-token') || '';
         cloudState.username = localStorage.getItem('o-maid-username') || '';
-        cloudState.apiBase = localStorage.getItem('o-maid-api-base') || 'http://localhost:3000/api';
+        cloudState.apiBase = localStorage.getItem('o-maid-api-base') || DEFAULT_API_BASE;
     }
 }
 
@@ -55,7 +58,7 @@ function saveCloudState(updates) {
 }
 
 export function getApiBase() {
-    return cloudState.apiBase || 'http://localhost:3000/api';
+    return cloudState.apiBase || DEFAULT_API_BASE;
 }
 
 export function setApiBase(url) {
