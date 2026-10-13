@@ -33,3 +33,7 @@ temp/
 .env.local
 .env.*.local
 
+# Release & Version
+version.txt
+.build_temp/
+
