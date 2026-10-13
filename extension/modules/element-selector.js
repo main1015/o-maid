@@ -190,7 +190,7 @@ function initRecursive(doc, bind) {
                 }
             } catch (e) {
                 // 跨域 iframe 会在此报错，优雅跳过
-                console.warn('O-Maid: ' + chrome.i18n.getMessage('msgCannotAccessIframe'), iframe.src);
+                console.debug('O-Maid: ' + chrome.i18n.getMessage('msgCannotAccessIframe'), iframe.src);
             }
         }
     } catch (e) {
@@ -378,7 +378,7 @@ export function selectElementForAction(e) {
             targetUrl = targetDoc.location.href;
         }
     } catch (e) {
-        console.warn('O-Maid: ' + chrome.i18n.getMessage('msgAccessTopUrlRestricted'), e);
+        console.debug('O-Maid: ' + chrome.i18n.getMessage('msgAccessTopUrlRestricted'), e);
         targetUrl = isInsideIframe ? targetDoc.location.href : window.location.href;
     }
 

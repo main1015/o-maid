@@ -1,191 +1,593 @@
 {
-  "appName": { "message": "O-Maid - वेब ऑपरेशन गाइड और स्मार्ट हिंट असिस्टेंट" },
-  "appDesc": { "message": "वेब गाइड के लिए स्मार्ट असिस्टेंट। किसी भी वेबसाइट पर संकेत और ट्यूटोरियल जोड़ें।" },
-  "popupTitle": { "message": "O-Maid स्मार्ट असिस्टेंट" },
-  "popupHeader": { "message": "O-Maid असिस्टेंट" },
-  "togglePanelBtn": { "message": "📋 पैनल टॉगल करें" },
-  "popupNotConnectedTip": { "message": "💡 सुझाव: वर्तमान पृष्ठ कनेक्ट नहीं है" },
-  "popupReloadTip": { "message": "एक्सटेंशन रीलोड के बाद पुनः कनेक्ट करने के लिए कृपया पृष्ठ रीफ्रेश करें।" },
-  "popupReloadBtn": { "message": "वर्तमान पृष्ठ रीफ्रेश करें (F5)" },
-  "popupGithubLink": { "message": "🔗 ओपन सोर्स गिटहब" },
-  "popupSystemPageError": { "message": "<span>⚠️ स्क्रिप्ट सिस्टम पेजों पर नहीं चल सकती। कृपया सामान्य वेब पेज पर स्विच करें!</span>" },
-  "sidepanelTitle": { "message": "O-Maid असिस्टेंट" },
-  "btnCloudAuth": { "message": "क्लाउड खाता" },
-  "btnSettings": { "message": "सेटिंग्स" },
-  "btnExport": { "message": "डेटा निर्यात करें" },
-  "btnImport": { "message": "डेटा आयात करें" },
-  "btnAdd": { "message": "नया संकेत जोड़ें" },
-  "tabLocal": { "message": "स्थानीय लाइब्रेरी" },
-  "tabCloud": { "message": "क्लाउड खोजें" },
-  "titleTours": { "message": "गाइडेड टूर्स" },
-  "titleHints": { "message": "होवर संकेत" },
-  "msgNoData": { "message": "वर्तमान में कोई संकेत या टूर नहीं हैं।" },
-  "titleCloudTours": { "message": "साझा किए गए टूर्स" },
-  "titleCloudHints": { "message": "साझा किए गए संकेत" },
-  "btnRefreshCloud": { "message": "क्लाउड डेटा रीफ्रेश करें" },
-  "msgCloudNoData": { "message": "क्लाउड में कोई मिलान संकेत या टूर नहीं मिला।" },
-  "titleAuth": { "message": "क्लाउड खाता" },
-  "placeholderUsername": { "message": "उपयोगकर्ता नाम" },
-  "placeholderPassword": { "message": "पासवर्ड" },
-  "btnLogin": { "message": "लॉग इन" },
-  "btnRegister": { "message": "पंजीकरण करें" },
-  "btnLogout": { "message": "लॉग आउट" },
-  "btnClose": { "message": "बंद करें" },
-  "titleSettings": { "message": "सेटिंग्स" },
-  "labelApiBase": { "message": "बैकएंड API URL:" },
-  "btnSaveSettings": { "message": "सेटिंग्स सहेजें" },
-  "btnCloseSettings": { "message": "बंद करें" },
-  "titleAddChoice": { "message": "आप क्या बनाना चाहते हैं?" },
-  "btnCreateHint": { "message": "होवर संकेत" },
-  "btnCreateTour": { "message": "गाइडेड टूर" },
-  "btnCancel": { "message": "रद्द करें" },
-  "labelHintText": { "message": "संकेत पाठ:" },
-  "labelCssSelector": { "message": "CSS चयनकर्ता:" },
-  "btnReselect": { "message": "पुनः चयन करें" },
-  "btnSave": { "message": "सहेजें" },
-  "labelTourName": { "message": "टूर का नाम:" },
-  "labelTourTrigger": { "message": "ट्रिगर:" },
-  "optionManual": { "message": "मैनुअल" },
-  "optionAuto": { "message": "ऑटो" },
-  "titleSteps": { "message": "चरण" },
-  "btnAddStep": { "message": "+ चरण जोड़ें" },
-  "btnSaveTour": { "message": "टूर सहेजें" },
-  "labelStepText": { "message": "चरण संकेत पाठ:" },
-  "labelStepSelector": { "message": "CSS चयनकर्ता:" },
-  "btnStepReselect": { "message": "पुनः चयन करें" },
-  "btnSaveStep": { "message": "चरण सहेजें" },
-  "spTourItemToggleSteps": { "message": "चरण टॉगल करने के लिए क्लिक करें" },
-  "spTourItemResetStatus": { "message": "पूर्णता स्थिति रीसेट करें" },
-  "spTriggerAuto": { "message": "ऑटो" },
-  "spTriggerManual": { "message": "मैनुअल" },
-  "spUnnamedStep": { "message": "अनाम चरण" },
-  "spMsgTourReset": { "message": "टूर \"\" पूर्णता स्थिति रीसेट कर दी गई है।" },
-  "spMsgTourDeleted": { "message": "टूर हटा दिया गया" },
-  "spMsgHintDeleted": { "message": "संकेत हटा दिया गया" },
-  "spTitleEditHint": { "message": "संकेत संपादित करें" },
-  "spTitleNewHint": { "message": "नया संकेत" },
-  "spTitleEditTour": { "message": "टूर संपादित करें" },
-  "spTitleNewTour": { "message": "नया टूर" },
-  "spStepPrefix": { "message": "चरण" },
-  "spUnnamed": { "message": "अनाम" },
-  "spMsgFillCompleteInfo": { "message": "कृपया पूरी जानकारी भरें" },
-  "spMsgHintSaved": { "message": "संकेत सहेजा गया" },
-  "spMsgFillTourInfo": { "message": "कृपया टूर का नाम दें और कम से कम एक चरण जोड़ें" },
-  "spMsgTourSaved": { "message": "टूर सहेजा गया" },
-  "spMsgExportSuccess": { "message": "डेटा सफलतापूर्वक निर्यात किया गया!" },
-  "spMsgImportSuccess": { "message": "डेटा सफलतापूर्वक आयात किया गया!" },
-  "spMsgImportFail": { "message": "आयात विफल रहा: " },
-  "spMsgParseFail": { "message": "JSON फ़ाइल पार्स करने में विफल: " },
-  "uiTitle": { "message": "O-Maid असिस्टेंट" },
-  "btnCollapsePanel": { "message": "पैनल संकुचित करें" },
-  "btnClosePanel": { "message": "पैनल बंद करें" },
-  "tabLocalRules": { "message": "स्थानीय नियम" },
-  "tabCloudShared": { "message": "क्लाउड साझा" },
-  "msgCloudNotLoggedIn": { "message": "☁️ क्लाउड लॉग इन नहीं है" },
-  "btnLoginNow": { "message": "अभी लॉग इन करें" },
-  "labelScope": { "message": "दायरा:" },
-  "scopeCurrentPage": { "message": "वर्तमान पृष्ठ" },
-  "btnRefresh": { "message": "रीफ्रेश करें" },
-  "titleSyncRefresh": { "message": "क्लाउड डेटा से स्थानीय नियम प्राप्त करें" },
-  "btnViewAll": { "message": "सभी देखें" },
-  "btnQuickAdd": { "message": "+ नया" },
-  "titleQuickAddTour": { "message": "त्वरित गाइडेड टूर" },
-  "titleQuickAddHint": { "message": "त्वरित होवर संकेत" },
-  "msgNoLocalRules": { "message": "वर्तमान पृष्ठ के लिए कोई स्थानीय नियम नहीं हैं।" },
-  "linkViewAllLocal": { "message": "सभी स्थानीय नियम देखें >>" },
-  "scopeCurrentSite": { "message": "वर्तमान साइट" },
-  "linkViewAllCloud": { "message": "पब्लिक हॉल देखें" },
-  "msgNoCloudRulesSite": { "message": "वर्तमान साइट के लिए कोई क्लाउड नियम नहीं।" },
-  "linkViewAllCloudRules": { "message": "सभी सार्वजनिक नियम देखें >>" },
-  "labelServerAddress": { "message": "सर्वर पता:" },
-  "linkChangePort": { "message": "पोर्ट बदलें" },
-  "titleSysSettings": { "message": "⚙️ सिस्टम सेटिंग्स" },
-  "btnSaveApiSettings": { "message": "API सेटिंग्स सहेजें" },
-  "labelLocalDataBackup": { "message": "स्थानीय डेटा बैकअप और माइग्रेशन:" },
-  "btnExportJson": { "message": "📤 JSON निर्यात करें" },
-  "btnImportJson": { "message": "📥 JSON आयात करें" },
-  "msgInvalidDataFormat": { "message": "अमान्य डेटा स्वरूप" },
-  "msgFillRequiredFields": { "message": "कृपया सभी आवश्यक फ़ील्ड भरें" },
-  "msgSelectingElement": { "message": "🎯 <strong>तत्व का चयन</strong>: लक्ष्य तत्व पर क्लिक करें &nbsp;<span style=\"opacity:0.85; font-size:11px; background:rgba(255,255,255,0.25); padding:2px 7px; border-radius:4px; margin-left:6px; cursor:pointer;\" id=\"o-maid-banner-esc-btn\">बाहर निकलने के लिए ESC दबाएँ</span>" },
-  "msgCannotAccessIframe": { "message": "क्रॉस-ऑरिजिन iframe तक नहीं पहुंच सकते" },
-  "msgAccessTopUrlRestricted": { "message": "शीर्ष URL तक पहुंच प्रतिबंधित है, वर्तमान URL का उपयोग कर रहा है" },
-  "defaultStepTitle": { "message": "चरण " },
-  "msgStepElementNotFound": { "message": "टूर चरण तत्व पृष्ठ पर नहीं मिला।" },
-  "introNextLabel": { "message": "अगला →" },
-  "introPrevLabel": { "message": "← पीछे" },
-  "introDoneLabel": { "message": "पूर्ण" },
-  "msgPluginReloaded": { "message": "O-Maid प्लगइन अपडेट हो गया है। जारी रखने के लिए रीफ्रेश करें।" },
-  "msgConfirmRefresh": { "message": "क्या अभी पृष्ठ रीफ्रेश करें?" },
-  "msgServerConnectFail": { "message": "सर्वर से कनेक्ट नहीं हो सका ()। बैकएंड की जांच करें!" },
-  "msgCloudBatchFetchFail": { "message": "क्लाउड डेटा बैच प्राप्त करने में विफल, सिंगल फ़ेच में अपग्रेड किया गया" },
-  "dynamicTitleMain": { "message": "O-Maid" },
-  "dynamicTitleCreate": { "message": "बनाएं" },
-  "dynamicTitleSettings": { "message": "सेटिंग्स" },
-  "dynamicTitleAuth": { "message": "क्लाउड खाता" },
-  "dynamicTitleEditHint": { "message": "संकेत संपादित करें" },
-  "dynamicTitleNewHint": { "message": "नया संकेत" },
-  "dynamicTitleEditTour": { "message": "टूर संपादित करें" },
-  "dynamicTitleNewTour": { "message": "नया टूर" },
-  "dynamicTitleEditStep": { "message": "चरण संपादित करें" },
-  "dynamicScopeAll": { "message": "सभी नियम" },
-  "dynamicScopeCurrent": { "message": "वर्तमान पृष्ठ" },
-  "dynamicBtnViewCurrent": { "message": "वर्तमान देखें" },
-  "dynamicBtnViewAll": { "message": "सभी देखें" },
-  "dynamicNoRulesAll": { "message": "स्थानीय रूप से कोई नियम सहेजे नहीं गए।" },
-  "dynamicNoRulesCurrent": { "message": "वर्तमान पृष्ठ के लिए कोई नियम नहीं हैं।" },
-  "dynamicStatusLoggedIn": { "message": "इस रूप में लॉग इन हैं: " },
-  "dynamicBannerLoggedIn": { "message": "👤 लॉग इन: <strong></strong>" },
-  "dynamicBtnAccountSettings": { "message": "खाता सेटिंग्स" },
-  "dynamicStatusNotLoggedIn": { "message": "लॉग इन नहीं है। नियम साझा करने के लिए लॉग इन करें।" },
-  "dynamicBannerNotLoggedIn": { "message": "क्लाउड लॉग इन नहीं है (केवल स्थानीय)" },
-  "dynamicBtnLoginRegister": { "message": "लॉग इन / रजिस्टर" },
-  "dynamicScopeCloudAll": { "message": "पब्लिक हॉल (सभी साइटें)" },
-  "dynamicBtnCloudViewCurrent": { "message": "वर्तमान साइट देखें" },
-  "dynamicBtnCloudViewAll": { "message": "पब्लिक हॉल देखें" },
-  "dynamicNoCloudRulesAll": { "message": "पब्लिक हॉल में कोई साझा कार्य नहीं।" },
-  "dynamicNoCloudRulesCurrent": { "message": "साइट के लिए कोई क्लाउड कार्य नहीं ()." },
-  "msgSetSaveSuccess": { "message": "सेटिंग्स सहेजी गईं।" },
-  "msgApiEmpty": { "message": "API पता खाली नहीं हो सकता" },
-  "msgInputCredentials": { "message": "उपयोगकर्ता नाम और पासवर्ड दर्ज करें" },
-  "msgLoginSuccess": { "message": "लॉगिन सफल रहा" },
-  "msgLoginFailed": { "message": "लॉगिन विफल रहा: " },
-  "msgRegisterSuccess": { "message": "पंजीकरण सफल रहा, कृपया लॉग इन करें" },
-  "msgRegisterFailed": { "message": "पंजीकरण विफल: " },
-  "msgLogoutSuccess": { "message": "सफलतापूर्वक लॉग आउट किया गया" },
-  "msgExportSuccess": { "message": "डेटा सफलतापूर्वक निर्यात किया गया!" },
-  "msgExportFailed": { "message": "निर्यात विफल" },
-  "msgExportError": { "message": "निर्यात त्रुटि: " },
-  "msgImportSuccess": { "message": "डेटा सफलतापूर्वक आयात किया गया!" },
-  "msgImportFailed": { "message": "आयात विफल: " },
-  "msgParseError": { "message": "JSON फ़ाइल पार्स करने में विफल: " },
-  "msgNoLocalCloudRules": { "message": "क्लाउड से जुड़े कोई स्थानीय नियम नहीं" },
-  "msgSyncFailed": { "message": "सिंक विफल रहा" },
-  "msgSyncConflictRecovered": { "message": " विरोधों को क्लाउड संस्करण में पुनर्प्राप्त किया गया!" },
-  "msgSyncConflictKept": { "message": " नियमों के लिए स्थानीय संशोधन रखे गए!" },
-  "msgSyncUpdated": { "message": " क्लाउड नियमों को सिंक किया गया!" },
-  "msgSyncAllLatest": { "message": "सभी क्लाउड नियम अद्यतित हैं" },
-  "msgSyncError": { "message": "सिंक त्रुटि: " },
-  "msgFetchCloudFailed": { "message": "क्लाउड डेटा प्राप्त करने में विफल" },
-  "msgDownloadSuccess": { "message": "स्थानीय में डाउनलोड किया गया!" },
-  "msgDownloadOverwrite": { "message": "कार्य मौजूद है, नवीनतम संस्करण में अपडेट किया गया!" },
-  "msgDownloadOverwriteHint": { "message": "संकेत मौजूद है, नवीनतम संस्करण में अपडेट किया गया!" },
-  "msgPublishNeedLogin": { "message": "प्रकाशित करने के लिए लॉगिन आवश्यक है" },
-  "msgPublishProtect": { "message": "[] द्वारा साझा किया गया नियम, अधिलेखित नहीं किया जा सकता।" },
-  "msgPublishFailed": { "message": "प्रकाशन विफल रहा: " },
-  "msgPublishPending": { "message": "क्लाउड में जमा किया गया, स्वीकृति लंबित है" },
-  "msgPublishSuccess": { "message": "सफलतापूर्वक प्रकाशित किया गया!" },
-  "msgPublishException": { "message": "प्रकाशन अपवाद" },
-  "msgTourResetSuccess": { "message": "टूर \"\" पूर्णता स्थिति रीसेट कर दी गई।" },
-  "msgTourDeleteSuccess": { "message": "टूर \"\" हटा दिया गया!" },
-  "msgDeleteFailed": { "message": "हटाना विफल रहा: " },
-  "msgHintDeleteSuccess": { "message": "होवर संकेत हटा दिया गया!" },
-  "msgElementNotFound": { "message": "वर्तमान पृष्ठ पर तत्व नहीं मिला।" },
-  "msgElementSelectedHint": { "message": "तत्व चयनित! कृपया संकेत पाठ दर्ज करें।" },
-  "msgElementSelectedTour": { "message": "तत्व चयनित! कृपया चरण विवरण दर्ज करें।" },
-  "msgStepElementUpdated": { "message": "चरण लक्ष्य तत्व अपडेट किया गया!" },
-  "msgSaveSuccess": { "message": "सफलतापूर्वक सहेजा गया" },
-  "msgSaveFailedLog": { "message": "सहेजना विफल रहा, लॉग जांचें।" },
-  "msgSaveError": { "message": "सहेजने में त्रुटि: " },
-  "msgTourSaveSuccess": { "message": "टूर सफलतापूर्वक सहेजा गया" },
-  "msgStepUpdated": { "message": "चरण अपडेट किया गया" }
+  "appName": {
+    "message": "O-Maid - वेब ऑपरेशन गाइड और स्मार्ट हिंट असिस्टेंट"
+  },
+  "appDesc": {
+    "message": "वेब गाइड के लिए स्मार्ट असिस्टेंट। किसी भी वेबसाइट पर संकेत और ट्यूटोरियल जोड़ें।"
+  },
+  "popupTitle": {
+    "message": "O-Maid स्मार्ट असिस्टेंट"
+  },
+  "popupHeader": {
+    "message": "O-Maid असिस्टेंट"
+  },
+  "togglePanelBtn": {
+    "message": "📋 पैनल टॉगल करें"
+  },
+  "popupNotConnectedTip": {
+    "message": "💡 सुझाव: वर्तमान पृष्ठ कनेक्ट नहीं है"
+  },
+  "popupReloadTip": {
+    "message": "एक्सटेंशन रीलोड के बाद पुनः कनेक्ट करने के लिए कृपया पृष्ठ रीफ्रेश करें।"
+  },
+  "popupReloadBtn": {
+    "message": "वर्तमान पृष्ठ रीफ्रेश करें (F5)"
+  },
+  "popupGithubLink": {
+    "message": "🔗 ओपन सोर्स गिटहब"
+  },
+  "popupSystemPageError": {
+    "message": "<span>⚠️ स्क्रिप्ट सिस्टम पेजों पर नहीं चल सकती। कृपया सामान्य वेब पेज पर स्विच करें!</span>"
+  },
+  "sidepanelTitle": {
+    "message": "O-Maid असिस्टेंट"
+  },
+  "btnCloudAuth": {
+    "message": "क्लाउड खाता"
+  },
+  "btnSettings": {
+    "message": "सेटिंग्स"
+  },
+  "btnExport": {
+    "message": "डेटा निर्यात करें"
+  },
+  "btnImport": {
+    "message": "डेटा आयात करें"
+  },
+  "btnAdd": {
+    "message": "नया संकेत जोड़ें"
+  },
+  "tabLocal": {
+    "message": "स्थानीय लाइब्रेरी"
+  },
+  "tabCloud": {
+    "message": "क्लाउड खोजें"
+  },
+  "titleTours": {
+    "message": "गाइडेड टूर्स"
+  },
+  "titleHints": {
+    "message": "होवर संकेत"
+  },
+  "msgNoData": {
+    "message": "वर्तमान में कोई संकेत या टूर नहीं हैं।"
+  },
+  "titleCloudTours": {
+    "message": "साझा किए गए टूर्स"
+  },
+  "titleCloudHints": {
+    "message": "साझा किए गए संकेत"
+  },
+  "btnRefreshCloud": {
+    "message": "क्लाउड डेटा रीफ्रेश करें"
+  },
+  "msgCloudNoData": {
+    "message": "क्लाउड में कोई मिलान संकेत या टूर नहीं मिला।"
+  },
+  "titleAuth": {
+    "message": "क्लाउड खाता"
+  },
+  "placeholderUsername": {
+    "message": "उपयोगकर्ता नाम"
+  },
+  "placeholderPassword": {
+    "message": "पासवर्ड"
+  },
+  "btnLogin": {
+    "message": "लॉग इन"
+  },
+  "btnRegister": {
+    "message": "पंजीकरण करें"
+  },
+  "btnLogout": {
+    "message": "लॉग आउट"
+  },
+  "btnClose": {
+    "message": "बंद करें"
+  },
+  "titleSettings": {
+    "message": "सेटिंग्स"
+  },
+  "labelApiBase": {
+    "message": "बैकएंड API URL:"
+  },
+  "btnSaveSettings": {
+    "message": "सेटिंग्स सहेजें"
+  },
+  "btnCloseSettings": {
+    "message": "बंद करें"
+  },
+  "titleAddChoice": {
+    "message": "आप क्या बनाना चाहते हैं?"
+  },
+  "btnCreateHint": {
+    "message": "होवर संकेत"
+  },
+  "btnCreateTour": {
+    "message": "गाइडेड टूर"
+  },
+  "btnCancel": {
+    "message": "रद्द करें"
+  },
+  "labelHintText": {
+    "message": "संकेत पाठ:"
+  },
+  "labelCssSelector": {
+    "message": "CSS चयनकर्ता:"
+  },
+  "btnReselect": {
+    "message": "पुनः चयन करें"
+  },
+  "btnSave": {
+    "message": "सहेजें"
+  },
+  "labelTourName": {
+    "message": "टूर का नाम:"
+  },
+  "labelTourTrigger": {
+    "message": "ट्रिगर:"
+  },
+  "optionManual": {
+    "message": "मैनुअल"
+  },
+  "optionAuto": {
+    "message": "ऑटो"
+  },
+  "titleSteps": {
+    "message": "चरण"
+  },
+  "btnAddStep": {
+    "message": "+ चरण जोड़ें"
+  },
+  "btnSaveTour": {
+    "message": "टूर सहेजें"
+  },
+  "labelStepText": {
+    "message": "चरण संकेत पाठ:"
+  },
+  "labelStepSelector": {
+    "message": "CSS चयनकर्ता:"
+  },
+  "btnStepReselect": {
+    "message": "पुनः चयन करें"
+  },
+  "btnSaveStep": {
+    "message": "चरण सहेजें"
+  },
+  "spTourItemToggleSteps": {
+    "message": "चरण टॉगल करने के लिए क्लिक करें"
+  },
+  "spTourItemResetStatus": {
+    "message": "पूर्णता स्थिति रीसेट करें"
+  },
+  "spTriggerAuto": {
+    "message": "ऑटो"
+  },
+  "spTriggerManual": {
+    "message": "मैनुअल"
+  },
+  "spUnnamedStep": {
+    "message": "अनाम चरण"
+  },
+  "spMsgTourReset": {
+    "message": "टूर \"\" पूर्णता स्थिति रीसेट कर दी गई है।"
+  },
+  "spMsgTourDeleted": {
+    "message": "टूर हटा दिया गया"
+  },
+  "spMsgHintDeleted": {
+    "message": "संकेत हटा दिया गया"
+  },
+  "spTitleEditHint": {
+    "message": "संकेत संपादित करें"
+  },
+  "spTitleNewHint": {
+    "message": "नया संकेत"
+  },
+  "spTitleEditTour": {
+    "message": "टूर संपादित करें"
+  },
+  "spTitleNewTour": {
+    "message": "नया टूर"
+  },
+  "spStepPrefix": {
+    "message": "चरण"
+  },
+  "spUnnamed": {
+    "message": "अनाम"
+  },
+  "spMsgFillCompleteInfo": {
+    "message": "कृपया पूरी जानकारी भरें"
+  },
+  "spMsgHintSaved": {
+    "message": "संकेत सहेजा गया"
+  },
+  "spMsgFillTourInfo": {
+    "message": "कृपया टूर का नाम दें और कम से कम एक चरण जोड़ें"
+  },
+  "spMsgTourSaved": {
+    "message": "टूर सहेजा गया"
+  },
+  "spMsgExportSuccess": {
+    "message": "डेटा सफलतापूर्वक निर्यात किया गया!"
+  },
+  "spMsgImportSuccess": {
+    "message": "डेटा सफलतापूर्वक आयात किया गया!"
+  },
+  "spMsgImportFail": {
+    "message": "आयात विफल रहा: "
+  },
+  "spMsgParseFail": {
+    "message": "JSON फ़ाइल पार्स करने में विफल: "
+  },
+  "uiTitle": {
+    "message": "O-Maid असिस्टेंट"
+  },
+  "btnCollapsePanel": {
+    "message": "पैनल संकुचित करें"
+  },
+  "btnClosePanel": {
+    "message": "पैनल बंद करें"
+  },
+  "tabLocalRules": {
+    "message": "स्थानीय नियम"
+  },
+  "tabCloudShared": {
+    "message": "क्लाउड साझा"
+  },
+  "msgCloudNotLoggedIn": {
+    "message": "☁️ क्लाउड लॉग इन नहीं है"
+  },
+  "btnLoginNow": {
+    "message": "अभी लॉग इन करें"
+  },
+  "labelScope": {
+    "message": "दायरा:"
+  },
+  "scopeCurrentPage": {
+    "message": "वर्तमान पृष्ठ"
+  },
+  "btnRefresh": {
+    "message": "रीफ्रेश करें"
+  },
+  "titleSyncRefresh": {
+    "message": "क्लाउड डेटा से स्थानीय नियम प्राप्त करें"
+  },
+  "btnViewAll": {
+    "message": "सभी देखें"
+  },
+  "btnQuickAdd": {
+    "message": "+ नया"
+  },
+  "titleQuickAddTour": {
+    "message": "त्वरित गाइडेड टूर"
+  },
+  "titleQuickAddHint": {
+    "message": "त्वरित होवर संकेत"
+  },
+  "msgNoLocalRules": {
+    "message": "वर्तमान पृष्ठ के लिए कोई स्थानीय नियम नहीं हैं।"
+  },
+  "linkViewAllLocal": {
+    "message": "सभी स्थानीय नियम देखें >>"
+  },
+  "scopeCurrentSite": {
+    "message": "वर्तमान साइट"
+  },
+  "linkViewAllCloud": {
+    "message": "पब्लिक हॉल देखें"
+  },
+  "msgNoCloudRulesSite": {
+    "message": "वर्तमान साइट के लिए कोई क्लाउड नियम नहीं।"
+  },
+  "linkViewAllCloudRules": {
+    "message": "सभी सार्वजनिक नियम देखें >>"
+  },
+  "labelServerAddress": {
+    "message": "सर्वर पता:"
+  },
+  "linkChangePort": {
+    "message": "पोर्ट बदलें"
+  },
+  "titleSysSettings": {
+    "message": "⚙️ सिस्टम सेटिंग्स"
+  },
+  "btnSaveApiSettings": {
+    "message": "API सेटिंग्स सहेजें"
+  },
+  "labelLocalDataBackup": {
+    "message": "स्थानीय डेटा बैकअप और माइग्रेशन:"
+  },
+  "btnExportJson": {
+    "message": "📤 JSON निर्यात करें"
+  },
+  "btnImportJson": {
+    "message": "📥 JSON आयात करें"
+  },
+  "msgInvalidDataFormat": {
+    "message": "अमान्य डेटा स्वरूप"
+  },
+  "msgFillRequiredFields": {
+    "message": "कृपया सभी आवश्यक फ़ील्ड भरें"
+  },
+  "msgSelectingElement": {
+    "message": "🎯 <strong>तत्व का चयन</strong>: लक्ष्य तत्व पर क्लिक करें &nbsp;<span style=\"opacity:0.85; font-size:11px; background:rgba(255,255,255,0.25); padding:2px 7px; border-radius:4px; margin-left:6px; cursor:pointer;\" id=\"o-maid-banner-esc-btn\">बाहर निकलने के लिए ESC दबाएँ</span>"
+  },
+  "msgCannotAccessIframe": {
+    "message": "क्रॉस-ऑरिजिन iframe तक नहीं पहुंच सकते"
+  },
+  "msgAccessTopUrlRestricted": {
+    "message": "शीर्ष URL तक पहुंच प्रतिबंधित है, वर्तमान URL का उपयोग कर रहा है"
+  },
+  "defaultStepTitle": {
+    "message": "चरण "
+  },
+  "msgStepElementNotFound": {
+    "message": "टूर चरण तत्व पृष्ठ पर नहीं मिला।"
+  },
+  "introNextLabel": {
+    "message": "अगला →"
+  },
+  "introPrevLabel": {
+    "message": "← पीछे"
+  },
+  "introDoneLabel": {
+    "message": "पूर्ण"
+  },
+  "msgPluginReloaded": {
+    "message": "O-Maid प्लगइन अपडेट हो गया है। जारी रखने के लिए रीफ्रेश करें।"
+  },
+  "msgConfirmRefresh": {
+    "message": "क्या अभी पृष्ठ रीफ्रेश करें?"
+  },
+  "msgServerConnectFail": {
+    "message": "सर्वर से कनेक्ट नहीं हो सका ()। बैकएंड की जांच करें!"
+  },
+  "msgCloudBatchFetchFail": {
+    "message": "क्लाउड डेटा बैच प्राप्त करने में विफल, सिंगल फ़ेच में अपग्रेड किया गया"
+  },
+  "dynamicTitleMain": {
+    "message": "O-Maid"
+  },
+  "dynamicTitleCreate": {
+    "message": "बनाएं"
+  },
+  "dynamicTitleSettings": {
+    "message": "सेटिंग्स"
+  },
+  "dynamicTitleAuth": {
+    "message": "क्लाउड खाता"
+  },
+  "dynamicTitleEditHint": {
+    "message": "संकेत संपादित करें"
+  },
+  "dynamicTitleNewHint": {
+    "message": "नया संकेत"
+  },
+  "dynamicTitleEditTour": {
+    "message": "टूर संपादित करें"
+  },
+  "dynamicTitleNewTour": {
+    "message": "नया टूर"
+  },
+  "dynamicTitleEditStep": {
+    "message": "चरण संपादित करें"
+  },
+  "dynamicScopeAll": {
+    "message": "सभी नियम"
+  },
+  "dynamicScopeCurrent": {
+    "message": "वर्तमान पृष्ठ"
+  },
+  "dynamicBtnViewCurrent": {
+    "message": "वर्तमान देखें"
+  },
+  "dynamicBtnViewAll": {
+    "message": "सभी देखें"
+  },
+  "dynamicNoRulesAll": {
+    "message": "स्थानीय रूप से कोई नियम सहेजे नहीं गए।"
+  },
+  "dynamicNoRulesCurrent": {
+    "message": "वर्तमान पृष्ठ के लिए कोई नियम नहीं हैं।"
+  },
+  "dynamicStatusLoggedIn": {
+    "message": "इस रूप में लॉग इन हैं: "
+  },
+  "dynamicBannerLoggedIn": {
+    "message": "👤 लॉग इन: <strong></strong>"
+  },
+  "dynamicBtnAccountSettings": {
+    "message": "खाता सेटिंग्स"
+  },
+  "dynamicStatusNotLoggedIn": {
+    "message": "लॉग इन नहीं है। नियम साझा करने के लिए लॉग इन करें।"
+  },
+  "dynamicBannerNotLoggedIn": {
+    "message": "क्लाउड लॉग इन नहीं है (केवल स्थानीय)"
+  },
+  "dynamicBtnLoginRegister": {
+    "message": "लॉग इन / रजिस्टर"
+  },
+  "dynamicScopeCloudAll": {
+    "message": "पब्लिक हॉल (सभी साइटें)"
+  },
+  "dynamicBtnCloudViewCurrent": {
+    "message": "वर्तमान साइट देखें"
+  },
+  "dynamicBtnCloudViewAll": {
+    "message": "पब्लिक हॉल देखें"
+  },
+  "dynamicNoCloudRulesAll": {
+    "message": "पब्लिक हॉल में कोई साझा कार्य नहीं।"
+  },
+  "dynamicNoCloudRulesCurrent": {
+    "message": "साइट के लिए कोई क्लाउड कार्य नहीं ()."
+  },
+  "msgSetSaveSuccess": {
+    "message": "सेटिंग्स सहेजी गईं।"
+  },
+  "msgApiEmpty": {
+    "message": "API पता खाली नहीं हो सकता"
+  },
+  "msgInputCredentials": {
+    "message": "उपयोगकर्ता नाम और पासवर्ड दर्ज करें"
+  },
+  "msgLoginSuccess": {
+    "message": "लॉगिन सफल रहा"
+  },
+  "msgLoginFailed": {
+    "message": "लॉगिन विफल रहा: "
+  },
+  "msgRegisterSuccess": {
+    "message": "पंजीकरण सफल रहा, कृपया लॉग इन करें"
+  },
+  "msgRegisterFailed": {
+    "message": "पंजीकरण विफल: "
+  },
+  "msgLogoutSuccess": {
+    "message": "सफलतापूर्वक लॉग आउट किया गया"
+  },
+  "msgExportSuccess": {
+    "message": "डेटा सफलतापूर्वक निर्यात किया गया!"
+  },
+  "msgExportFailed": {
+    "message": "निर्यात विफल"
+  },
+  "msgExportError": {
+    "message": "निर्यात त्रुटि: "
+  },
+  "msgImportSuccess": {
+    "message": "डेटा सफलतापूर्वक आयात किया गया!"
+  },
+  "msgImportFailed": {
+    "message": "आयात विफल: "
+  },
+  "msgParseError": {
+    "message": "JSON फ़ाइल पार्स करने में विफल: "
+  },
+  "msgNoLocalCloudRules": {
+    "message": "क्लाउड से जुड़े कोई स्थानीय नियम नहीं"
+  },
+  "msgSyncFailed": {
+    "message": "सिंक विफल रहा"
+  },
+  "msgSyncConflictRecovered": {
+    "message": " विरोधों को क्लाउड संस्करण में पुनर्प्राप्त किया गया!"
+  },
+  "msgSyncConflictKept": {
+    "message": " नियमों के लिए स्थानीय संशोधन रखे गए!"
+  },
+  "msgSyncUpdated": {
+    "message": " क्लाउड नियमों को सिंक किया गया!"
+  },
+  "msgSyncAllLatest": {
+    "message": "सभी क्लाउड नियम अद्यतित हैं"
+  },
+  "msgSyncError": {
+    "message": "सिंक त्रुटि: "
+  },
+  "msgFetchCloudFailed": {
+    "message": "क्लाउड डेटा प्राप्त करने में विफल"
+  },
+  "msgDownloadSuccess": {
+    "message": "स्थानीय में डाउनलोड किया गया!"
+  },
+  "msgDownloadOverwrite": {
+    "message": "कार्य मौजूद है, नवीनतम संस्करण में अपडेट किया गया!"
+  },
+  "msgDownloadOverwriteHint": {
+    "message": "संकेत मौजूद है, नवीनतम संस्करण में अपडेट किया गया!"
+  },
+  "msgPublishNeedLogin": {
+    "message": "प्रकाशित करने के लिए लॉगिन आवश्यक है"
+  },
+  "msgPublishProtect": {
+    "message": "[] द्वारा साझा किया गया नियम, अधिलेखित नहीं किया जा सकता।"
+  },
+  "msgPublishFailed": {
+    "message": "प्रकाशन विफल रहा: "
+  },
+  "msgPublishPending": {
+    "message": "क्लाउड में जमा किया गया, स्वीकृति लंबित है"
+  },
+  "msgPublishSuccess": {
+    "message": "सफलतापूर्वक प्रकाशित किया गया!"
+  },
+  "msgPublishException": {
+    "message": "प्रकाशन अपवाद"
+  },
+  "msgTourResetSuccess": {
+    "message": "टूर \"\" पूर्णता स्थिति रीसेट कर दी गई।"
+  },
+  "msgTourDeleteSuccess": {
+    "message": "टूर \"\" हटा दिया गया!"
+  },
+  "msgDeleteFailed": {
+    "message": "हटाना विफल रहा: "
+  },
+  "msgHintDeleteSuccess": {
+    "message": "होवर संकेत हटा दिया गया!"
+  },
+  "msgElementNotFound": {
+    "message": "वर्तमान पृष्ठ पर तत्व नहीं मिला।"
+  },
+  "msgElementSelectedHint": {
+    "message": "तत्व चयनित! कृपया संकेत पाठ दर्ज करें।"
+  },
+  "msgElementSelectedTour": {
+    "message": "तत्व चयनित! कृपया चरण विवरण दर्ज करें।"
+  },
+  "msgStepElementUpdated": {
+    "message": "चरण लक्ष्य तत्व अपडेट किया गया!"
+  },
+  "msgSaveSuccess": {
+    "message": "सफलतापूर्वक सहेजा गया"
+  },
+  "msgSaveFailedLog": {
+    "message": "सहेजना विफल रहा, लॉग जांचें।"
+  },
+  "msgSaveError": {
+    "message": "सहेजने में त्रुटि: "
+  },
+  "msgTourSaveSuccess": {
+    "message": "टूर सफलतापूर्वक सहेजा गया"
+  },
+  "msgStepUpdated": {
+    "message": "चरण अपडेट किया गया"
+  },
+  "labelLanguage": {
+    "message": "इंटरफ़ेस भाषा"
+  },
+  "descLanguage": {
+    "message": "एक्सटेंशन इंटरफ़ेस की भाषा बदलें"
+  },
+  "msgLanguageChanged": {
+    "message": "भाषा सेटिंग अपडेट की गई"
+  },
+  "labelDebugLog": {
+    "message": "डीबग लॉग आउटपुट"
+  },
+  "descDebugLog": {
+    "message": "कंसोल में एक्सटेंशन विवरण आउटपुट करें"
+  },
+  "msgDebugLogEnabled": {
+    "message": "डीबग लॉग आउटपुट सक्षम किया गया"
+  },
+  "msgDebugLogDisabled": {
+    "message": "डीबग लॉग आउटपुट अक्षम किया गया"
+  },
+  "langAuto": {
+    "message": "🌐 स्वचालित (सिस्टम)"
+  }
 }

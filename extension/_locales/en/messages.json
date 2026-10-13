@@ -565,5 +565,29 @@
   },
   "msgStepUpdated": {
     "message": "Step updated"
+  },
+  "labelDebugLog": {
+    "message": "Debug Logs"
+  },
+  "descDebugLog": {
+    "message": "Output extension execution logs to console"
+  },
+  "msgDebugLogEnabled": {
+    "message": "Debug logs enabled"
+  },
+  "msgDebugLogDisabled": {
+    "message": "Debug logs disabled"
+  },
+  "labelLanguage": {
+    "message": "Display Language"
+  },
+  "descLanguage": {
+    "message": "Select extension interface language"
+  },
+  "msgLanguageChanged": {
+    "message": "Language updated"
+  },
+  "langAuto": {
+    "message": "🌐 Auto (System)"
   }
 }

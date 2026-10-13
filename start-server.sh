@@ -22,8 +22,12 @@ echo "======================================"
 echo "    🚀 正在启动 O-Maid 云端后端服务 (端口: $PORT)"
 echo "======================================"
 
-echo "[1/2] 正在检查并安装后端依赖 (npm install)..."
-# npm install
+if [ ! -d "node_modules" ]; then
+  echo "[1/2] 检测到未安装依赖，正在安装后端依赖 (npm install)..."
+  npm install
+else
+  echo "[1/2] 依赖已就绪，跳过 npm install"
+fi
 
 echo "[2/2] 正在启动服务器..."
 npm start

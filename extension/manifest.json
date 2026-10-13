@@ -51,7 +51,8 @@
     {
       "resources": [
         "modules/*.js",
-        "icons/*.png"
+        "icons/*.png",
+        "_locales/*/*.json"
       ],
       "matches": [
         "<all_urls>"

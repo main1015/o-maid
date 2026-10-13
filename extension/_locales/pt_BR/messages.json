@@ -1,191 +1,593 @@
 {
-  "appName": { "message": "O-Maid - Assistente Inteligente de Guias Web" },
-  "appDesc": { "message": "Assistente inteligente para guias da web. Adicione dicas, anotações e tutoriais a qualquer site." },
-  "popupTitle": { "message": "Assistente Inteligente O-Maid" },
-  "popupHeader": { "message": "Assistente O-Maid" },
-  "togglePanelBtn": { "message": "📋 Alternar Painel" },
-  "popupNotConnectedTip": { "message": "💡 Dica: Página atual não conectada" },
-  "popupReloadTip": { "message": "Atualize a página para reconectar após recarregar a extensão." },
-  "popupReloadBtn": { "message": "Atualizar página atual (F5)" },
-  "popupGithubLink": { "message": "🔗 GitHub Código Aberto" },
-  "popupSystemPageError": { "message": "<span>⚠️ Scripts não podem rodar em páginas do sistema. Vá para uma página normal!</span>" },
-  "sidepanelTitle": { "message": "Assistente O-Maid" },
-  "btnCloudAuth": { "message": "Conta na Nuvem" },
-  "btnSettings": { "message": "Configurações" },
-  "btnExport": { "message": "Exportar Dados" },
-  "btnImport": { "message": "Importar Dados" },
-  "btnAdd": { "message": "Nova Dica" },
-  "tabLocal": { "message": "Biblioteca Local" },
-  "tabCloud": { "message": "Descobrir Nuvem" },
-  "titleTours": { "message": "Guias Interativos" },
-  "titleHints": { "message": "Dicas Visuais" },
-  "msgNoData": { "message": "Nenhuma dica ou guia no momento." },
-  "titleCloudTours": { "message": "Guias Compartilhados" },
-  "titleCloudHints": { "message": "Dicas Compartilhadas" },
-  "btnRefreshCloud": { "message": "Atualizar Nuvem" },
-  "msgCloudNoData": { "message": "Nenhuma dica ou guia correspondente na nuvem." },
-  "titleAuth": { "message": "Conta na Nuvem" },
-  "placeholderUsername": { "message": "Usuário" },
-  "placeholderPassword": { "message": "Senha" },
-  "btnLogin": { "message": "Entrar" },
-  "btnRegister": { "message": "Registrar" },
-  "btnLogout": { "message": "Sair" },
-  "btnClose": { "message": "Fechar" },
-  "titleSettings": { "message": "Configurações" },
-  "labelApiBase": { "message": "URL da API do Backend:" },
-  "btnSaveSettings": { "message": "Salvar Configurações" },
-  "btnCloseSettings": { "message": "Fechar" },
-  "titleAddChoice": { "message": "O que você quer criar?" },
-  "btnCreateHint": { "message": "Dica Visual" },
-  "btnCreateTour": { "message": "Guia Interativo" },
-  "btnCancel": { "message": "Cancelar" },
-  "labelHintText": { "message": "Texto da Dica:" },
-  "labelCssSelector": { "message": "Seletor CSS:" },
-  "btnReselect": { "message": "Selecionar Novamente" },
-  "btnSave": { "message": "Salvar" },
-  "labelTourName": { "message": "Nome do Guia:" },
-  "labelTourTrigger": { "message": "Gatilho:" },
-  "optionManual": { "message": "Manual" },
-  "optionAuto": { "message": "Automático" },
-  "titleSteps": { "message": "Passos" },
-  "btnAddStep": { "message": "+ Adicionar Passo" },
-  "btnSaveTour": { "message": "Salvar Guia" },
-  "labelStepText": { "message": "Texto do Passo:" },
-  "labelStepSelector": { "message": "Seletor CSS:" },
-  "btnStepReselect": { "message": "Selecionar Novamente" },
-  "btnSaveStep": { "message": "Salvar Passo" },
-  "spTourItemToggleSteps": { "message": "Clique para ver passos" },
-  "spTourItemResetStatus": { "message": "Redefinir status" },
-  "spTriggerAuto": { "message": "Auto" },
-  "spTriggerManual": { "message": "Manual" },
-  "spUnnamedStep": { "message": "Passo sem nome" },
-  "spMsgTourReset": { "message": "Status do guia \"\" redefinido." },
-  "spMsgTourDeleted": { "message": "Guia excluído" },
-  "spMsgHintDeleted": { "message": "Dica excluída" },
-  "spTitleEditHint": { "message": "Editar Dica" },
-  "spTitleNewHint": { "message": "Nova Dica" },
-  "spTitleEditTour": { "message": "Editar Guia" },
-  "spTitleNewTour": { "message": "Novo Guia" },
-  "spStepPrefix": { "message": "Passo" },
-  "spUnnamed": { "message": "Sem nome" },
-  "spMsgFillCompleteInfo": { "message": "Por favor, preencha tudo" },
-  "spMsgHintSaved": { "message": "Dica salva" },
-  "spMsgFillTourInfo": { "message": "Forneça nome e ao menos um passo" },
-  "spMsgTourSaved": { "message": "Guia salvo" },
-  "spMsgExportSuccess": { "message": "Dados exportados com sucesso!" },
-  "spMsgImportSuccess": { "message": "Dados importados com sucesso!" },
-  "spMsgImportFail": { "message": "Falha na importação: " },
-  "spMsgParseFail": { "message": "Falha ao ler arquivo JSON: " },
-  "uiTitle": { "message": "Assistente O-Maid" },
-  "btnCollapsePanel": { "message": "Recolher Painel" },
-  "btnClosePanel": { "message": "Fechar Painel" },
-  "tabLocalRules": { "message": "Regras Locais" },
-  "tabCloudShared": { "message": "Compartilhado (Nuvem)" },
-  "msgCloudNotLoggedIn": { "message": "☁️ Nuvem Não Logada" },
-  "btnLoginNow": { "message": "Entrar Agora" },
-  "labelScope": { "message": "Escopo:" },
-  "scopeCurrentPage": { "message": "Página Atual" },
-  "btnRefresh": { "message": "Atualizar" },
-  "titleSyncRefresh": { "message": "Buscar e atualizar regras locais" },
-  "btnViewAll": { "message": "Ver Tudo" },
-  "btnQuickAdd": { "message": "+ Novo" },
-  "titleQuickAddTour": { "message": "Novo Guia Rápido" },
-  "titleQuickAddHint": { "message": "Nova Dica Rápida" },
-  "msgNoLocalRules": { "message": "Nenhuma regra local para a página atual." },
-  "linkViewAllLocal": { "message": "Ver todas as regras locais >>" },
-  "scopeCurrentSite": { "message": "Site Atual" },
-  "linkViewAllCloud": { "message": "Ver Salão Público" },
-  "msgNoCloudRulesSite": { "message": "Nenhuma regra na nuvem para este site." },
-  "linkViewAllCloudRules": { "message": "Ver todas as regras públicas >>" },
-  "labelServerAddress": { "message": "Endereço do Servidor:" },
-  "linkChangePort": { "message": "Alterar Porta" },
-  "titleSysSettings": { "message": "⚙️ Configurações do Sistema" },
-  "btnSaveApiSettings": { "message": "Salvar Configurações da API" },
-  "labelLocalDataBackup": { "message": "Backup e Migração:" },
-  "btnExportJson": { "message": "📤 Exportar JSON" },
-  "btnImportJson": { "message": "📥 Importar JSON" },
-  "msgInvalidDataFormat": { "message": "Formato de dados inválido" },
-  "msgFillRequiredFields": { "message": "Preencha os campos obrigatórios" },
-  "msgSelectingElement": { "message": "🎯 <strong>Selecionando Elemento</strong>: Clique num alvo &nbsp;<span style=\"opacity:0.85; font-size:11px; background:rgba(255,255,255,0.25); padding:2px 7px; border-radius:4px; margin-left:6px; cursor:pointer;\" id=\"o-maid-banner-esc-btn\">Pressione ESC para sair</span>" },
-  "msgCannotAccessIframe": { "message": "Não é possível acessar o iframe cruzado" },
-  "msgAccessTopUrlRestricted": { "message": "Acesso à URL restrito, usando a URL atual" },
-  "defaultStepTitle": { "message": "Passo " },
-  "msgStepElementNotFound": { "message": "Elemento do passo não encontrado na página." },
-  "introNextLabel": { "message": "Próximo →" },
-  "introPrevLabel": { "message": "← Voltar" },
-  "introDoneLabel": { "message": "Feito" },
-  "msgPluginReloaded": { "message": "Plugin atualizado. Atualize a página." },
-  "msgConfirmRefresh": { "message": "Atualizar a página agora?" },
-  "msgServerConnectFail": { "message": "Erro de conexão com o servidor ()." },
-  "msgCloudBatchFetchFail": { "message": "Falha na busca em lote, usando busca única" },
-  "dynamicTitleMain": { "message": "O-Maid" },
-  "dynamicTitleCreate": { "message": "Criar" },
-  "dynamicTitleSettings": { "message": "Configurações" },
-  "dynamicTitleAuth": { "message": "Conta na Nuvem" },
-  "dynamicTitleEditHint": { "message": "Editar Dica" },
-  "dynamicTitleNewHint": { "message": "Nova Dica" },
-  "dynamicTitleEditTour": { "message": "Editar Guia" },
-  "dynamicTitleNewTour": { "message": "Novo Guia" },
-  "dynamicTitleEditStep": { "message": "Editar Passo" },
-  "dynamicScopeAll": { "message": "Todas as Regras" },
-  "dynamicScopeCurrent": { "message": "Página Atual" },
-  "dynamicBtnViewCurrent": { "message": "Ver Atual" },
-  "dynamicBtnViewAll": { "message": "Ver Tudo" },
-  "dynamicNoRulesAll": { "message": "Nenhuma regra salva no local." },
-  "dynamicNoRulesCurrent": { "message": "Nenhuma regra para a página atual." },
-  "dynamicStatusLoggedIn": { "message": "Logado como: " },
-  "dynamicBannerLoggedIn": { "message": "👤 Logado: <strong></strong>" },
-  "dynamicBtnAccountSettings": { "message": "Configurações da Conta" },
-  "dynamicStatusNotLoggedIn": { "message": "Não logado. Faça login para compartilhar." },
-  "dynamicBannerNotLoggedIn": { "message": "Nuvem desconectada (Apenas local)" },
-  "dynamicBtnLoginRegister": { "message": "Entrar / Registrar" },
-  "dynamicScopeCloudAll": { "message": "Salão Público (Todos os Sites)" },
-  "dynamicBtnCloudViewCurrent": { "message": "Ver Site Atual" },
-  "dynamicBtnCloudViewAll": { "message": "Ver Salão Público" },
-  "dynamicNoCloudRulesAll": { "message": "Nenhuma tarefa compartilhada no salão público." },
-  "dynamicNoCloudRulesCurrent": { "message": "Nenhuma tarefa para o site ()." },
-  "msgSetSaveSuccess": { "message": "Configurações salvas e aplicadas." },
-  "msgApiEmpty": { "message": "O endereço da API não pode estar vazio" },
-  "msgInputCredentials": { "message": "Digite usuário e senha" },
-  "msgLoginSuccess": { "message": "Login bem-sucedido" },
-  "msgLoginFailed": { "message": "Falha no login: " },
-  "msgRegisterSuccess": { "message": "Registrado com sucesso, faça login" },
-  "msgRegisterFailed": { "message": "Falha no registro: " },
-  "msgLogoutSuccess": { "message": "Desconectado com sucesso" },
-  "msgExportSuccess": { "message": "Dados exportados com sucesso!" },
-  "msgExportFailed": { "message": "Falha na exportação" },
-  "msgExportError": { "message": "Erro na exportação: " },
-  "msgImportSuccess": { "message": "Dados importados com sucesso!" },
-  "msgImportFailed": { "message": "Falha na importação: " },
-  "msgParseError": { "message": "Falha ao ler JSON: " },
-  "msgNoLocalCloudRules": { "message": "Nenhuma regra local associada à nuvem" },
-  "msgSyncFailed": { "message": "Falha na sincronização" },
-  "msgSyncConflictRecovered": { "message": " conflitos recuperados para a versão da nuvem!" },
-  "msgSyncConflictKept": { "message": "Modificações locais mantidas para  regras!" },
-  "msgSyncUpdated": { "message": " regras atualizadas com sucesso!" },
-  "msgSyncAllLatest": { "message": "Todas as regras da nuvem estão atualizadas" },
-  "msgSyncError": { "message": "Erro de sincronização: " },
-  "msgFetchCloudFailed": { "message": "Falha ao buscar dados na nuvem" },
-  "msgDownloadSuccess": { "message": "Baixado para local!" },
-  "msgDownloadOverwrite": { "message": "Tarefa existe localmente, atualizada para a última versão!" },
-  "msgDownloadOverwriteHint": { "message": "Dica existe localmente, atualizada para a última versão!" },
-  "msgPublishNeedLogin": { "message": "Necessário login para publicar" },
-  "msgPublishProtect": { "message": "Regra compartilhada por [], impossível sobrescrever." },
-  "msgPublishFailed": { "message": "Falha ao publicar: " },
-  "msgPublishPending": { "message": "Enviado à nuvem, aguardando aprovação" },
-  "msgPublishSuccess": { "message": "Publicado com sucesso! Agora é público." },
-  "msgPublishException": { "message": "Exceção ao publicar" },
-  "msgTourResetSuccess": { "message": "Status do guia \"\" redefinido." },
-  "msgTourDeleteSuccess": { "message": "Guia \"\" excluído!" },
-  "msgDeleteFailed": { "message": "Falha ao excluir: " },
-  "msgHintDeleteSuccess": { "message": "Dica excluída!" },
-  "msgElementNotFound": { "message": "Elemento não encontrado na página." },
-  "msgElementSelectedHint": { "message": "Elemento selecionado! Digite o texto da dica." },
-  "msgElementSelectedTour": { "message": "Elemento selecionado! Digite a descrição do passo." },
-  "msgStepElementUpdated": { "message": "Elemento alvo atualizado!" },
-  "msgSaveSuccess": { "message": "Salvo com sucesso" },
-  "msgSaveFailedLog": { "message": "Falha ao salvar. Verifique os logs." },
-  "msgSaveError": { "message": "Erro ao salvar: " },
-  "msgTourSaveSuccess": { "message": "Guia salvo com sucesso" },
-  "msgStepUpdated": { "message": "Passo atualizado" }
+  "appName": {
+    "message": "O-Maid - Assistente Inteligente de Guias Web"
+  },
+  "appDesc": {
+    "message": "Assistente inteligente para guias da web. Adicione dicas, anotações e tutoriais a qualquer site."
+  },
+  "popupTitle": {
+    "message": "Assistente Inteligente O-Maid"
+  },
+  "popupHeader": {
+    "message": "Assistente O-Maid"
+  },
+  "togglePanelBtn": {
+    "message": "📋 Alternar Painel"
+  },
+  "popupNotConnectedTip": {
+    "message": "💡 Dica: Página atual não conectada"
+  },
+  "popupReloadTip": {
+    "message": "Atualize a página para reconectar após recarregar a extensão."
+  },
+  "popupReloadBtn": {
+    "message": "Atualizar página atual (F5)"
+  },
+  "popupGithubLink": {
+    "message": "🔗 GitHub Código Aberto"
+  },
+  "popupSystemPageError": {
+    "message": "<span>⚠️ Scripts não podem rodar em páginas do sistema. Vá para uma página normal!</span>"
+  },
+  "sidepanelTitle": {
+    "message": "Assistente O-Maid"
+  },
+  "btnCloudAuth": {
+    "message": "Conta na Nuvem"
+  },
+  "btnSettings": {
+    "message": "Configurações"
+  },
+  "btnExport": {
+    "message": "Exportar Dados"
+  },
+  "btnImport": {
+    "message": "Importar Dados"
+  },
+  "btnAdd": {
+    "message": "Nova Dica"
+  },
+  "tabLocal": {
+    "message": "Biblioteca Local"
+  },
+  "tabCloud": {
+    "message": "Descobrir Nuvem"
+  },
+  "titleTours": {
+    "message": "Guias Interativos"
+  },
+  "titleHints": {
+    "message": "Dicas Visuais"
+  },
+  "msgNoData": {
+    "message": "Nenhuma dica ou guia no momento."
+  },
+  "titleCloudTours": {
+    "message": "Guias Compartilhados"
+  },
+  "titleCloudHints": {
+    "message": "Dicas Compartilhadas"
+  },
+  "btnRefreshCloud": {
+    "message": "Atualizar Nuvem"
+  },
+  "msgCloudNoData": {
+    "message": "Nenhuma dica ou guia correspondente na nuvem."
+  },
+  "titleAuth": {
+    "message": "Conta na Nuvem"
+  },
+  "placeholderUsername": {
+    "message": "Usuário"
+  },
+  "placeholderPassword": {
+    "message": "Senha"
+  },
+  "btnLogin": {
+    "message": "Entrar"
+  },
+  "btnRegister": {
+    "message": "Registrar"
+  },
+  "btnLogout": {
+    "message": "Sair"
+  },
+  "btnClose": {
+    "message": "Fechar"
+  },
+  "titleSettings": {
+    "message": "Configurações"
+  },
+  "labelApiBase": {
+    "message": "URL da API do Backend:"
+  },
+  "btnSaveSettings": {
+    "message": "Salvar Configurações"
+  },
+  "btnCloseSettings": {
+    "message": "Fechar"
+  },
+  "titleAddChoice": {
+    "message": "O que você quer criar?"
+  },
+  "btnCreateHint": {
+    "message": "Dica Visual"
+  },
+  "btnCreateTour": {
+    "message": "Guia Interativo"
+  },
+  "btnCancel": {
+    "message": "Cancelar"
+  },
+  "labelHintText": {
+    "message": "Texto da Dica:"
+  },
+  "labelCssSelector": {
+    "message": "Seletor CSS:"
+  },
+  "btnReselect": {
+    "message": "Selecionar Novamente"
+  },
+  "btnSave": {
+    "message": "Salvar"
+  },
+  "labelTourName": {
+    "message": "Nome do Guia:"
+  },
+  "labelTourTrigger": {
+    "message": "Gatilho:"
+  },
+  "optionManual": {
+    "message": "Manual"
+  },
+  "optionAuto": {
+    "message": "Automático"
+  },
+  "titleSteps": {
+    "message": "Passos"
+  },
+  "btnAddStep": {
+    "message": "+ Adicionar Passo"
+  },
+  "btnSaveTour": {
+    "message": "Salvar Guia"
+  },
+  "labelStepText": {
+    "message": "Texto do Passo:"
+  },
+  "labelStepSelector": {
+    "message": "Seletor CSS:"
+  },
+  "btnStepReselect": {
+    "message": "Selecionar Novamente"
+  },
+  "btnSaveStep": {
+    "message": "Salvar Passo"
+  },
+  "spTourItemToggleSteps": {
+    "message": "Clique para ver passos"
+  },
+  "spTourItemResetStatus": {
+    "message": "Redefinir status"
+  },
+  "spTriggerAuto": {
+    "message": "Auto"
+  },
+  "spTriggerManual": {
+    "message": "Manual"
+  },
+  "spUnnamedStep": {
+    "message": "Passo sem nome"
+  },
+  "spMsgTourReset": {
+    "message": "Status do guia \"\" redefinido."
+  },
+  "spMsgTourDeleted": {
+    "message": "Guia excluído"
+  },
+  "spMsgHintDeleted": {
+    "message": "Dica excluída"
+  },
+  "spTitleEditHint": {
+    "message": "Editar Dica"
+  },
+  "spTitleNewHint": {
+    "message": "Nova Dica"
+  },
+  "spTitleEditTour": {
+    "message": "Editar Guia"
+  },
+  "spTitleNewTour": {
+    "message": "Novo Guia"
+  },
+  "spStepPrefix": {
+    "message": "Passo"
+  },
+  "spUnnamed": {
+    "message": "Sem nome"
+  },
+  "spMsgFillCompleteInfo": {
+    "message": "Por favor, preencha tudo"
+  },
+  "spMsgHintSaved": {
+    "message": "Dica salva"
+  },
+  "spMsgFillTourInfo": {
+    "message": "Forneça nome e ao menos um passo"
+  },
+  "spMsgTourSaved": {
+    "message": "Guia salvo"
+  },
+  "spMsgExportSuccess": {
+    "message": "Dados exportados com sucesso!"
+  },
+  "spMsgImportSuccess": {
+    "message": "Dados importados com sucesso!"
+  },
+  "spMsgImportFail": {
+    "message": "Falha na importação: "
+  },
+  "spMsgParseFail": {
+    "message": "Falha ao ler arquivo JSON: "
+  },
+  "uiTitle": {
+    "message": "Assistente O-Maid"
+  },
+  "btnCollapsePanel": {
+    "message": "Recolher Painel"
+  },
+  "btnClosePanel": {
+    "message": "Fechar Painel"
+  },
+  "tabLocalRules": {
+    "message": "Regras Locais"
+  },
+  "tabCloudShared": {
+    "message": "Compartilhado (Nuvem)"
+  },
+  "msgCloudNotLoggedIn": {
+    "message": "☁️ Nuvem Não Logada"
+  },
+  "btnLoginNow": {
+    "message": "Entrar Agora"
+  },
+  "labelScope": {
+    "message": "Escopo:"
+  },
+  "scopeCurrentPage": {
+    "message": "Página Atual"
+  },
+  "btnRefresh": {
+    "message": "Atualizar"
+  },
+  "titleSyncRefresh": {
+    "message": "Buscar e atualizar regras locais"
+  },
+  "btnViewAll": {
+    "message": "Ver Tudo"
+  },
+  "btnQuickAdd": {
+    "message": "+ Novo"
+  },
+  "titleQuickAddTour": {
+    "message": "Novo Guia Rápido"
+  },
+  "titleQuickAddHint": {
+    "message": "Nova Dica Rápida"
+  },
+  "msgNoLocalRules": {
+    "message": "Nenhuma regra local para a página atual."
+  },
+  "linkViewAllLocal": {
+    "message": "Ver todas as regras locais >>"
+  },
+  "scopeCurrentSite": {
+    "message": "Site Atual"
+  },
+  "linkViewAllCloud": {
+    "message": "Ver Salão Público"
+  },
+  "msgNoCloudRulesSite": {
+    "message": "Nenhuma regra na nuvem para este site."
+  },
+  "linkViewAllCloudRules": {
+    "message": "Ver todas as regras públicas >>"
+  },
+  "labelServerAddress": {
+    "message": "Endereço do Servidor:"
+  },
+  "linkChangePort": {
+    "message": "Alterar Porta"
+  },
+  "titleSysSettings": {
+    "message": "⚙️ Configurações do Sistema"
+  },
+  "btnSaveApiSettings": {
+    "message": "Salvar Configurações da API"
+  },
+  "labelLocalDataBackup": {
+    "message": "Backup e Migração:"
+  },
+  "btnExportJson": {
+    "message": "📤 Exportar JSON"
+  },
+  "btnImportJson": {
+    "message": "📥 Importar JSON"
+  },
+  "msgInvalidDataFormat": {
+    "message": "Formato de dados inválido"
+  },
+  "msgFillRequiredFields": {
+    "message": "Preencha os campos obrigatórios"
+  },
+  "msgSelectingElement": {
+    "message": "🎯 <strong>Selecionando Elemento</strong>: Clique num alvo &nbsp;<span style=\"opacity:0.85; font-size:11px; background:rgba(255,255,255,0.25); padding:2px 7px; border-radius:4px; margin-left:6px; cursor:pointer;\" id=\"o-maid-banner-esc-btn\">Pressione ESC para sair</span>"
+  },
+  "msgCannotAccessIframe": {
+    "message": "Não é possível acessar o iframe cruzado"
+  },
+  "msgAccessTopUrlRestricted": {
+    "message": "Acesso à URL restrito, usando a URL atual"
+  },
+  "defaultStepTitle": {
+    "message": "Passo "
+  },
+  "msgStepElementNotFound": {
+    "message": "Elemento do passo não encontrado na página."
+  },
+  "introNextLabel": {
+    "message": "Próximo →"
+  },
+  "introPrevLabel": {
+    "message": "← Voltar"
+  },
+  "introDoneLabel": {
+    "message": "Feito"
+  },
+  "msgPluginReloaded": {
+    "message": "Plugin atualizado. Atualize a página."
+  },
+  "msgConfirmRefresh": {
+    "message": "Atualizar a página agora?"
+  },
+  "msgServerConnectFail": {
+    "message": "Erro de conexão com o servidor ()."
+  },
+  "msgCloudBatchFetchFail": {
+    "message": "Falha na busca em lote, usando busca única"
+  },
+  "dynamicTitleMain": {
+    "message": "O-Maid"
+  },
+  "dynamicTitleCreate": {
+    "message": "Criar"
+  },
+  "dynamicTitleSettings": {
+    "message": "Configurações"
+  },
+  "dynamicTitleAuth": {
+    "message": "Conta na Nuvem"
+  },
+  "dynamicTitleEditHint": {
+    "message": "Editar Dica"
+  },
+  "dynamicTitleNewHint": {
+    "message": "Nova Dica"
+  },
+  "dynamicTitleEditTour": {
+    "message": "Editar Guia"
+  },
+  "dynamicTitleNewTour": {
+    "message": "Novo Guia"
+  },
+  "dynamicTitleEditStep": {
+    "message": "Editar Passo"
+  },
+  "dynamicScopeAll": {
+    "message": "Todas as Regras"
+  },
+  "dynamicScopeCurrent": {
+    "message": "Página Atual"
+  },
+  "dynamicBtnViewCurrent": {
+    "message": "Ver Atual"
+  },
+  "dynamicBtnViewAll": {
+    "message": "Ver Tudo"
+  },
+  "dynamicNoRulesAll": {
+    "message": "Nenhuma regra salva no local."
+  },
+  "dynamicNoRulesCurrent": {
+    "message": "Nenhuma regra para a página atual."
+  },
+  "dynamicStatusLoggedIn": {
+    "message": "Logado como: "
+  },
+  "dynamicBannerLoggedIn": {
+    "message": "👤 Logado: <strong></strong>"
+  },
+  "dynamicBtnAccountSettings": {
+    "message": "Configurações da Conta"
+  },
+  "dynamicStatusNotLoggedIn": {
+    "message": "Não logado. Faça login para compartilhar."
+  },
+  "dynamicBannerNotLoggedIn": {
+    "message": "Nuvem desconectada (Apenas local)"
+  },
+  "dynamicBtnLoginRegister": {
+    "message": "Entrar / Registrar"
+  },
+  "dynamicScopeCloudAll": {
+    "message": "Salão Público (Todos os Sites)"
+  },
+  "dynamicBtnCloudViewCurrent": {
+    "message": "Ver Site Atual"
+  },
+  "dynamicBtnCloudViewAll": {
+    "message": "Ver Salão Público"
+  },
+  "dynamicNoCloudRulesAll": {
+    "message": "Nenhuma tarefa compartilhada no salão público."
+  },
+  "dynamicNoCloudRulesCurrent": {
+    "message": "Nenhuma tarefa para o site ()."
+  },
+  "msgSetSaveSuccess": {
+    "message": "Configurações salvas e aplicadas."
+  },
+  "msgApiEmpty": {
+    "message": "O endereço da API não pode estar vazio"
+  },
+  "msgInputCredentials": {
+    "message": "Digite usuário e senha"
+  },
+  "msgLoginSuccess": {
+    "message": "Login bem-sucedido"
+  },
+  "msgLoginFailed": {
+    "message": "Falha no login: "
+  },
+  "msgRegisterSuccess": {
+    "message": "Registrado com sucesso, faça login"
+  },
+  "msgRegisterFailed": {
+    "message": "Falha no registro: "
+  },
+  "msgLogoutSuccess": {
+    "message": "Desconectado com sucesso"
+  },
+  "msgExportSuccess": {
+    "message": "Dados exportados com sucesso!"
+  },
+  "msgExportFailed": {
+    "message": "Falha na exportação"
+  },
+  "msgExportError": {
+    "message": "Erro na exportação: "
+  },
+  "msgImportSuccess": {
+    "message": "Dados importados com sucesso!"
+  },
+  "msgImportFailed": {
+    "message": "Falha na importação: "
+  },
+  "msgParseError": {
+    "message": "Falha ao ler JSON: "
+  },
+  "msgNoLocalCloudRules": {
+    "message": "Nenhuma regra local associada à nuvem"
+  },
+  "msgSyncFailed": {
+    "message": "Falha na sincronização"
+  },
+  "msgSyncConflictRecovered": {
+    "message": " conflitos recuperados para a versão da nuvem!"
+  },
+  "msgSyncConflictKept": {
+    "message": "Modificações locais mantidas para  regras!"
+  },
+  "msgSyncUpdated": {
+    "message": " regras atualizadas com sucesso!"
+  },
+  "msgSyncAllLatest": {
+    "message": "Todas as regras da nuvem estão atualizadas"
+  },
+  "msgSyncError": {
+    "message": "Erro de sincronização: "
+  },
+  "msgFetchCloudFailed": {
+    "message": "Falha ao buscar dados na nuvem"
+  },
+  "msgDownloadSuccess": {
+    "message": "Baixado para local!"
+  },
+  "msgDownloadOverwrite": {
+    "message": "Tarefa existe localmente, atualizada para a última versão!"
+  },
+  "msgDownloadOverwriteHint": {
+    "message": "Dica existe localmente, atualizada para a última versão!"
+  },
+  "msgPublishNeedLogin": {
+    "message": "Necessário login para publicar"
+  },
+  "msgPublishProtect": {
+    "message": "Regra compartilhada por [], impossível sobrescrever."
+  },
+  "msgPublishFailed": {
+    "message": "Falha ao publicar: "
+  },
+  "msgPublishPending": {
+    "message": "Enviado à nuvem, aguardando aprovação"
+  },
+  "msgPublishSuccess": {
+    "message": "Publicado com sucesso! Agora é público."
+  },
+  "msgPublishException": {
+    "message": "Exceção ao publicar"
+  },
+  "msgTourResetSuccess": {
+    "message": "Status do guia \"\" redefinido."
+  },
+  "msgTourDeleteSuccess": {
+    "message": "Guia \"\" excluído!"
+  },
+  "msgDeleteFailed": {
+    "message": "Falha ao excluir: "
+  },
+  "msgHintDeleteSuccess": {
+    "message": "Dica excluída!"
+  },
+  "msgElementNotFound": {
+    "message": "Elemento não encontrado na página."
+  },
+  "msgElementSelectedHint": {
+    "message": "Elemento selecionado! Digite o texto da dica."
+  },
+  "msgElementSelectedTour": {
+    "message": "Elemento selecionado! Digite a descrição do passo."
+  },
+  "msgStepElementUpdated": {
+    "message": "Elemento alvo atualizado!"
+  },
+  "msgSaveSuccess": {
+    "message": "Salvo com sucesso"
+  },
+  "msgSaveFailedLog": {
+    "message": "Falha ao salvar. Verifique os logs."
+  },
+  "msgSaveError": {
+    "message": "Erro ao salvar: "
+  },
+  "msgTourSaveSuccess": {
+    "message": "Guia salvo com sucesso"
+  },
+  "msgStepUpdated": {
+    "message": "Passo atualizado"
+  },
+  "labelLanguage": {
+    "message": "Idioma da interface"
+  },
+  "descLanguage": {
+    "message": "Alterar o idioma de exibição da extensão"
+  },
+  "msgLanguageChanged": {
+    "message": "Configurações de idioma atualizadas"
+  },
+  "labelDebugLog": {
+    "message": "Saída de logs de depuração"
+  },
+  "descDebugLog": {
+    "message": "Exibir detalhes de execução no console"
+  },
+  "msgDebugLogEnabled": {
+    "message": "Logs de depuração ativados"
+  },
+  "msgDebugLogDisabled": {
+    "message": "Logs de depuração desativados"
+  },
+  "langAuto": {
+    "message": "🌐 Automático (Sistema)"
+  }
 }

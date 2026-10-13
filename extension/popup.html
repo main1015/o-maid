@@ -66,6 +66,38 @@
     .github-link:hover {
       color: #0f172a;
     }
+
+    .switch-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #cbd5e1;
+      transition: 0.2s;
+      border-radius: 18px;
+    }
+
+    .switch-slider:before {
+      position: absolute;
+      content: "";
+      height: 14px;
+      width: 14px;
+      left: 2px;
+      bottom: 2px;
+      background-color: white;
+      transition: 0.2s;
+      border-radius: 50%;
+    }
+
+    input:checked + .switch-slider {
+      background-color: #0d6efd;
+    }
+
+    input:checked + .switch-slider:before {
+      transform: translateX(16px);
+    }
   </style>
 </head>
 
@@ -81,6 +113,20 @@
     <div style="font-size:11px; color:#475569; margin-bottom:6px;" data-i18n="popupReloadTip"></div>
     <button id="reload-tab-btn"
       style="width:100%; padding:5px; background:#ef4444; color:#fff; border:none; border-radius:4px; font-size:11px; font-weight:500; cursor:pointer;" data-i18n="popupReloadBtn"></button>
+  </div>
+
+  <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid #f1f5f9; display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: #475569;">
+    <span data-i18n="labelLanguage"></span>
+    <select id="popup-language-select" style="max-width: 110px; padding: 3px 6px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 11px; background: #fff; cursor: pointer; color: #1e293b; outline: none;">
+    </select>
+  </div>
+
+  <div style="margin-top: 8px; padding-top: 8px; border-top: 1px dashed #f1f5f9; display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: #475569;">
+    <span data-i18n="labelDebugLog"></span>
+    <label style="position: relative; display: inline-block; width: 34px; height: 18px; margin: 0; cursor: pointer;">
+      <input type="checkbox" id="popup-debug-log" style="opacity: 0; width: 0; height: 0;">
+      <span class="switch-slider"></span>
+    </label>
   </div>
 
   <div style="margin-top: 12px; text-align: center; font-size: 11px;">

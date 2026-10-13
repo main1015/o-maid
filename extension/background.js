@@ -1,6 +1,10 @@
 // background.js - O-Maid 后台服务工作者
 
+import { initLogger } from './modules/logger.js';
 import * as StorageAPI from './modules/storage-api.js';
+
+// 初始化日志控制
+initLogger();
 
 // -----------------------------------------------------------------------------
 // I. 核心扩展逻辑

@@ -1,191 +1,593 @@
 {
-  "appName": { "message": "O-Maid - Web Operation Guide & Smart Hint Assistant" },
-  "appDesc": { "message": "Intelligenter Assistent für Web-Guides. Fügen Sie Tipps und Touren auf jeder Website hinzu." },
-  "popupTitle": { "message": "O-Maid Smart Assistent" },
-  "popupHeader": { "message": "O-Maid Assistent" },
-  "togglePanelBtn": { "message": "📋 Panel Umschalten" },
-  "popupNotConnectedTip": { "message": "💡 Tipp: Aktuelle Seite nicht verbunden" },
-  "popupReloadTip": { "message": "Bitte laden Sie die Seite neu, um die Verbindung wiederherzustellen." },
-  "popupReloadBtn": { "message": "Aktuelle Seite aktualisieren (F5)" },
-  "popupGithubLink": { "message": "🔗 GitHub Open Source" },
-  "popupSystemPageError": { "message": "<span>⚠️ Skripte können nicht auf Systemseiten ausgeführt werden. Bitte wechseln Sie zu einer normalen Webseite!</span>" },
-  "sidepanelTitle": { "message": "O-Maid Assistent" },
-  "btnCloudAuth": { "message": "Cloud-Konto" },
-  "btnSettings": { "message": "Einstellungen" },
-  "btnExport": { "message": "Daten exportieren" },
-  "btnImport": { "message": "Daten importieren" },
-  "btnAdd": { "message": "Neuer Tipp" },
-  "tabLocal": { "message": "Lokale Bibliothek" },
-  "tabCloud": { "message": "Cloud Entdecken" },
-  "titleTours": { "message": "Geführte Touren" },
-  "titleHints": { "message": "Hover-Tipps" },
-  "msgNoData": { "message": "Derzeit keine Tipps oder Touren." },
-  "titleCloudTours": { "message": "Geteilte Touren" },
-  "titleCloudHints": { "message": "Geteilte Tipps" },
-  "btnRefreshCloud": { "message": "Cloud-Daten aktualisieren" },
-  "msgCloudNoData": { "message": "Keine passenden Tipps oder Touren in der Cloud." },
-  "titleAuth": { "message": "Cloud-Konto" },
-  "placeholderUsername": { "message": "Benutzername" },
-  "placeholderPassword": { "message": "Passwort" },
-  "btnLogin": { "message": "Anmelden" },
-  "btnRegister": { "message": "Registrieren" },
-  "btnLogout": { "message": "Abmelden" },
-  "btnClose": { "message": "Schließen" },
-  "titleSettings": { "message": "Einstellungen" },
-  "labelApiBase": { "message": "Backend-API-URL:" },
-  "btnSaveSettings": { "message": "Einstellungen speichern" },
-  "btnCloseSettings": { "message": "Schließen" },
-  "titleAddChoice": { "message": "Was möchten Sie erstellen?" },
-  "btnCreateHint": { "message": "Hover-Tipp" },
-  "btnCreateTour": { "message": "Geführte Tour" },
-  "btnCancel": { "message": "Abbrechen" },
-  "labelHintText": { "message": "Tipp-Text:" },
-  "labelCssSelector": { "message": "CSS-Selektor:" },
-  "btnReselect": { "message": "Neu auswählen" },
-  "btnSave": { "message": "Speichern" },
-  "labelTourName": { "message": "Name der Tour:" },
-  "labelTourTrigger": { "message": "Auslöser:" },
-  "optionManual": { "message": "Manuell" },
-  "optionAuto": { "message": "Automatisch" },
-  "titleSteps": { "message": "Schritte" },
-  "btnAddStep": { "message": "+ Schritt hinzufügen" },
-  "btnSaveTour": { "message": "Tour speichern" },
-  "labelStepText": { "message": "Schritt-Text:" },
-  "labelStepSelector": { "message": "CSS-Selektor:" },
-  "btnStepReselect": { "message": "Neu auswählen" },
-  "btnSaveStep": { "message": "Schritt speichern" },
-  "spTourItemToggleSteps": { "message": "Klicken, um Schritte umzuschalten" },
-  "spTourItemResetStatus": { "message": "Abschlussstatus zurücksetzen" },
-  "spTriggerAuto": { "message": "Auto" },
-  "spTriggerManual": { "message": "Manuell" },
-  "spUnnamedStep": { "message": "Unbenannter Schritt" },
-  "spMsgTourReset": { "message": "Status der Tour \"\" wurde zurückgesetzt." },
-  "spMsgTourDeleted": { "message": "Tour gelöscht" },
-  "spMsgHintDeleted": { "message": "Tipp gelöscht" },
-  "spTitleEditHint": { "message": "Tipp bearbeiten" },
-  "spTitleNewHint": { "message": "Neuer Tipp" },
-  "spTitleEditTour": { "message": "Tour bearbeiten" },
-  "spTitleNewTour": { "message": "Neue Tour" },
-  "spStepPrefix": { "message": "Schritt" },
-  "spUnnamed": { "message": "Unbenannt" },
-  "spMsgFillCompleteInfo": { "message": "Bitte alle Informationen ausfüllen" },
-  "spMsgHintSaved": { "message": "Tipp gespeichert" },
-  "spMsgFillTourInfo": { "message": "Bitte Tour-Namen und mind. einen Schritt angeben" },
-  "spMsgTourSaved": { "message": "Tour gespeichert" },
-  "spMsgExportSuccess": { "message": "Daten erfolgreich exportiert!" },
-  "spMsgImportSuccess": { "message": "Daten erfolgreich importiert!" },
-  "spMsgImportFail": { "message": "Import fehlgeschlagen: " },
-  "spMsgParseFail": { "message": "JSON-Parsing fehlgeschlagen: " },
-  "uiTitle": { "message": "O-Maid Assistent" },
-  "btnCollapsePanel": { "message": "Panel einklappen" },
-  "btnClosePanel": { "message": "Panel schließen" },
-  "tabLocalRules": { "message": "Lokale Regeln" },
-  "tabCloudShared": { "message": "Cloud-Geteilt" },
-  "msgCloudNotLoggedIn": { "message": "☁️ Cloud nicht angemeldet" },
-  "btnLoginNow": { "message": "Jetzt anmelden" },
-  "labelScope": { "message": "Bereich:" },
-  "scopeCurrentPage": { "message": "Aktuelle Seite" },
-  "btnRefresh": { "message": "Aktualisieren" },
-  "titleSyncRefresh": { "message": "Lokale Regeln mit Cloud abrufen" },
-  "btnViewAll": { "message": "Alle anzeigen" },
-  "btnQuickAdd": { "message": "+ Neu" },
-  "titleQuickAddTour": { "message": "Schnelle Tour" },
-  "titleQuickAddHint": { "message": "Schneller Tipp" },
-  "msgNoLocalRules": { "message": "Keine lokalen Regeln für diese Seite." },
-  "linkViewAllLocal": { "message": "Alle lokalen Regeln anzeigen >>" },
-  "scopeCurrentSite": { "message": "Aktuelle Website" },
-  "linkViewAllCloud": { "message": "Öffentliche Halle ansehen" },
-  "msgNoCloudRulesSite": { "message": "Keine passenden Cloud-Regeln für diese Website." },
-  "linkViewAllCloudRules": { "message": "Alle öffentlichen Regeln ansehen >>" },
-  "labelServerAddress": { "message": "Server-Adresse:" },
-  "linkChangePort": { "message": "Port ändern" },
-  "titleSysSettings": { "message": "⚙️ Systemeinstellungen" },
-  "btnSaveApiSettings": { "message": "API-Einstellungen speichern" },
-  "labelLocalDataBackup": { "message": "Lokales Daten-Backup:" },
-  "btnExportJson": { "message": "📤 JSON exportieren" },
-  "btnImportJson": { "message": "📥 JSON importieren" },
-  "msgInvalidDataFormat": { "message": "Ungültiges Datenformat" },
-  "msgFillRequiredFields": { "message": "Bitte alle Pflichtfelder ausfüllen" },
-  "msgSelectingElement": { "message": "🎯 <strong>Element auswählen</strong>: Bitte klicken Sie auf ein Zielelement &nbsp;<span style=\"opacity:0.85; font-size:11px; background:rgba(255,255,255,0.25); padding:2px 7px; border-radius:4px; margin-left:6px; cursor:pointer;\" id=\"o-maid-banner-esc-btn\">ESC zum Beenden drücken</span>" },
-  "msgCannotAccessIframe": { "message": "Zugriff auf seitenübergreifenden iframe nicht möglich" },
-  "msgAccessTopUrlRestricted": { "message": "Zugriff auf Top-URL beschränkt, aktuelle URL wird verwendet" },
-  "defaultStepTitle": { "message": "Schritt " },
-  "msgStepElementNotFound": { "message": "Element für Tour-Schritt auf aktueller Seite nicht gefunden." },
-  "introNextLabel": { "message": "Weiter →" },
-  "introPrevLabel": { "message": "← Zurück" },
-  "introDoneLabel": { "message": "Fertig" },
-  "msgPluginReloaded": { "message": "Plugin wurde aktualisiert. Bitte Seite neu laden." },
-  "msgConfirmRefresh": { "message": "Seite jetzt neu laden?" },
-  "msgServerConnectFail": { "message": "Keine Verbindung zum Server (). Bitte Backend prüfen!" },
-  "msgCloudBatchFetchFail": { "message": "Stapel-Abruf fehlgeschlagen, wechsle zu Einzelabruf" },
-  "dynamicTitleMain": { "message": "O-Maid" },
-  "dynamicTitleCreate": { "message": "Erstellen" },
-  "dynamicTitleSettings": { "message": "Einstellungen" },
-  "dynamicTitleAuth": { "message": "Cloud-Konto" },
-  "dynamicTitleEditHint": { "message": "Tipp bearbeiten" },
-  "dynamicTitleNewHint": { "message": "Neuer Tipp" },
-  "dynamicTitleEditTour": { "message": "Tour bearbeiten" },
-  "dynamicTitleNewTour": { "message": "Neue Tour" },
-  "dynamicTitleEditStep": { "message": "Schritt bearbeiten" },
-  "dynamicScopeAll": { "message": "Alle Regeln" },
-  "dynamicScopeCurrent": { "message": "Aktuelle Seite" },
-  "dynamicBtnViewCurrent": { "message": "Aktuelle anzeigen" },
-  "dynamicBtnViewAll": { "message": "Alle anzeigen" },
-  "dynamicNoRulesAll": { "message": "Keine lokalen Regeln gespeichert." },
-  "dynamicNoRulesCurrent": { "message": "Keine lokalen Regeln für diese Seite." },
-  "dynamicStatusLoggedIn": { "message": "Angemeldet als: " },
-  "dynamicBannerLoggedIn": { "message": "👤 Angemeldet: <strong></strong>" },
-  "dynamicBtnAccountSettings": { "message": "Kontoeinstellungen" },
-  "dynamicStatusNotLoggedIn": { "message": "Nicht angemeldet. Zum Teilen bitte anmelden." },
-  "dynamicBannerNotLoggedIn": { "message": "Cloud nicht angemeldet (Nur lokal)" },
-  "dynamicBtnLoginRegister": { "message": "Anmelden / Registrieren" },
-  "dynamicScopeCloudAll": { "message": "Öffentliche Halle (Alle Seiten)" },
-  "dynamicBtnCloudViewCurrent": { "message": "Aktuelle Website anzeigen" },
-  "dynamicBtnCloudViewAll": { "message": "Öffentliche Halle anzeigen" },
-  "dynamicNoCloudRulesAll": { "message": "Keine geteilten Aufgaben vorhanden." },
-  "dynamicNoCloudRulesCurrent": { "message": "Keine Cloud-Aufgaben für Seite ()." },
-  "msgSetSaveSuccess": { "message": "Einstellungen gespeichert." },
-  "msgApiEmpty": { "message": "API-Adresse darf nicht leer sein" },
-  "msgInputCredentials": { "message": "Bitte Benutzername und Passwort eingeben" },
-  "msgLoginSuccess": { "message": "Erfolgreich angemeldet" },
-  "msgLoginFailed": { "message": "Anmeldung fehlgeschlagen: " },
-  "msgRegisterSuccess": { "message": "Erfolgreich registriert, bitte anmelden" },
-  "msgRegisterFailed": { "message": "Registrierung fehlgeschlagen: " },
-  "msgLogoutSuccess": { "message": "Erfolgreich abgemeldet" },
-  "msgExportSuccess": { "message": "Daten erfolgreich exportiert!" },
-  "msgExportFailed": { "message": "Export fehlgeschlagen" },
-  "msgExportError": { "message": "Export-Fehler: " },
-  "msgImportSuccess": { "message": "Daten erfolgreich importiert!" },
-  "msgImportFailed": { "message": "Import fehlgeschlagen: " },
-  "msgParseError": { "message": "JSON-Parsing fehlgeschlagen: " },
-  "msgNoLocalCloudRules": { "message": "Keine lokalen Cloud-Regeln gefunden" },
-  "msgSyncFailed": { "message": "Synchronisierung fehlgeschlagen" },
-  "msgSyncConflictRecovered": { "message": " Konflikte auf Cloud-Version wiederhergestellt!" },
-  "msgSyncConflictKept": { "message": "Lokale Änderungen für  Regeln beibehalten!" },
-  "msgSyncUpdated": { "message": " Cloud-Regeln erfolgreich synchronisiert!" },
-  "msgSyncAllLatest": { "message": "Alle Cloud-Regeln sind auf dem neuesten Stand" },
-  "msgSyncError": { "message": "Synchronisierungsfehler: " },
-  "msgFetchCloudFailed": { "message": "Cloud-Daten konnten nicht abgerufen werden" },
-  "msgDownloadSuccess": { "message": "Erfolgreich heruntergeladen!" },
-  "msgDownloadOverwrite": { "message": "Aufgabe existiert lokal, auf neueste Version aktualisiert!" },
-  "msgDownloadOverwriteHint": { "message": "Tipp existiert lokal, auf neueste Version aktualisiert!" },
-  "msgPublishNeedLogin": { "message": "Zum Veröffentlichen anmelden erforderlich" },
-  "msgPublishProtect": { "message": "Von [] geteilte Regel kann nicht überschrieben werden." },
-  "msgPublishFailed": { "message": "Veröffentlichung fehlgeschlagen: " },
-  "msgPublishPending": { "message": "An Cloud gesendet, wartet auf Freigabe" },
-  "msgPublishSuccess": { "message": "Erfolgreich veröffentlicht!" },
-  "msgPublishException": { "message": "Ausnahme bei Veröffentlichung" },
-  "msgTourResetSuccess": { "message": "Abschlussstatus der Tour \"\" zurückgesetzt." },
-  "msgTourDeleteSuccess": { "message": "Tour \"\" gelöscht!" },
-  "msgDeleteFailed": { "message": "Löschen fehlgeschlagen: " },
-  "msgHintDeleteSuccess": { "message": "Hover-Tipp gelöscht!" },
-  "msgElementNotFound": { "message": "Element auf der aktuellen Seite nicht gefunden." },
-  "msgElementSelectedHint": { "message": "Element ausgewählt! Bitte Tipp-Text eingeben." },
-  "msgElementSelectedTour": { "message": "Element ausgewählt! Bitte Schritt-Beschreibung eingeben." },
-  "msgStepElementUpdated": { "message": "Ziel-Element des Schritts aktualisiert!" },
-  "msgSaveSuccess": { "message": "Erfolgreich gespeichert" },
-  "msgSaveFailedLog": { "message": "Speichern fehlgeschlagen, siehe Logs." },
-  "msgSaveError": { "message": "Speicherfehler: " },
-  "msgTourSaveSuccess": { "message": "Tour erfolgreich gespeichert" },
-  "msgStepUpdated": { "message": "Schritt aktualisiert" }
+  "appName": {
+    "message": "O-Maid - Web Operation Guide & Smart Hint Assistant"
+  },
+  "appDesc": {
+    "message": "Intelligenter Assistent für Web-Guides. Fügen Sie Tipps und Touren auf jeder Website hinzu."
+  },
+  "popupTitle": {
+    "message": "O-Maid Smart Assistent"
+  },
+  "popupHeader": {
+    "message": "O-Maid Assistent"
+  },
+  "togglePanelBtn": {
+    "message": "📋 Panel Umschalten"
+  },
+  "popupNotConnectedTip": {
+    "message": "💡 Tipp: Aktuelle Seite nicht verbunden"
+  },
+  "popupReloadTip": {
+    "message": "Bitte laden Sie die Seite neu, um die Verbindung wiederherzustellen."
+  },
+  "popupReloadBtn": {
+    "message": "Aktuelle Seite aktualisieren (F5)"
+  },
+  "popupGithubLink": {
+    "message": "🔗 GitHub Open Source"
+  },
+  "popupSystemPageError": {
+    "message": "<span>⚠️ Skripte können nicht auf Systemseiten ausgeführt werden. Bitte wechseln Sie zu einer normalen Webseite!</span>"
+  },
+  "sidepanelTitle": {
+    "message": "O-Maid Assistent"
+  },
+  "btnCloudAuth": {
+    "message": "Cloud-Konto"
+  },
+  "btnSettings": {
+    "message": "Einstellungen"
+  },
+  "btnExport": {
+    "message": "Daten exportieren"
+  },
+  "btnImport": {
+    "message": "Daten importieren"
+  },
+  "btnAdd": {
+    "message": "Neuer Tipp"
+  },
+  "tabLocal": {
+    "message": "Lokale Bibliothek"
+  },
+  "tabCloud": {
+    "message": "Cloud Entdecken"
+  },
+  "titleTours": {
+    "message": "Geführte Touren"
+  },
+  "titleHints": {
+    "message": "Hover-Tipps"
+  },
+  "msgNoData": {
+    "message": "Derzeit keine Tipps oder Touren."
+  },
+  "titleCloudTours": {
+    "message": "Geteilte Touren"
+  },
+  "titleCloudHints": {
+    "message": "Geteilte Tipps"
+  },
+  "btnRefreshCloud": {
+    "message": "Cloud-Daten aktualisieren"
+  },
+  "msgCloudNoData": {
+    "message": "Keine passenden Tipps oder Touren in der Cloud."
+  },
+  "titleAuth": {
+    "message": "Cloud-Konto"
+  },
+  "placeholderUsername": {
+    "message": "Benutzername"
+  },
+  "placeholderPassword": {
+    "message": "Passwort"
+  },
+  "btnLogin": {
+    "message": "Anmelden"
+  },
+  "btnRegister": {
+    "message": "Registrieren"
+  },
+  "btnLogout": {
+    "message": "Abmelden"
+  },
+  "btnClose": {
+    "message": "Schließen"
+  },
+  "titleSettings": {
+    "message": "Einstellungen"
+  },
+  "labelApiBase": {
+    "message": "Backend-API-URL:"
+  },
+  "btnSaveSettings": {
+    "message": "Einstellungen speichern"
+  },
+  "btnCloseSettings": {
+    "message": "Schließen"
+  },
+  "titleAddChoice": {
+    "message": "Was möchten Sie erstellen?"
+  },
+  "btnCreateHint": {
+    "message": "Hover-Tipp"
+  },
+  "btnCreateTour": {
+    "message": "Geführte Tour"
+  },
+  "btnCancel": {
+    "message": "Abbrechen"
+  },
+  "labelHintText": {
+    "message": "Tipp-Text:"
+  },
+  "labelCssSelector": {
+    "message": "CSS-Selektor:"
+  },
+  "btnReselect": {
+    "message": "Neu auswählen"
+  },
+  "btnSave": {
+    "message": "Speichern"
+  },
+  "labelTourName": {
+    "message": "Name der Tour:"
+  },
+  "labelTourTrigger": {
+    "message": "Auslöser:"
+  },
+  "optionManual": {
+    "message": "Manuell"
+  },
+  "optionAuto": {
+    "message": "Automatisch"
+  },
+  "titleSteps": {
+    "message": "Schritte"
+  },
+  "btnAddStep": {
+    "message": "+ Schritt hinzufügen"
+  },
+  "btnSaveTour": {
+    "message": "Tour speichern"
+  },
+  "labelStepText": {
+    "message": "Schritt-Text:"
+  },
+  "labelStepSelector": {
+    "message": "CSS-Selektor:"
+  },
+  "btnStepReselect": {
+    "message": "Neu auswählen"
+  },
+  "btnSaveStep": {
+    "message": "Schritt speichern"
+  },
+  "spTourItemToggleSteps": {
+    "message": "Klicken, um Schritte umzuschalten"
+  },
+  "spTourItemResetStatus": {
+    "message": "Abschlussstatus zurücksetzen"
+  },
+  "spTriggerAuto": {
+    "message": "Auto"
+  },
+  "spTriggerManual": {
+    "message": "Manuell"
+  },
+  "spUnnamedStep": {
+    "message": "Unbenannter Schritt"
+  },
+  "spMsgTourReset": {
+    "message": "Status der Tour \"\" wurde zurückgesetzt."
+  },
+  "spMsgTourDeleted": {
+    "message": "Tour gelöscht"
+  },
+  "spMsgHintDeleted": {
+    "message": "Tipp gelöscht"
+  },
+  "spTitleEditHint": {
+    "message": "Tipp bearbeiten"
+  },
+  "spTitleNewHint": {
+    "message": "Neuer Tipp"
+  },
+  "spTitleEditTour": {
+    "message": "Tour bearbeiten"
+  },
+  "spTitleNewTour": {
+    "message": "Neue Tour"
+  },
+  "spStepPrefix": {
+    "message": "Schritt"
+  },
+  "spUnnamed": {
+    "message": "Unbenannt"
+  },
+  "spMsgFillCompleteInfo": {
+    "message": "Bitte alle Informationen ausfüllen"
+  },
+  "spMsgHintSaved": {
+    "message": "Tipp gespeichert"
+  },
+  "spMsgFillTourInfo": {
+    "message": "Bitte Tour-Namen und mind. einen Schritt angeben"
+  },
+  "spMsgTourSaved": {
+    "message": "Tour gespeichert"
+  },
+  "spMsgExportSuccess": {
+    "message": "Daten erfolgreich exportiert!"
+  },
+  "spMsgImportSuccess": {
+    "message": "Daten erfolgreich importiert!"
+  },
+  "spMsgImportFail": {
+    "message": "Import fehlgeschlagen: "
+  },
+  "spMsgParseFail": {
+    "message": "JSON-Parsing fehlgeschlagen: "
+  },
+  "uiTitle": {
+    "message": "O-Maid Assistent"
+  },
+  "btnCollapsePanel": {
+    "message": "Panel einklappen"
+  },
+  "btnClosePanel": {
+    "message": "Panel schließen"
+  },
+  "tabLocalRules": {
+    "message": "Lokale Regeln"
+  },
+  "tabCloudShared": {
+    "message": "Cloud-Geteilt"
+  },
+  "msgCloudNotLoggedIn": {
+    "message": "☁️ Cloud nicht angemeldet"
+  },
+  "btnLoginNow": {
+    "message": "Jetzt anmelden"
+  },
+  "labelScope": {
+    "message": "Bereich:"
+  },
+  "scopeCurrentPage": {
+    "message": "Aktuelle Seite"
+  },
+  "btnRefresh": {
+    "message": "Aktualisieren"
+  },
+  "titleSyncRefresh": {
+    "message": "Lokale Regeln mit Cloud abrufen"
+  },
+  "btnViewAll": {
+    "message": "Alle anzeigen"
+  },
+  "btnQuickAdd": {
+    "message": "+ Neu"
+  },
+  "titleQuickAddTour": {
+    "message": "Schnelle Tour"
+  },
+  "titleQuickAddHint": {
+    "message": "Schneller Tipp"
+  },
+  "msgNoLocalRules": {
+    "message": "Keine lokalen Regeln für diese Seite."
+  },
+  "linkViewAllLocal": {
+    "message": "Alle lokalen Regeln anzeigen >>"
+  },
+  "scopeCurrentSite": {
+    "message": "Aktuelle Website"
+  },
+  "linkViewAllCloud": {
+    "message": "Öffentliche Halle ansehen"
+  },
+  "msgNoCloudRulesSite": {
+    "message": "Keine passenden Cloud-Regeln für diese Website."
+  },
+  "linkViewAllCloudRules": {
+    "message": "Alle öffentlichen Regeln ansehen >>"
+  },
+  "labelServerAddress": {
+    "message": "Server-Adresse:"
+  },
+  "linkChangePort": {
+    "message": "Port ändern"
+  },
+  "titleSysSettings": {
+    "message": "⚙️ Systemeinstellungen"
+  },
+  "btnSaveApiSettings": {
+    "message": "API-Einstellungen speichern"
+  },
+  "labelLocalDataBackup": {
+    "message": "Lokales Daten-Backup:"
+  },
+  "btnExportJson": {
+    "message": "📤 JSON exportieren"
+  },
+  "btnImportJson": {
+    "message": "📥 JSON importieren"
+  },
+  "msgInvalidDataFormat": {
+    "message": "Ungültiges Datenformat"
+  },
+  "msgFillRequiredFields": {
+    "message": "Bitte alle Pflichtfelder ausfüllen"
+  },
+  "msgSelectingElement": {
+    "message": "🎯 <strong>Element auswählen</strong>: Bitte klicken Sie auf ein Zielelement &nbsp;<span style=\"opacity:0.85; font-size:11px; background:rgba(255,255,255,0.25); padding:2px 7px; border-radius:4px; margin-left:6px; cursor:pointer;\" id=\"o-maid-banner-esc-btn\">ESC zum Beenden drücken</span>"
+  },
+  "msgCannotAccessIframe": {
+    "message": "Zugriff auf seitenübergreifenden iframe nicht möglich"
+  },
+  "msgAccessTopUrlRestricted": {
+    "message": "Zugriff auf Top-URL beschränkt, aktuelle URL wird verwendet"
+  },
+  "defaultStepTitle": {
+    "message": "Schritt "
+  },
+  "msgStepElementNotFound": {
+    "message": "Element für Tour-Schritt auf aktueller Seite nicht gefunden."
+  },
+  "introNextLabel": {
+    "message": "Weiter →"
+  },
+  "introPrevLabel": {
+    "message": "← Zurück"
+  },
+  "introDoneLabel": {
+    "message": "Fertig"
+  },
+  "msgPluginReloaded": {
+    "message": "Plugin wurde aktualisiert. Bitte Seite neu laden."
+  },
+  "msgConfirmRefresh": {
+    "message": "Seite jetzt neu laden?"
+  },
+  "msgServerConnectFail": {
+    "message": "Keine Verbindung zum Server (). Bitte Backend prüfen!"
+  },
+  "msgCloudBatchFetchFail": {
+    "message": "Stapel-Abruf fehlgeschlagen, wechsle zu Einzelabruf"
+  },
+  "dynamicTitleMain": {
+    "message": "O-Maid"
+  },
+  "dynamicTitleCreate": {
+    "message": "Erstellen"
+  },
+  "dynamicTitleSettings": {
+    "message": "Einstellungen"
+  },
+  "dynamicTitleAuth": {
+    "message": "Cloud-Konto"
+  },
+  "dynamicTitleEditHint": {
+    "message": "Tipp bearbeiten"
+  },
+  "dynamicTitleNewHint": {
+    "message": "Neuer Tipp"
+  },
+  "dynamicTitleEditTour": {
+    "message": "Tour bearbeiten"
+  },
+  "dynamicTitleNewTour": {
+    "message": "Neue Tour"
+  },
+  "dynamicTitleEditStep": {
+    "message": "Schritt bearbeiten"
+  },
+  "dynamicScopeAll": {
+    "message": "Alle Regeln"
+  },
+  "dynamicScopeCurrent": {
+    "message": "Aktuelle Seite"
+  },
+  "dynamicBtnViewCurrent": {
+    "message": "Aktuelle anzeigen"
+  },
+  "dynamicBtnViewAll": {
+    "message": "Alle anzeigen"
+  },
+  "dynamicNoRulesAll": {
+    "message": "Keine lokalen Regeln gespeichert."
+  },
+  "dynamicNoRulesCurrent": {
+    "message": "Keine lokalen Regeln für diese Seite."
+  },
+  "dynamicStatusLoggedIn": {
+    "message": "Angemeldet als: "
+  },
+  "dynamicBannerLoggedIn": {
+    "message": "👤 Angemeldet: <strong></strong>"
+  },
+  "dynamicBtnAccountSettings": {
+    "message": "Kontoeinstellungen"
+  },
+  "dynamicStatusNotLoggedIn": {
+    "message": "Nicht angemeldet. Zum Teilen bitte anmelden."
+  },
+  "dynamicBannerNotLoggedIn": {
+    "message": "Cloud nicht angemeldet (Nur lokal)"
+  },
+  "dynamicBtnLoginRegister": {
+    "message": "Anmelden / Registrieren"
+  },
+  "dynamicScopeCloudAll": {
+    "message": "Öffentliche Halle (Alle Seiten)"
+  },
+  "dynamicBtnCloudViewCurrent": {
+    "message": "Aktuelle Website anzeigen"
+  },
+  "dynamicBtnCloudViewAll": {
+    "message": "Öffentliche Halle anzeigen"
+  },
+  "dynamicNoCloudRulesAll": {
+    "message": "Keine geteilten Aufgaben vorhanden."
+  },
+  "dynamicNoCloudRulesCurrent": {
+    "message": "Keine Cloud-Aufgaben für Seite ()."
+  },
+  "msgSetSaveSuccess": {
+    "message": "Einstellungen gespeichert."
+  },
+  "msgApiEmpty": {
+    "message": "API-Adresse darf nicht leer sein"
+  },
+  "msgInputCredentials": {
+    "message": "Bitte Benutzername und Passwort eingeben"
+  },
+  "msgLoginSuccess": {
+    "message": "Erfolgreich angemeldet"
+  },
+  "msgLoginFailed": {
+    "message": "Anmeldung fehlgeschlagen: "
+  },
+  "msgRegisterSuccess": {
+    "message": "Erfolgreich registriert, bitte anmelden"
+  },
+  "msgRegisterFailed": {
+    "message": "Registrierung fehlgeschlagen: "
+  },
+  "msgLogoutSuccess": {
+    "message": "Erfolgreich abgemeldet"
+  },
+  "msgExportSuccess": {
+    "message": "Daten erfolgreich exportiert!"
+  },
+  "msgExportFailed": {
+    "message": "Export fehlgeschlagen"
+  },
+  "msgExportError": {
+    "message": "Export-Fehler: "
+  },
+  "msgImportSuccess": {
+    "message": "Daten erfolgreich importiert!"
+  },
+  "msgImportFailed": {
+    "message": "Import fehlgeschlagen: "
+  },
+  "msgParseError": {
+    "message": "JSON-Parsing fehlgeschlagen: "
+  },
+  "msgNoLocalCloudRules": {
+    "message": "Keine lokalen Cloud-Regeln gefunden"
+  },
+  "msgSyncFailed": {
+    "message": "Synchronisierung fehlgeschlagen"
+  },
+  "msgSyncConflictRecovered": {
+    "message": " Konflikte auf Cloud-Version wiederhergestellt!"
+  },
+  "msgSyncConflictKept": {
+    "message": "Lokale Änderungen für  Regeln beibehalten!"
+  },
+  "msgSyncUpdated": {
+    "message": " Cloud-Regeln erfolgreich synchronisiert!"
+  },
+  "msgSyncAllLatest": {
+    "message": "Alle Cloud-Regeln sind auf dem neuesten Stand"
+  },
+  "msgSyncError": {
+    "message": "Synchronisierungsfehler: "
+  },
+  "msgFetchCloudFailed": {
+    "message": "Cloud-Daten konnten nicht abgerufen werden"
+  },
+  "msgDownloadSuccess": {
+    "message": "Erfolgreich heruntergeladen!"
+  },
+  "msgDownloadOverwrite": {
+    "message": "Aufgabe existiert lokal, auf neueste Version aktualisiert!"
+  },
+  "msgDownloadOverwriteHint": {
+    "message": "Tipp existiert lokal, auf neueste Version aktualisiert!"
+  },
+  "msgPublishNeedLogin": {
+    "message": "Zum Veröffentlichen anmelden erforderlich"
+  },
+  "msgPublishProtect": {
+    "message": "Von [] geteilte Regel kann nicht überschrieben werden."
+  },
+  "msgPublishFailed": {
+    "message": "Veröffentlichung fehlgeschlagen: "
+  },
+  "msgPublishPending": {
+    "message": "An Cloud gesendet, wartet auf Freigabe"
+  },
+  "msgPublishSuccess": {
+    "message": "Erfolgreich veröffentlicht!"
+  },
+  "msgPublishException": {
+    "message": "Ausnahme bei Veröffentlichung"
+  },
+  "msgTourResetSuccess": {
+    "message": "Abschlussstatus der Tour \"\" zurückgesetzt."
+  },
+  "msgTourDeleteSuccess": {
+    "message": "Tour \"\" gelöscht!"
+  },
+  "msgDeleteFailed": {
+    "message": "Löschen fehlgeschlagen: "
+  },
+  "msgHintDeleteSuccess": {
+    "message": "Hover-Tipp gelöscht!"
+  },
+  "msgElementNotFound": {
+    "message": "Element auf der aktuellen Seite nicht gefunden."
+  },
+  "msgElementSelectedHint": {
+    "message": "Element ausgewählt! Bitte Tipp-Text eingeben."
+  },
+  "msgElementSelectedTour": {
+    "message": "Element ausgewählt! Bitte Schritt-Beschreibung eingeben."
+  },
+  "msgStepElementUpdated": {
+    "message": "Ziel-Element des Schritts aktualisiert!"
+  },
+  "msgSaveSuccess": {
+    "message": "Erfolgreich gespeichert"
+  },
+  "msgSaveFailedLog": {
+    "message": "Speichern fehlgeschlagen, siehe Logs."
+  },
+  "msgSaveError": {
+    "message": "Speicherfehler: "
+  },
+  "msgTourSaveSuccess": {
+    "message": "Tour erfolgreich gespeichert"
+  },
+  "msgStepUpdated": {
+    "message": "Schritt aktualisiert"
+  },
+  "labelLanguage": {
+    "message": "Oberflächensprache"
+  },
+  "descLanguage": {
+    "message": "Anzeigesprache der Erweiterung wechseln"
+  },
+  "msgLanguageChanged": {
+    "message": "Spracheinstellung aktualisiert"
+  },
+  "labelDebugLog": {
+    "message": "Debug-Protokollausgabe"
+  },
+  "descDebugLog": {
+    "message": "Ausführungsdetails in der Konsole ausgeben"
+  },
+  "msgDebugLogEnabled": {
+    "message": "Debug-Protokollausgabe aktiviert"
+  },
+  "msgDebugLogDisabled": {
+    "message": "Debug-Protokollausgabe deaktiviert"
+  },
+  "langAuto": {
+    "message": "🌐 Auto (Systemsprache)"
+  }
 }

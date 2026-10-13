@@ -1,191 +1,593 @@
 {
-  "appName": { "message": "O-Maid - ওয়েব গাইড এবং স্মার্ট সহকারী" },
-  "appDesc": { "message": "ওয়েব গাইডের জন্য স্মার্ট সহকারী। যেকোনো ওয়েবসাইটে হোভার ইঙ্গিত এবং ট্যুর যোগ করুন।" },
-  "popupTitle": { "message": "O-Maid স্মার্ট সহকারী" },
-  "popupHeader": { "message": "O-Maid সহকারী" },
-  "togglePanelBtn": { "message": "📋 প্যানেল টগল করুন" },
-  "popupNotConnectedTip": { "message": "💡 টিপ: বর্তমান পৃষ্ঠা সংযুক্ত নয়" },
-  "popupReloadTip": { "message": "এক্সটেনশন পুনরায় লোড করার পরে সংযোগ করতে পৃষ্ঠাটি রিফ্রেশ করুন।" },
-  "popupReloadBtn": { "message": "বর্তমান পৃষ্ঠা রিফ্রেশ করুন (F5)" },
-  "popupGithubLink": { "message": "🔗 গিটহাব ওপেন সোর্স" },
-  "popupSystemPageError": { "message": "<span>⚠️ সিস্টেম পেজগুলিতে স্ক্রিপ্ট চালানো যায় না। দয়া করে সাধারণ পেজে যান!</span>" },
-  "sidepanelTitle": { "message": "O-Maid সহকারী" },
-  "btnCloudAuth": { "message": "ক্লাউড অ্যাকাউন্ট" },
-  "btnSettings": { "message": "সেটিংস" },
-  "btnExport": { "message": "ডেটা এক্সপোর্ট করুন" },
-  "btnImport": { "message": "ডেটা ইমপোর্ট করুন" },
-  "btnAdd": { "message": "নতুন ইঙ্গিত যোগ করুন" },
-  "tabLocal": { "message": "লোকাল লাইব্রেরি" },
-  "tabCloud": { "message": "ক্লাউড আবিষ্কার" },
-  "titleTours": { "message": "গাইডেড ট্যুর" },
-  "titleHints": { "message": "হোভার ইঙ্গিত" },
-  "msgNoData": { "message": "বর্তমানে কোন ইঙ্গিত বা ট্যুর নেই।" },
-  "titleCloudTours": { "message": "শেয়ার্ড ট্যুর" },
-  "titleCloudHints": { "message": "শেয়ার্ড ইঙ্গিত" },
-  "btnRefreshCloud": { "message": "ক্লাউড ডেটা রিফ্রেশ করুন" },
-  "msgCloudNoData": { "message": "ক্লাউডে কোন মিল ইঙ্গিত বা ট্যুর পাওয়া যায়নি।" },
-  "titleAuth": { "message": "ক্লাউড অ্যাকাউন্ট" },
-  "placeholderUsername": { "message": "ব্যবহারকারীর নাম" },
-  "placeholderPassword": { "message": "পাসওয়ার্ড" },
-  "btnLogin": { "message": "লগইন" },
-  "btnRegister": { "message": "নিবন্ধন করুন" },
-  "btnLogout": { "message": "লগআউট" },
-  "btnClose": { "message": "বন্ধ করুন" },
-  "titleSettings": { "message": "সেটিংস" },
-  "labelApiBase": { "message": "ব্যাকএন্ড API URL:" },
-  "btnSaveSettings": { "message": "সেটিংস সংরক্ষণ করুন" },
-  "btnCloseSettings": { "message": "বন্ধ করুন" },
-  "titleAddChoice": { "message": "আপনি কী তৈরি করতে চান?" },
-  "btnCreateHint": { "message": "হোভার ইঙ্গিত" },
-  "btnCreateTour": { "message": "গাইডেড ট্যুর" },
-  "btnCancel": { "message": "বাতিল করুন" },
-  "labelHintText": { "message": "ইঙ্গিতের পাঠ্য:" },
-  "labelCssSelector": { "message": "CSS সিলেক্টর:" },
-  "btnReselect": { "message": "পুনরায় নির্বাচন করুন" },
-  "btnSave": { "message": "সংরক্ষণ করুন" },
-  "labelTourName": { "message": "ট্যুরের নাম:" },
-  "labelTourTrigger": { "message": "ট্রিগার:" },
-  "optionManual": { "message": "ম্যানুয়াল" },
-  "optionAuto": { "message": "অটো" },
-  "titleSteps": { "message": "ধাপ" },
-  "btnAddStep": { "message": "+ ধাপ যোগ করুন" },
-  "btnSaveTour": { "message": "ট্যুর সংরক্ষণ করুন" },
-  "labelStepText": { "message": "ধাপের পাঠ্য:" },
-  "labelStepSelector": { "message": "CSS সিলেক্টর:" },
-  "btnStepReselect": { "message": "পুনরায় নির্বাচন করুন" },
-  "btnSaveStep": { "message": "ধাপ সংরক্ষণ করুন" },
-  "spTourItemToggleSteps": { "message": "ধাপ টগল করতে ক্লিক করুন" },
-  "spTourItemResetStatus": { "message": "সম্পূর্ণ স্থিতি রিসেট করুন" },
-  "spTriggerAuto": { "message": "অটো" },
-  "spTriggerManual": { "message": "ম্যানুয়াল" },
-  "spUnnamedStep": { "message": "নামবিহীন ধাপ" },
-  "spMsgTourReset": { "message": "ট্যুর \"\" এর সম্পূর্ণ স্থিতি রিসেট করা হয়েছে।" },
-  "spMsgTourDeleted": { "message": "ট্যুর মুছে ফেলা হয়েছে" },
-  "spMsgHintDeleted": { "message": "ইঙ্গিত মুছে ফেলা হয়েছে" },
-  "spTitleEditHint": { "message": "ইঙ্গিত সম্পাদনা করুন" },
-  "spTitleNewHint": { "message": "নতুন ইঙ্গিত" },
-  "spTitleEditTour": { "message": "ট্যুর সম্পাদনা করুন" },
-  "spTitleNewTour": { "message": "নতুন ট্যুর" },
-  "spStepPrefix": { "message": "ধাপ" },
-  "spUnnamed": { "message": "নামবিহীন" },
-  "spMsgFillCompleteInfo": { "message": "দয়া করে সম্পূর্ণ তথ্য পূরণ করুন" },
-  "spMsgHintSaved": { "message": "ইঙ্গিত সংরক্ষিত" },
-  "spMsgFillTourInfo": { "message": "দয়া করে ট্যুরের নাম দিন এবং অন্তত একটি ধাপ যোগ করুন" },
-  "spMsgTourSaved": { "message": "ট্যুর সংরক্ষিত" },
-  "spMsgExportSuccess": { "message": "ডেটা সফলভাবে এক্সপোর্ট করা হয়েছে!" },
-  "spMsgImportSuccess": { "message": "ডেটা সফলভাবে ইমপোর্ট করা হয়েছে!" },
-  "spMsgImportFail": { "message": "ইমপোর্ট ব্যর্থ হয়েছে: " },
-  "spMsgParseFail": { "message": "JSON ফাইল পার্স করতে ব্যর্থ: " },
-  "uiTitle": { "message": "O-Maid সহকারী" },
-  "btnCollapsePanel": { "message": "প্যানেল কোলাপ্স করুন" },
-  "btnClosePanel": { "message": "প্যানেল বন্ধ করুন" },
-  "tabLocalRules": { "message": "লোকাল নিয়ম" },
-  "tabCloudShared": { "message": "ক্লাউড শেয়ার্ড" },
-  "msgCloudNotLoggedIn": { "message": "☁️ ক্লাউড লগ ইন করা নেই" },
-  "btnLoginNow": { "message": "এখনই লগ ইন করুন" },
-  "labelScope": { "message": "স্কোপ:" },
-  "scopeCurrentPage": { "message": "বর্তমান পৃষ্ঠা" },
-  "btnRefresh": { "message": "রিফ্রেশ" },
-  "titleSyncRefresh": { "message": "ক্লাউড থেকে স্থানীয় নিয়ম আপডেট করুন" },
-  "btnViewAll": { "message": "সব দেখুন" },
-  "btnQuickAdd": { "message": "+ নতুন" },
-  "titleQuickAddTour": { "message": "দ্রুত ট্যুর যোগ করুন" },
-  "titleQuickAddHint": { "message": "দ্রুত ইঙ্গিত যোগ করুন" },
-  "msgNoLocalRules": { "message": "বর্তমান পৃষ্ঠার জন্য কোন স্থানীয় নিয়ম নেই।" },
-  "linkViewAllLocal": { "message": "সব স্থানীয় নিয়ম দেখুন >>" },
-  "scopeCurrentSite": { "message": "বর্তমান সাইট" },
-  "linkViewAllCloud": { "message": "পাবলিক হল দেখুন" },
-  "msgNoCloudRulesSite": { "message": "বর্তমান সাইটের জন্য কোন ক্লাউড নিয়ম নেই।" },
-  "linkViewAllCloudRules": { "message": "সব পাবলিক নিয়ম দেখুন >>" },
-  "labelServerAddress": { "message": "সার্ভারের ঠিকানা:" },
-  "linkChangePort": { "message": "পোর্ট পরিবর্তন করুন" },
-  "titleSysSettings": { "message": "⚙️ সিস্টেম সেটিংস" },
-  "btnSaveApiSettings": { "message": "API সেটিংস সংরক্ষণ করুন" },
-  "labelLocalDataBackup": { "message": "স্থানীয় ডেটা ব্যাকআপ:" },
-  "btnExportJson": { "message": "📤 JSON এক্সপোর্ট" },
-  "btnImportJson": { "message": "📥 JSON ইমপোর্ট" },
-  "msgInvalidDataFormat": { "message": "অবৈধ ডেটা বিন্যাস" },
-  "msgFillRequiredFields": { "message": "সমস্ত প্রয়োজনীয় ক্ষেত্র পূরণ করুন" },
-  "msgSelectingElement": { "message": "🎯 <strong>উপাদান নির্বাচন করা হচ্ছে</strong>: পৃষ্ঠার একটি লক্ষ্যের উপর ক্লিক করুন &nbsp;<span style=\"opacity:0.85; font-size:11px; background:rgba(255,255,255,0.25); padding:2px 7px; border-radius:4px; margin-left:6px; cursor:pointer;\" id=\"o-maid-banner-esc-btn\">প্রস্থান করতে ESC চাপুন</span>" },
-  "msgCannotAccessIframe": { "message": "ক্রস-অরিজিন আইফ্রেম অ্যাক্সেস করতে পারে না" },
-  "msgAccessTopUrlRestricted": { "message": "শীর্ষ URL-এ অ্যাক্সেস সীমাবদ্ধ, বর্তমান URL ব্যবহার করা হচ্ছে" },
-  "defaultStepTitle": { "message": "ধাপ " },
-  "msgStepElementNotFound": { "message": "ট্যুর ধাপের উপাদান পাওয়া যায়নি।" },
-  "introNextLabel": { "message": "পরবর্তী →" },
-  "introPrevLabel": { "message": "← পূর্ববর্তী" },
-  "introDoneLabel": { "message": "সম্পন্ন" },
-  "msgPluginReloaded": { "message": "প্লাগইন আপডেট হয়েছে। রিফ্রেশ করুন।" },
-  "msgConfirmRefresh": { "message": "এখন পৃষ্ঠা রিফ্রেশ করবেন?" },
-  "msgServerConnectFail": { "message": "সার্ভারের সাথে সংযোগ করতে পারেনি ()।" },
-  "msgCloudBatchFetchFail": { "message": "ব্যাচ ফেচ ব্যর্থ হয়েছে, একক ফেচে ডিমোট করা হয়েছে" },
-  "dynamicTitleMain": { "message": "O-Maid" },
-  "dynamicTitleCreate": { "message": "তৈরি করুন" },
-  "dynamicTitleSettings": { "message": "সেটিংস" },
-  "dynamicTitleAuth": { "message": "ক্লাউড অ্যাকাউন্ট" },
-  "dynamicTitleEditHint": { "message": "ইঙ্গিত সম্পাদনা করুন" },
-  "dynamicTitleNewHint": { "message": "নতুন ইঙ্গিত" },
-  "dynamicTitleEditTour": { "message": "ট্যুর সম্পাদনা করুন" },
-  "dynamicTitleNewTour": { "message": "নতুন ট্যুর" },
-  "dynamicTitleEditStep": { "message": "ধাপ সম্পাদনা করুন" },
-  "dynamicScopeAll": { "message": "সব নিয়ম" },
-  "dynamicScopeCurrent": { "message": "বর্তমান পৃষ্ঠা" },
-  "dynamicBtnViewCurrent": { "message": "বর্তমান দেখুন" },
-  "dynamicBtnViewAll": { "message": "সব দেখুন" },
-  "dynamicNoRulesAll": { "message": "স্থানীয়ভাবে কোন নিয়ম সংরক্ষিত নেই।" },
-  "dynamicNoRulesCurrent": { "message": "বর্তমান পৃষ্ঠার জন্য কোন নিয়ম নেই।" },
-  "dynamicStatusLoggedIn": { "message": "হিসাবে লগ ইন করা হয়েছে: " },
-  "dynamicBannerLoggedIn": { "message": "👤 লগ ইন করা হয়েছে: <strong></strong>" },
-  "dynamicBtnAccountSettings": { "message": "অ্যাকাউন্ট সেটিংস" },
-  "dynamicStatusNotLoggedIn": { "message": "লগ ইন করা নেই। শেয়ার করতে লগ ইন করুন।" },
-  "dynamicBannerNotLoggedIn": { "message": "ক্লাউড লগ ইন করা নেই (শুধুমাত্র স্থানীয়)" },
-  "dynamicBtnLoginRegister": { "message": "লগইন / নিবন্ধন" },
-  "dynamicScopeCloudAll": { "message": "পাবলিক হল (সব সাইট)" },
-  "dynamicBtnCloudViewCurrent": { "message": "বর্তমান সাইট দেখুন" },
-  "dynamicBtnCloudViewAll": { "message": "পাবলিক হল দেখুন" },
-  "dynamicNoCloudRulesAll": { "message": "পাবলিক হলে কোন শেয়ার করা কাজ নেই।" },
-  "dynamicNoCloudRulesCurrent": { "message": "সাইটের জন্য কোন ক্লাউড কাজ নেই ()।" },
-  "msgSetSaveSuccess": { "message": "সেটিংস সংরক্ষিত হয়েছে।" },
-  "msgApiEmpty": { "message": "API ঠিকানা খালি হতে পারে না" },
-  "msgInputCredentials": { "message": "ব্যবহারকারীর নাম এবং পাসওয়ার্ড লিখুন" },
-  "msgLoginSuccess": { "message": "লগইন সফল" },
-  "msgLoginFailed": { "message": "লগইন ব্যর্থ হয়েছে: " },
-  "msgRegisterSuccess": { "message": "নিবন্ধন সফল, লগইন করুন" },
-  "msgRegisterFailed": { "message": "নিবন্ধন ব্যর্থ হয়েছে: " },
-  "msgLogoutSuccess": { "message": "সফলভাবে লগআউট হয়েছে" },
-  "msgExportSuccess": { "message": "ডেটা সফলভাবে এক্সপোর্ট করা হয়েছে!" },
-  "msgExportFailed": { "message": "এক্সপোর্ট ব্যর্থ" },
-  "msgExportError": { "message": "এক্সপোর্ট ত্রুটি: " },
-  "msgImportSuccess": { "message": "ডেটা সফলভাবে ইমপোর্ট করা হয়েছে!" },
-  "msgImportFailed": { "message": "ইমপোর্ট ব্যর্থ হয়েছে: " },
-  "msgParseError": { "message": "JSON ফাইল পার্স করতে ব্যর্থ: " },
-  "msgNoLocalCloudRules": { "message": "ক্লাউডের সাথে যুক্ত কোন স্থানীয় নিয়ম নেই" },
-  "msgSyncFailed": { "message": "সিঙ্ক ব্যর্থ হয়েছে" },
-  "msgSyncConflictRecovered": { "message": " বিরোধ ক্লাউড সংস্করণে পুনরুদ্ধার করা হয়েছে!" },
-  "msgSyncConflictKept": { "message": " স্থানীয় পরিবর্তন সংরক্ষিত!" },
-  "msgSyncUpdated": { "message": " ক্লাউড নিয়ম আপডেট করা হয়েছে!" },
-  "msgSyncAllLatest": { "message": "সব ক্লাউড নিয়ম আপ টু ডেট" },
-  "msgSyncError": { "message": "সিঙ্ক ত্রুটি: " },
-  "msgFetchCloudFailed": { "message": "ক্লাউড ডেটা পেতে ব্যর্থ" },
-  "msgDownloadSuccess": { "message": "স্থানীয়ভাবে ডাউনলোড করা হয়েছে!" },
-  "msgDownloadOverwrite": { "message": "টাস্ক বিদ্যমান, স্বয়ংক্রিয়ভাবে আপডেট করা হয়েছে!" },
-  "msgDownloadOverwriteHint": { "message": "ইঙ্গিত বিদ্যমান, আপডেট করা হয়েছে!" },
-  "msgPublishNeedLogin": { "message": "প্রকাশ করার জন্য লগইন প্রয়োজন" },
-  "msgPublishProtect": { "message": "[] দ্বারা শেয়ার করা নিয়ম ওভাররাইট করা যাবে না।" },
-  "msgPublishFailed": { "message": "প্রকাশ ব্যর্থ হয়েছে: " },
-  "msgPublishPending": { "message": "ক্লাউডে জমা দেওয়া হয়েছে, অনুমোদনের অপেক্ষায়" },
-  "msgPublishSuccess": { "message": "সফলভাবে প্রকাশিত!" },
-  "msgPublishException": { "message": "প্রকাশ ব্যতিক্রম" },
-  "msgTourResetSuccess": { "message": "ট্যুর \"\" এর সম্পূর্ণ স্থিতি রিসেট করা হয়েছে।" },
-  "msgTourDeleteSuccess": { "message": "ট্যুর \"\" মুছে ফেলা হয়েছে!" },
-  "msgDeleteFailed": { "message": "মুছে ফেলতে ব্যর্থ: " },
-  "msgHintDeleteSuccess": { "message": "হোভার ইঙ্গিত মুছে ফেলা হয়েছে!" },
-  "msgElementNotFound": { "message": "উপাদান পাওয়া যায়নি।" },
-  "msgElementSelectedHint": { "message": "উপাদান নির্বাচিত! ইঙ্গিত পাঠ্য লিখুন।" },
-  "msgElementSelectedTour": { "message": "উপাদান নির্বাচিত! ধাপের বিবরণ লিখুন।" },
-  "msgStepElementUpdated": { "message": "ধাপের লক্ষ্য উপাদান আপডেট করা হয়েছে!" },
-  "msgSaveSuccess": { "message": "সফলভাবে সংরক্ষিত" },
-  "msgSaveFailedLog": { "message": "সংরক্ষণ ব্যর্থ হয়েছে, লগ পরীক্ষা করুন।" },
-  "msgSaveError": { "message": "সংরক্ষণ ত্রুটি: " },
-  "msgTourSaveSuccess": { "message": "ট্যুর সফলভাবে সংরক্ষিত" },
-  "msgStepUpdated": { "message": "ধাপ আপডেট করা হয়েছে" }
+  "appName": {
+    "message": "O-Maid - ওয়েব গাইড এবং স্মার্ট সহকারী"
+  },
+  "appDesc": {
+    "message": "ওয়েব গাইডের জন্য স্মার্ট সহকারী। যেকোনো ওয়েবসাইটে হোভার ইঙ্গিত এবং ট্যুর যোগ করুন।"
+  },
+  "popupTitle": {
+    "message": "O-Maid স্মার্ট সহকারী"
+  },
+  "popupHeader": {
+    "message": "O-Maid সহকারী"
+  },
+  "togglePanelBtn": {
+    "message": "📋 প্যানেল টগল করুন"
+  },
+  "popupNotConnectedTip": {
+    "message": "💡 টিপ: বর্তমান পৃষ্ঠা সংযুক্ত নয়"
+  },
+  "popupReloadTip": {
+    "message": "এক্সটেনশন পুনরায় লোড করার পরে সংযোগ করতে পৃষ্ঠাটি রিফ্রেশ করুন।"
+  },
+  "popupReloadBtn": {
+    "message": "বর্তমান পৃষ্ঠা রিফ্রেশ করুন (F5)"
+  },
+  "popupGithubLink": {
+    "message": "🔗 গিটহাব ওপেন সোর্স"
+  },
+  "popupSystemPageError": {
+    "message": "<span>⚠️ সিস্টেম পেজগুলিতে স্ক্রিপ্ট চালানো যায় না। দয়া করে সাধারণ পেজে যান!</span>"
+  },
+  "sidepanelTitle": {
+    "message": "O-Maid সহকারী"
+  },
+  "btnCloudAuth": {
+    "message": "ক্লাউড অ্যাকাউন্ট"
+  },
+  "btnSettings": {
+    "message": "সেটিংস"
+  },
+  "btnExport": {
+    "message": "ডেটা এক্সপোর্ট করুন"
+  },
+  "btnImport": {
+    "message": "ডেটা ইমপোর্ট করুন"
+  },
+  "btnAdd": {
+    "message": "নতুন ইঙ্গিত যোগ করুন"
+  },
+  "tabLocal": {
+    "message": "লোকাল লাইব্রেরি"
+  },
+  "tabCloud": {
+    "message": "ক্লাউড আবিষ্কার"
+  },
+  "titleTours": {
+    "message": "গাইডেড ট্যুর"
+  },
+  "titleHints": {
+    "message": "হোভার ইঙ্গিত"
+  },
+  "msgNoData": {
+    "message": "বর্তমানে কোন ইঙ্গিত বা ট্যুর নেই।"
+  },
+  "titleCloudTours": {
+    "message": "শেয়ার্ড ট্যুর"
+  },
+  "titleCloudHints": {
+    "message": "শেয়ার্ড ইঙ্গিত"
+  },
+  "btnRefreshCloud": {
+    "message": "ক্লাউড ডেটা রিফ্রেশ করুন"
+  },
+  "msgCloudNoData": {
+    "message": "ক্লাউডে কোন মিল ইঙ্গিত বা ট্যুর পাওয়া যায়নি।"
+  },
+  "titleAuth": {
+    "message": "ক্লাউড অ্যাকাউন্ট"
+  },
+  "placeholderUsername": {
+    "message": "ব্যবহারকারীর নাম"
+  },
+  "placeholderPassword": {
+    "message": "পাসওয়ার্ড"
+  },
+  "btnLogin": {
+    "message": "লগইন"
+  },
+  "btnRegister": {
+    "message": "নিবন্ধন করুন"
+  },
+  "btnLogout": {
+    "message": "লগআউট"
+  },
+  "btnClose": {
+    "message": "বন্ধ করুন"
+  },
+  "titleSettings": {
+    "message": "সেটিংস"
+  },
+  "labelApiBase": {
+    "message": "ব্যাকএন্ড API URL:"
+  },
+  "btnSaveSettings": {
+    "message": "সেটিংস সংরক্ষণ করুন"
+  },
+  "btnCloseSettings": {
+    "message": "বন্ধ করুন"
+  },
+  "titleAddChoice": {
+    "message": "আপনি কী তৈরি করতে চান?"
+  },
+  "btnCreateHint": {
+    "message": "হোভার ইঙ্গিত"
+  },
+  "btnCreateTour": {
+    "message": "গাইডেড ট্যুর"
+  },
+  "btnCancel": {
+    "message": "বাতিল করুন"
+  },
+  "labelHintText": {
+    "message": "ইঙ্গিতের পাঠ্য:"
+  },
+  "labelCssSelector": {
+    "message": "CSS সিলেক্টর:"
+  },
+  "btnReselect": {
+    "message": "পুনরায় নির্বাচন করুন"
+  },
+  "btnSave": {
+    "message": "সংরক্ষণ করুন"
+  },
+  "labelTourName": {
+    "message": "ট্যুরের নাম:"
+  },
+  "labelTourTrigger": {
+    "message": "ট্রিগার:"
+  },
+  "optionManual": {
+    "message": "ম্যানুয়াল"
+  },
+  "optionAuto": {
+    "message": "অটো"
+  },
+  "titleSteps": {
+    "message": "ধাপ"
+  },
+  "btnAddStep": {
+    "message": "+ ধাপ যোগ করুন"
+  },
+  "btnSaveTour": {
+    "message": "ট্যুর সংরক্ষণ করুন"
+  },
+  "labelStepText": {
+    "message": "ধাপের পাঠ্য:"
+  },
+  "labelStepSelector": {
+    "message": "CSS সিলেক্টর:"
+  },
+  "btnStepReselect": {
+    "message": "পুনরায় নির্বাচন করুন"
+  },
+  "btnSaveStep": {
+    "message": "ধাপ সংরক্ষণ করুন"
+  },
+  "spTourItemToggleSteps": {
+    "message": "ধাপ টগল করতে ক্লিক করুন"
+  },
+  "spTourItemResetStatus": {
+    "message": "সম্পূর্ণ স্থিতি রিসেট করুন"
+  },
+  "spTriggerAuto": {
+    "message": "অটো"
+  },
+  "spTriggerManual": {
+    "message": "ম্যানুয়াল"
+  },
+  "spUnnamedStep": {
+    "message": "নামবিহীন ধাপ"
+  },
+  "spMsgTourReset": {
+    "message": "ট্যুর \"\" এর সম্পূর্ণ স্থিতি রিসেট করা হয়েছে।"
+  },
+  "spMsgTourDeleted": {
+    "message": "ট্যুর মুছে ফেলা হয়েছে"
+  },
+  "spMsgHintDeleted": {
+    "message": "ইঙ্গিত মুছে ফেলা হয়েছে"
+  },
+  "spTitleEditHint": {
+    "message": "ইঙ্গিত সম্পাদনা করুন"
+  },
+  "spTitleNewHint": {
+    "message": "নতুন ইঙ্গিত"
+  },
+  "spTitleEditTour": {
+    "message": "ট্যুর সম্পাদনা করুন"
+  },
+  "spTitleNewTour": {
+    "message": "নতুন ট্যুর"
+  },
+  "spStepPrefix": {
+    "message": "ধাপ"
+  },
+  "spUnnamed": {
+    "message": "নামবিহীন"
+  },
+  "spMsgFillCompleteInfo": {
+    "message": "দয়া করে সম্পূর্ণ তথ্য পূরণ করুন"
+  },
+  "spMsgHintSaved": {
+    "message": "ইঙ্গিত সংরক্ষিত"
+  },
+  "spMsgFillTourInfo": {
+    "message": "দয়া করে ট্যুরের নাম দিন এবং অন্তত একটি ধাপ যোগ করুন"
+  },
+  "spMsgTourSaved": {
+    "message": "ট্যুর সংরক্ষিত"
+  },
+  "spMsgExportSuccess": {
+    "message": "ডেটা সফলভাবে এক্সপোর্ট করা হয়েছে!"
+  },
+  "spMsgImportSuccess": {
+    "message": "ডেটা সফলভাবে ইমপোর্ট করা হয়েছে!"
+  },
+  "spMsgImportFail": {
+    "message": "ইমপোর্ট ব্যর্থ হয়েছে: "
+  },
+  "spMsgParseFail": {
+    "message": "JSON ফাইল পার্স করতে ব্যর্থ: "
+  },
+  "uiTitle": {
+    "message": "O-Maid সহকারী"
+  },
+  "btnCollapsePanel": {
+    "message": "প্যানেল কোলাপ্স করুন"
+  },
+  "btnClosePanel": {
+    "message": "প্যানেল বন্ধ করুন"
+  },
+  "tabLocalRules": {
+    "message": "লোকাল নিয়ম"
+  },
+  "tabCloudShared": {
+    "message": "ক্লাউড শেয়ার্ড"
+  },
+  "msgCloudNotLoggedIn": {
+    "message": "☁️ ক্লাউড লগ ইন করা নেই"
+  },
+  "btnLoginNow": {
+    "message": "এখনই লগ ইন করুন"
+  },
+  "labelScope": {
+    "message": "স্কোপ:"
+  },
+  "scopeCurrentPage": {
+    "message": "বর্তমান পৃষ্ঠা"
+  },
+  "btnRefresh": {
+    "message": "রিফ্রেশ"
+  },
+  "titleSyncRefresh": {
+    "message": "ক্লাউড থেকে স্থানীয় নিয়ম আপডেট করুন"
+  },
+  "btnViewAll": {
+    "message": "সব দেখুন"
+  },
+  "btnQuickAdd": {
+    "message": "+ নতুন"
+  },
+  "titleQuickAddTour": {
+    "message": "দ্রুত ট্যুর যোগ করুন"
+  },
+  "titleQuickAddHint": {
+    "message": "দ্রুত ইঙ্গিত যোগ করুন"
+  },
+  "msgNoLocalRules": {
+    "message": "বর্তমান পৃষ্ঠার জন্য কোন স্থানীয় নিয়ম নেই।"
+  },
+  "linkViewAllLocal": {
+    "message": "সব স্থানীয় নিয়ম দেখুন >>"
+  },
+  "scopeCurrentSite": {
+    "message": "বর্তমান সাইট"
+  },
+  "linkViewAllCloud": {
+    "message": "পাবলিক হল দেখুন"
+  },
+  "msgNoCloudRulesSite": {
+    "message": "বর্তমান সাইটের জন্য কোন ক্লাউড নিয়ম নেই।"
+  },
+  "linkViewAllCloudRules": {
+    "message": "সব পাবলিক নিয়ম দেখুন >>"
+  },
+  "labelServerAddress": {
+    "message": "সার্ভারের ঠিকানা:"
+  },
+  "linkChangePort": {
+    "message": "পোর্ট পরিবর্তন করুন"
+  },
+  "titleSysSettings": {
+    "message": "⚙️ সিস্টেম সেটিংস"
+  },
+  "btnSaveApiSettings": {
+    "message": "API সেটিংস সংরক্ষণ করুন"
+  },
+  "labelLocalDataBackup": {
+    "message": "স্থানীয় ডেটা ব্যাকআপ:"
+  },
+  "btnExportJson": {
+    "message": "📤 JSON এক্সপোর্ট"
+  },
+  "btnImportJson": {
+    "message": "📥 JSON ইমপোর্ট"
+  },
+  "msgInvalidDataFormat": {
+    "message": "অবৈধ ডেটা বিন্যাস"
+  },
+  "msgFillRequiredFields": {
+    "message": "সমস্ত প্রয়োজনীয় ক্ষেত্র পূরণ করুন"
+  },
+  "msgSelectingElement": {
+    "message": "🎯 <strong>উপাদান নির্বাচন করা হচ্ছে</strong>: পৃষ্ঠার একটি লক্ষ্যের উপর ক্লিক করুন &nbsp;<span style=\"opacity:0.85; font-size:11px; background:rgba(255,255,255,0.25); padding:2px 7px; border-radius:4px; margin-left:6px; cursor:pointer;\" id=\"o-maid-banner-esc-btn\">প্রস্থান করতে ESC চাপুন</span>"
+  },
+  "msgCannotAccessIframe": {
+    "message": "ক্রস-অরিজিন আইফ্রেম অ্যাক্সেস করতে পারে না"
+  },
+  "msgAccessTopUrlRestricted": {
+    "message": "শীর্ষ URL-এ অ্যাক্সেস সীমাবদ্ধ, বর্তমান URL ব্যবহার করা হচ্ছে"
+  },
+  "defaultStepTitle": {
+    "message": "ধাপ "
+  },
+  "msgStepElementNotFound": {
+    "message": "ট্যুর ধাপের উপাদান পাওয়া যায়নি।"
+  },
+  "introNextLabel": {
+    "message": "পরবর্তী →"
+  },
+  "introPrevLabel": {
+    "message": "← পূর্ববর্তী"
+  },
+  "introDoneLabel": {
+    "message": "সম্পন্ন"
+  },
+  "msgPluginReloaded": {
+    "message": "প্লাগইন আপডেট হয়েছে। রিফ্রেশ করুন।"
+  },
+  "msgConfirmRefresh": {
+    "message": "এখন পৃষ্ঠা রিফ্রেশ করবেন?"
+  },
+  "msgServerConnectFail": {
+    "message": "সার্ভারের সাথে সংযোগ করতে পারেনি ()।"
+  },
+  "msgCloudBatchFetchFail": {
+    "message": "ব্যাচ ফেচ ব্যর্থ হয়েছে, একক ফেচে ডিমোট করা হয়েছে"
+  },
+  "dynamicTitleMain": {
+    "message": "O-Maid"
+  },
+  "dynamicTitleCreate": {
+    "message": "তৈরি করুন"
+  },
+  "dynamicTitleSettings": {
+    "message": "সেটিংস"
+  },
+  "dynamicTitleAuth": {
+    "message": "ক্লাউড অ্যাকাউন্ট"
+  },
+  "dynamicTitleEditHint": {
+    "message": "ইঙ্গিত সম্পাদনা করুন"
+  },
+  "dynamicTitleNewHint": {
+    "message": "নতুন ইঙ্গিত"
+  },
+  "dynamicTitleEditTour": {
+    "message": "ট্যুর সম্পাদনা করুন"
+  },
+  "dynamicTitleNewTour": {
+    "message": "নতুন ট্যুর"
+  },
+  "dynamicTitleEditStep": {
+    "message": "ধাপ সম্পাদনা করুন"
+  },
+  "dynamicScopeAll": {
+    "message": "সব নিয়ম"
+  },
+  "dynamicScopeCurrent": {
+    "message": "বর্তমান পৃষ্ঠা"
+  },
+  "dynamicBtnViewCurrent": {
+    "message": "বর্তমান দেখুন"
+  },
+  "dynamicBtnViewAll": {
+    "message": "সব দেখুন"
+  },
+  "dynamicNoRulesAll": {
+    "message": "স্থানীয়ভাবে কোন নিয়ম সংরক্ষিত নেই।"
+  },
+  "dynamicNoRulesCurrent": {
+    "message": "বর্তমান পৃষ্ঠার জন্য কোন নিয়ম নেই।"
+  },
+  "dynamicStatusLoggedIn": {
+    "message": "হিসাবে লগ ইন করা হয়েছে: "
+  },
+  "dynamicBannerLoggedIn": {
+    "message": "👤 লগ ইন করা হয়েছে: <strong></strong>"
+  },
+  "dynamicBtnAccountSettings": {
+    "message": "অ্যাকাউন্ট সেটিংস"
+  },
+  "dynamicStatusNotLoggedIn": {
+    "message": "লগ ইন করা নেই। শেয়ার করতে লগ ইন করুন।"
+  },
+  "dynamicBannerNotLoggedIn": {
+    "message": "ক্লাউড লগ ইন করা নেই (শুধুমাত্র স্থানীয়)"
+  },
+  "dynamicBtnLoginRegister": {
+    "message": "লগইন / নিবন্ধন"
+  },
+  "dynamicScopeCloudAll": {
+    "message": "পাবলিক হল (সব সাইট)"
+  },
+  "dynamicBtnCloudViewCurrent": {
+    "message": "বর্তমান সাইট দেখুন"
+  },
+  "dynamicBtnCloudViewAll": {
+    "message": "পাবলিক হল দেখুন"
+  },
+  "dynamicNoCloudRulesAll": {
+    "message": "পাবলিক হলে কোন শেয়ার করা কাজ নেই।"
+  },
+  "dynamicNoCloudRulesCurrent": {
+    "message": "সাইটের জন্য কোন ক্লাউড কাজ নেই ()।"
+  },
+  "msgSetSaveSuccess": {
+    "message": "সেটিংস সংরক্ষিত হয়েছে।"
+  },
+  "msgApiEmpty": {
+    "message": "API ঠিকানা খালি হতে পারে না"
+  },
+  "msgInputCredentials": {
+    "message": "ব্যবহারকারীর নাম এবং পাসওয়ার্ড লিখুন"
+  },
+  "msgLoginSuccess": {
+    "message": "লগইন সফল"
+  },
+  "msgLoginFailed": {
+    "message": "লগইন ব্যর্থ হয়েছে: "
+  },
+  "msgRegisterSuccess": {
+    "message": "নিবন্ধন সফল, লগইন করুন"
+  },
+  "msgRegisterFailed": {
+    "message": "নিবন্ধন ব্যর্থ হয়েছে: "
+  },
+  "msgLogoutSuccess": {
+    "message": "সফলভাবে লগআউট হয়েছে"
+  },
+  "msgExportSuccess": {
+    "message": "ডেটা সফলভাবে এক্সপোর্ট করা হয়েছে!"
+  },
+  "msgExportFailed": {
+    "message": "এক্সপোর্ট ব্যর্থ"
+  },
+  "msgExportError": {
+    "message": "এক্সপোর্ট ত্রুটি: "
+  },
+  "msgImportSuccess": {
+    "message": "ডেটা সফলভাবে ইমপোর্ট করা হয়েছে!"
+  },
+  "msgImportFailed": {
+    "message": "ইমপোর্ট ব্যর্থ হয়েছে: "
+  },
+  "msgParseError": {
+    "message": "JSON ফাইল পার্স করতে ব্যর্থ: "
+  },
+  "msgNoLocalCloudRules": {
+    "message": "ক্লাউডের সাথে যুক্ত কোন স্থানীয় নিয়ম নেই"
+  },
+  "msgSyncFailed": {
+    "message": "সিঙ্ক ব্যর্থ হয়েছে"
+  },
+  "msgSyncConflictRecovered": {
+    "message": " বিরোধ ক্লাউড সংস্করণে পুনরুদ্ধার করা হয়েছে!"
+  },
+  "msgSyncConflictKept": {
+    "message": " স্থানীয় পরিবর্তন সংরক্ষিত!"
+  },
+  "msgSyncUpdated": {
+    "message": " ক্লাউড নিয়ম আপডেট করা হয়েছে!"
+  },
+  "msgSyncAllLatest": {
+    "message": "সব ক্লাউড নিয়ম আপ টু ডেট"
+  },
+  "msgSyncError": {
+    "message": "সিঙ্ক ত্রুটি: "
+  },
+  "msgFetchCloudFailed": {
+    "message": "ক্লাউড ডেটা পেতে ব্যর্থ"
+  },
+  "msgDownloadSuccess": {
+    "message": "স্থানীয়ভাবে ডাউনলোড করা হয়েছে!"
+  },
+  "msgDownloadOverwrite": {
+    "message": "টাস্ক বিদ্যমান, স্বয়ংক্রিয়ভাবে আপডেট করা হয়েছে!"
+  },
+  "msgDownloadOverwriteHint": {
+    "message": "ইঙ্গিত বিদ্যমান, আপডেট করা হয়েছে!"
+  },
+  "msgPublishNeedLogin": {
+    "message": "প্রকাশ করার জন্য লগইন প্রয়োজন"
+  },
+  "msgPublishProtect": {
+    "message": "[] দ্বারা শেয়ার করা নিয়ম ওভাররাইট করা যাবে না।"
+  },
+  "msgPublishFailed": {
+    "message": "প্রকাশ ব্যর্থ হয়েছে: "
+  },
+  "msgPublishPending": {
+    "message": "ক্লাউডে জমা দেওয়া হয়েছে, অনুমোদনের অপেক্ষায়"
+  },
+  "msgPublishSuccess": {
+    "message": "সফলভাবে প্রকাশিত!"
+  },
+  "msgPublishException": {
+    "message": "প্রকাশ ব্যতিক্রম"
+  },
+  "msgTourResetSuccess": {
+    "message": "ট্যুর \"\" এর সম্পূর্ণ স্থিতি রিসেট করা হয়েছে।"
+  },
+  "msgTourDeleteSuccess": {
+    "message": "ট্যুর \"\" মুছে ফেলা হয়েছে!"
+  },
+  "msgDeleteFailed": {
+    "message": "মুছে ফেলতে ব্যর্থ: "
+  },
+  "msgHintDeleteSuccess": {
+    "message": "হোভার ইঙ্গিত মুছে ফেলা হয়েছে!"
+  },
+  "msgElementNotFound": {
+    "message": "উপাদান পাওয়া যায়নি।"
+  },
+  "msgElementSelectedHint": {
+    "message": "উপাদান নির্বাচিত! ইঙ্গিত পাঠ্য লিখুন।"
+  },
+  "msgElementSelectedTour": {
+    "message": "উপাদান নির্বাচিত! ধাপের বিবরণ লিখুন।"
+  },
+  "msgStepElementUpdated": {
+    "message": "ধাপের লক্ষ্য উপাদান আপডেট করা হয়েছে!"
+  },
+  "msgSaveSuccess": {
+    "message": "সফলভাবে সংরক্ষিত"
+  },
+  "msgSaveFailedLog": {
+    "message": "সংরক্ষণ ব্যর্থ হয়েছে, লগ পরীক্ষা করুন।"
+  },
+  "msgSaveError": {
+    "message": "সংরক্ষণ ত্রুটি: "
+  },
+  "msgTourSaveSuccess": {
+    "message": "ট্যুর সফলভাবে সংরক্ষিত"
+  },
+  "msgStepUpdated": {
+    "message": "ধাপ আপডেট করা হয়েছে"
+  },
+  "labelLanguage": {
+    "message": "ইন্টারফেস ভাষা"
+  },
+  "descLanguage": {
+    "message": "প্লাগইন ইন্টারফেসের ভাষা পরিবর্তন করুন"
+  },
+  "msgLanguageChanged": {
+    "message": "ভাষা সেটিংস আপডেট করা হয়েছে"
+  },
+  "labelDebugLog": {
+    "message": "ডিবাগ লগ আউটপুট"
+  },
+  "descDebugLog": {
+    "message": "কনসোলে প্লাগইন চালানোর বিবরণ আউটপুট করুন"
+  },
+  "msgDebugLogEnabled": {
+    "message": "ডিবাগ লগ আউটপুট সক্রিয় করা হয়েছে"
+  },
+  "msgDebugLogDisabled": {
+    "message": "ডিবাগ লগ আউটপুট অক্ষম করা হয়েছে"
+  },
+  "langAuto": {
+    "message": "🌐 স্বয়ংক্রিয় (সিস্টেম)"
+  }
 }

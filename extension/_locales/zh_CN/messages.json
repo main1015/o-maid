@@ -565,5 +565,29 @@
   },
   "msgStepUpdated": {
     "message": "步骤已更新"
+  },
+  "labelDebugLog": {
+    "message": "调试日志输出"
+  },
+  "descDebugLog": {
+    "message": "在控制台输出插件运行详情"
+  },
+  "msgDebugLogEnabled": {
+    "message": "已开启调试日志输出"
+  },
+  "msgDebugLogDisabled": {
+    "message": "已关闭调试日志输出"
+  },
+  "labelLanguage": {
+    "message": "界面语言"
+  },
+  "descLanguage": {
+    "message": "切换插件界面显示语言"
+  },
+  "msgLanguageChanged": {
+    "message": "语言设置已更新"
+  },
+  "langAuto": {
+    "message": "🌐 Auto / 跟随系统"
   }
 }

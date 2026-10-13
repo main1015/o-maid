@@ -1,12 +1,58 @@
-// popup.js
-import { localizeHtml } from './modules/i18n.js';
+import { localizeHtml, initI18n, getSupportedLocales, getCurrentLocale, setLocale } from './modules/i18n.js';
+import { initLogger, setLoggingEnabled } from './modules/logger.js';
 
-// 初始化本地化
-localizeHtml();
+// 初始化多语言与日志管控
+async function init() {
+  await initI18n();
+  localizeHtml();
+  await initLogger();
+  setupLanguageSelector();
+}
+
+function setupLanguageSelector() {
+  const langSelect = document.getElementById('popup-language-select');
+  if (!langSelect) return;
+
+  const renderOptions = () => {
+    langSelect.innerHTML = getSupportedLocales().map(loc =>
+      `<option value="${loc.code}" ${loc.code === getCurrentLocale() ? 'selected' : ''}>${loc.name}</option>`
+    ).join('');
+    langSelect.value = getCurrentLocale();
+  };
+
+  renderOptions();
+
+  langSelect.addEventListener('change', async (e) => {
+    await setLocale(e.target.value);
+    renderOptions();
+    localizeHtml();
+  });
+
+  chrome.storage?.onChanged?.addListener((changes, areaName) => {
+    if (areaName === 'local' && 'user_locale' in changes) {
+      renderOptions();
+      localizeHtml();
+    }
+  });
+}
+
+init();
 
 const toggleBtn = document.getElementById('toggle-panel-btn');
 const statusTip = document.getElementById('status-tip');
 const reloadBtn = document.getElementById('reload-tab-btn');
+const debugLogCheckbox = document.getElementById('popup-debug-log');
+
+// 回显与监听调试日志开关
+if (debugLogCheckbox) {
+  chrome.storage.local.get('enable_debug_log', (res) => {
+    debugLogCheckbox.checked = !!res.enable_debug_log;
+  });
+
+  debugLogCheckbox.addEventListener('change', (e) => {
+    setLoggingEnabled(e.target.checked);
+  });
+}
 
 toggleBtn.addEventListener('click', () => {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -25,7 +71,8 @@ toggleBtn.addEventListener('click', () => {
     // 向网页中的 content.js 发送呼出命令
     chrome.tabs.sendMessage(activeTab.id, { action: 'togglePanel' }, (response) => {
       if (chrome.runtime.lastError) {
-        console.warn("无法连接当前页面的助手脚本:", chrome.runtime.lastError.message);
+        const _errMsg = chrome.runtime.lastError.message;
+        console.debug("无法连接当前页面的助手脚本:", _errMsg);
         // 说明扩展刚刚重载过或页面尚未载入脚本
         if (statusTip) {
           statusTip.style.display = 'block';

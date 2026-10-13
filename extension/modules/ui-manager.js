@@ -6,6 +6,8 @@ import { startSelectionMode, stopSelectionMode } from './element-selector.js';
 import { startTour } from './tour-manager.js';
 import { createHoverTooltip } from './hover-hints.js';
 import * as CloudAPI from './cloud-api.js';
+import { isLoggingEnabled, setLoggingEnabled } from './logger.js';
+import { SUPPORTED_LOCALES, getSupportedLocales, getCurrentLocale, setLocale } from './i18n.js';
 
 let uiPanel = null;
 let uiHost = null;
@@ -153,6 +155,29 @@ export function createUIPanel() {
           <input type="text" id="setting-api-base" placeholder="http://localhost:3000/api" style="width: 100%; margin-top:4px; margin-bottom: 10px; padding: 7px 10px; box-sizing: border-box; border:1px solid #cbd5e1; border-radius:6px; font-size:13px;">
           <button id="save-settings-btn" class="save-btn" style="width: 100%; padding:8px; border-radius:6px; background:#6366f1; color:#fff; border:none; font-weight:600; cursor:pointer; margin-bottom: 16px;">${chrome.i18n.getMessage('btnSaveApiSettings')}</button>
           
+          <div style="border-top:1px dashed #e2e8f0; padding-top:12px; margin-bottom:12px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;">
+              <div>
+                <span style="font-size:12px; font-weight:600; color:#475569; display:block;">${chrome.i18n.getMessage('labelLanguage')}</span>
+                <span style="font-size:11px; color:#94a3b8; display:block;">${chrome.i18n.getMessage('descLanguage')}</span>
+              </div>
+            </div>
+            <select id="setting-language-select" style="width: 100%; padding: 7px 10px; box-sizing: border-box; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px; background: #fff; cursor: pointer; color: #1e293b;">
+              ${getSupportedLocales().map(loc => `<option value="${loc.code}" ${loc.code === getCurrentLocale() ? 'selected' : ''}>${loc.name}</option>`).join('')}
+            </select>
+          </div>
+
+          <div style="border-top:1px dashed #e2e8f0; padding-top:12px; margin-bottom:12px; display:flex; align-items:center; justify-content:space-between;">
+            <div>
+              <span style="font-size:12px; font-weight:600; color:#475569; display:block;">${chrome.i18n.getMessage('labelDebugLog')}</span>
+              <span style="font-size:11px; color:#94a3b8; display:block;">${chrome.i18n.getMessage('descDebugLog')}</span>
+            </div>
+            <label class="o-maid-switch">
+              <input type="checkbox" id="setting-debug-log">
+              <span class="o-maid-switch-slider"></span>
+            </label>
+          </div>
+
           <div style="border-top:1px dashed #e2e8f0; padding-top:12px; margin-bottom:12px;">
             <span style="font-size:12px; font-weight:600; color:#475569; display:block; margin-bottom:8px;">${chrome.i18n.getMessage('labelLocalDataBackup')}</span>
             <div style="display:flex; gap:8px;">
@@ -989,9 +1014,44 @@ function wireUpPanelEvents() {
     });
     
     // Settings
+    const updateSettingsUI = () => {
+        const debugSwitch = uiPanel.querySelector('#setting-debug-log');
+        if (debugSwitch) {
+            debugSwitch.checked = isLoggingEnabled();
+        }
+        const langSelect = uiPanel.querySelector('#setting-language-select');
+        if (langSelect) {
+            langSelect.value = getCurrentLocale();
+        }
+    };
+
     uiPanel.querySelector('#settings-btn')?.addEventListener('click', () => {
         uiPanel.querySelector('#setting-api-base').value = CloudAPI.getApiBase();
+        updateSettingsUI();
         switchToView('settings');
+    });
+
+    uiPanel.querySelector('#setting-language-select')?.addEventListener('change', async (e) => {
+        const newLocale = e.target.value;
+        await setLocale(newLocale);
+        showNotification(chrome.i18n.getMessage('msgLanguageChanged'), 'success');
+    });
+
+    uiPanel.querySelector('#setting-debug-log')?.addEventListener('change', async (e) => {
+        const isChecked = e.target.checked;
+        await setLoggingEnabled(isChecked);
+        showNotification(
+            isChecked ? chrome.i18n.getMessage('msgDebugLogEnabled') : chrome.i18n.getMessage('msgDebugLogDisabled'),
+            'info'
+        );
+    });
+
+    chrome.storage?.onChanged?.addListener((changes, areaName) => {
+        if (areaName === 'local') {
+            if ('enable_debug_log' in changes || 'user_locale' in changes) {
+                updateSettingsUI();
+            }
+        }
     });
     uiPanel.querySelector('#close-settings-btn')?.addEventListener('click', () => switchToView('main'));
     uiPanel.querySelector('#save-settings-btn')?.addEventListener('click', () => {
@@ -1288,6 +1348,12 @@ export function switchToView(viewName, data = null) {
         case 'settings':
             stopSelectionMode();
             uiPanel.querySelector('#o-maid-header-title').textContent = chrome.i18n.getMessage('dynamicTitleSettings');
+            const apiBaseInput = uiPanel.querySelector('#setting-api-base');
+            if (apiBaseInput) apiBaseInput.value = CloudAPI.getApiBase();
+            const langSel = uiPanel.querySelector('#setting-language-select');
+            if (langSel) langSel.value = getCurrentLocale();
+            const debugSw = uiPanel.querySelector('#setting-debug-log');
+            if (debugSw) debugSw.checked = isLoggingEnabled();
             break;
         case 'auth':
             stopSelectionMode();
@@ -2358,4 +2424,35 @@ function saveTourStep() {
  */
 export function getCurrentView() {
     return currentView;
+}
+
+/**
+ * 重建 UI 面板（在语言切换或全局重载时使用）
+ */
+export function rebuildUIPanel() {
+    if (!uiHost) return;
+    const wasVisible = uiPanel && uiPanel.style.display !== 'none';
+    const lastView = currentView;
+    const lastTab = currentMainTab;
+
+    uiHost.remove();
+    uiHost = null;
+    uiPanel = null;
+    shadowRoot = null;
+
+    createUIPanel();
+    if (wasVisible && uiPanel) {
+        uiPanel.style.display = 'flex';
+    }
+    switchToView(lastView);
+    if (lastView === 'view') {
+        switchMainTab(lastTab);
+    }
+}
+
+// 监听语言切换事件，即时热更新 UI
+if (typeof window !== 'undefined') {
+    window.addEventListener('o-maid-locale-changed', () => {
+        rebuildUIPanel();
+    });
 }

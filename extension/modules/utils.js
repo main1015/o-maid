@@ -85,7 +85,7 @@ export function generateSelector(el) {
             currDoc = iframe.ownerDocument;
         }
     } catch (e) {
-        console.warn('O-Maid: 无法获取跨域 iframe 的父级路径');
+        console.debug('O-Maid: 无法获取跨域 iframe 的父级路径');
     }
 
     return fullPath;
@@ -122,7 +122,7 @@ export function getElementOffset(el) {
             currWin = currWin.parent;
         }
     } catch (e) {
-        console.warn('O-Maid: 坐标计算受跨域限制，可能存在偏移');
+        console.debug('O-Maid: 坐标计算受跨域限制，可能存在偏移');
     }
 
     // 加上页面的滚动偏移，得到相对于整个文档的绝对坐标
@@ -213,7 +213,7 @@ export function querySelectorDeep(selector, root = document) {
  * @param {boolean} quiet - 是否静默模式（不输出警告日志）
  * @returns {Array<Element>} 匹配的元素数组
  */
-export function querySelectorAllDeep(selector, root = document, quiet = false) {
+export function querySelectorAllDeep(selector, root = document, quiet = true) {
     if (!selector) return [];
     if (!selector.includes(' >>> ')) return Array.from(root.querySelectorAll(selector));
 
@@ -234,7 +234,7 @@ export function querySelectorAllDeep(selector, root = document, quiet = false) {
         }
 
         if (nextRoots.length === 0) {
-            if (!quiet) console.warn(`O-Maid: [DeepQuery] Failed to find iframe at part ${i}: "${part}"`);
+            if (!quiet) console.debug(`O-Maid: [DeepQuery] Failed to find iframe at part ${i}: "${part}"`);
             return [];
         }
         currentRoots = nextRoots;

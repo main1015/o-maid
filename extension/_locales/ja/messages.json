@@ -1,191 +1,593 @@
 {
-  "appName": { "message": "O-Maid - Web Operation Guide & Smart Hint Assistant" },
-  "appDesc": { "message": "Web操作ガイドとホバーヒントをどのサイトにも追加できるスマートアシスタント。" },
-  "popupTitle": { "message": "O-Maid スマートアシスタント" },
-  "popupHeader": { "message": "O-Maid アシスタント" },
-  "togglePanelBtn": { "message": "📋 パネル切り替え" },
-  "popupNotConnectedTip": { "message": "💡 ヒント: 現在のページは未接続です" },
-  "popupReloadTip": { "message": "拡張機能を再ロードした後、ページを更新して再接続してください。" },
-  "popupReloadBtn": { "message": "現在のページを更新 (F5)" },
-  "popupGithubLink": { "message": "🔗 GitHub オープンソース" },
-  "popupSystemPageError": { "message": "<span>⚠️ システムページではスクリプトを実行できません。通常のWebページに切り替えてください！</span>" },
-  "sidepanelTitle": { "message": "O-Maid アシスタント" },
-  "btnCloudAuth": { "message": "クラウドアカウント" },
-  "btnSettings": { "message": "設定" },
-  "btnExport": { "message": "データをエクスポート" },
-  "btnImport": { "message": "データをインポート" },
-  "btnAdd": { "message": "ヒントを追加" },
-  "tabLocal": { "message": "ローカルライブラリ" },
-  "tabCloud": { "message": "クラウド発見" },
-  "titleTours": { "message": "ガイドツアー" },
-  "titleHints": { "message": "ホバーヒント" },
-  "msgNoData": { "message": "現在ヒントやツアーはありません。" },
-  "titleCloudTours": { "message": "共有ツアー" },
-  "titleCloudHints": { "message": "共有ヒント" },
-  "btnRefreshCloud": { "message": "クラウドデータを更新" },
-  "msgCloudNoData": { "message": "対応するクラウドのヒントやツアーが見つかりません。" },
-  "titleAuth": { "message": "クラウドアカウント" },
-  "placeholderUsername": { "message": "ユーザー名" },
-  "placeholderPassword": { "message": "パスワード" },
-  "btnLogin": { "message": "ログイン" },
-  "btnRegister": { "message": "登録" },
-  "btnLogout": { "message": "ログアウト" },
-  "btnClose": { "message": "閉じる" },
-  "titleSettings": { "message": "設定" },
-  "labelApiBase": { "message": "バックエンドAPIのURL:" },
-  "btnSaveSettings": { "message": "設定を保存" },
-  "btnCloseSettings": { "message": "閉じる" },
-  "titleAddChoice": { "message": "何を作成しますか？" },
-  "btnCreateHint": { "message": "ホバーヒント" },
-  "btnCreateTour": { "message": "ガイドツアー" },
-  "btnCancel": { "message": "キャンセル" },
-  "labelHintText": { "message": "ヒントテキスト:" },
-  "labelCssSelector": { "message": "CSSセレクタ:" },
-  "btnReselect": { "message": "再選択" },
-  "btnSave": { "message": "保存" },
-  "labelTourName": { "message": "ツアー名:" },
-  "labelTourTrigger": { "message": "トリガー:" },
-  "optionManual": { "message": "手動" },
-  "optionAuto": { "message": "自動" },
-  "titleSteps": { "message": "ステップ" },
-  "btnAddStep": { "message": "+ ステップを追加" },
-  "btnSaveTour": { "message": "ツアーを保存" },
-  "labelStepText": { "message": "ステップのテキスト:" },
-  "labelStepSelector": { "message": "CSSセレクタ:" },
-  "btnStepReselect": { "message": "再選択" },
-  "btnSaveStep": { "message": "ステップを保存" },
-  "spTourItemToggleSteps": { "message": "クリックしてステップを切り替え" },
-  "spTourItemResetStatus": { "message": "完了状態をリセット" },
-  "spTriggerAuto": { "message": "自動" },
-  "spTriggerManual": { "message": "手動" },
-  "spUnnamedStep": { "message": "名前なしステップ" },
-  "spMsgTourReset": { "message": "ツアー \"\" の完了状態がリセットされました。" },
-  "spMsgTourDeleted": { "message": "ツアーが削除されました" },
-  "spMsgHintDeleted": { "message": "ヒントが削除されました" },
-  "spTitleEditHint": { "message": "ホバーヒントを編集" },
-  "spTitleNewHint": { "message": "新規ホバーヒント" },
-  "spTitleEditTour": { "message": "ガイドツアーを編集" },
-  "spTitleNewTour": { "message": "新規ガイドツアー" },
-  "spStepPrefix": { "message": "ステップ" },
-  "spUnnamed": { "message": "名前なし" },
-  "spMsgFillCompleteInfo": { "message": "完全な情報を入力してください" },
-  "spMsgHintSaved": { "message": "ヒントが保存されました" },
-  "spMsgFillTourInfo": { "message": "ツアー名を入力し、少なくとも1つのステップを追加してください" },
-  "spMsgTourSaved": { "message": "ツアーが保存されました" },
-  "spMsgExportSuccess": { "message": "データが正常にエクスポートされました！" },
-  "spMsgImportSuccess": { "message": "データが正常にインポートされました！" },
-  "spMsgImportFail": { "message": "インポートに失敗しました: " },
-  "spMsgParseFail": { "message": "JSONファイルの解析に失敗しました: " },
-  "uiTitle": { "message": "O-Maid アシスタント" },
-  "btnCollapsePanel": { "message": "パネルを折りたたむ" },
-  "btnClosePanel": { "message": "パネルを閉じる" },
-  "tabLocalRules": { "message": "ローカルルール" },
-  "tabCloudShared": { "message": "クラウド共有" },
-  "msgCloudNotLoggedIn": { "message": "☁️ クラウド未ログイン" },
-  "btnLoginNow": { "message": "今すぐログイン" },
-  "labelScope": { "message": "スコープ:" },
-  "scopeCurrentPage": { "message": "現在のページ" },
-  "btnRefresh": { "message": "更新" },
-  "titleSyncRefresh": { "message": "クラウドから最新データを取得して更新" },
-  "btnViewAll": { "message": "すべて表示" },
-  "btnQuickAdd": { "message": "+ 新規" },
-  "titleQuickAddTour": { "message": "ガイドツアーをクイック追加" },
-  "titleQuickAddHint": { "message": "ホバーヒントをクイック追加" },
-  "msgNoLocalRules": { "message": "現在のページのローカルルールはありません。" },
-  "linkViewAllLocal": { "message": "すべてのローカルルールを表示 >>" },
-  "scopeCurrentSite": { "message": "現在のサイト" },
-  "linkViewAllCloud": { "message": "パブリックホールを表示" },
-  "msgNoCloudRulesSite": { "message": "現在のサイトに一致するクラウドルールはありません。" },
-  "linkViewAllCloudRules": { "message": "すべての公開ルールを表示 >>" },
-  "labelServerAddress": { "message": "サーバーアドレス:" },
-  "linkChangePort": { "message": "ポートを変更" },
-  "titleSysSettings": { "message": "⚙️ システム設定" },
-  "btnSaveApiSettings": { "message": "API設定を保存" },
-  "labelLocalDataBackup": { "message": "ローカルデータのバックアップと移行:" },
-  "btnExportJson": { "message": "📤 JSONをエクスポート" },
-  "btnImportJson": { "message": "📥 JSONをインポート" },
-  "msgInvalidDataFormat": { "message": "無効なデータ形式" },
-  "msgFillRequiredFields": { "message": "必須フィールドをすべて入力してください" },
-  "msgSelectingElement": { "message": "🎯 <strong>要素を選択中</strong>: ページ上のターゲット要素をクリックしてください &nbsp;<span style=\"opacity:0.85; font-size:11px; background:rgba(255,255,255,0.25); padding:2px 7px; border-radius:4px; margin-left:6px; cursor:pointer;\" id=\"o-maid-banner-esc-btn\">ESCキーで終了</span>" },
-  "msgCannotAccessIframe": { "message": "クロスオリジンiframeにアクセスできません" },
-  "msgAccessTopUrlRestricted": { "message": "トップURLへのアクセスが制限されているため、現在のURLを使用します" },
-  "defaultStepTitle": { "message": "ステップ " },
-  "msgStepElementNotFound": { "message": "ツアーステップの要素がページに見つからないため、続行できません。" },
-  "introNextLabel": { "message": "次へ →" },
-  "introPrevLabel": { "message": "← 戻る" },
-  "introDoneLabel": { "message": "完了" },
-  "msgPluginReloaded": { "message": "O-Maidプラグインが更新されました。続行するにはページを更新してください。" },
-  "msgConfirmRefresh": { "message": "今すぐページを更新しますか？" },
-  "msgServerConnectFail": { "message": "サーバー()に接続できません。バックエンドが実行されているか確認してください。" },
-  "msgCloudBatchFetchFail": { "message": "クラウドデータの一括取得に失敗し、単一取得にフォールバックしました" },
-  "dynamicTitleMain": { "message": "O-Maid" },
-  "dynamicTitleCreate": { "message": "作成" },
-  "dynamicTitleSettings": { "message": "設定" },
-  "dynamicTitleAuth": { "message": "クラウドアカウント" },
-  "dynamicTitleEditHint": { "message": "ホバーヒントを編集" },
-  "dynamicTitleNewHint": { "message": "新規ホバーヒント" },
-  "dynamicTitleEditTour": { "message": "ガイドツアーを編集" },
-  "dynamicTitleNewTour": { "message": "新規ガイドツアー" },
-  "dynamicTitleEditStep": { "message": "ステップを編集" },
-  "dynamicScopeAll": { "message": "すべてのルール" },
-  "dynamicScopeCurrent": { "message": "現在のページ" },
-  "dynamicBtnViewCurrent": { "message": "現在を表示" },
-  "dynamicBtnViewAll": { "message": "すべて表示" },
-  "dynamicNoRulesAll": { "message": "ローカルに保存されたルールはありません。" },
-  "dynamicNoRulesCurrent": { "message": "現在のページのローカルルールはありません。" },
-  "dynamicStatusLoggedIn": { "message": "ログイン中: " },
-  "dynamicBannerLoggedIn": { "message": "👤 ログイン中: <strong></strong>" },
-  "dynamicBtnAccountSettings": { "message": "アカウント設定" },
-  "dynamicStatusNotLoggedIn": { "message": "未ログイン。ルールを共有するにはログインしてください。" },
-  "dynamicBannerNotLoggedIn": { "message": "クラウド未ログイン (ローカルのみ)" },
-  "dynamicBtnLoginRegister": { "message": "ログイン / 登録" },
-  "dynamicScopeCloudAll": { "message": "パブリックホール (全サイト)" },
-  "dynamicBtnCloudViewCurrent": { "message": "現在のサイトを表示" },
-  "dynamicBtnCloudViewAll": { "message": "パブリックホールを表示" },
-  "dynamicNoCloudRulesAll": { "message": "パブリックホールに共有されたタスクはありません。" },
-  "dynamicNoCloudRulesCurrent": { "message": "サイト()のクラウドタスクはありません。" },
-  "msgSetSaveSuccess": { "message": "設定が保存され、すべてのページに適用されました。" },
-  "msgApiEmpty": { "message": "APIアドレスを空にすることはできません" },
-  "msgInputCredentials": { "message": "ユーザー名とパスワードを入力してください" },
-  "msgLoginSuccess": { "message": "ログインに成功しました" },
-  "msgLoginFailed": { "message": "ログインに失敗しました: " },
-  "msgRegisterSuccess": { "message": "登録に成功しました。ログインしてください" },
-  "msgRegisterFailed": { "message": "登録に失敗しました: " },
-  "msgLogoutSuccess": { "message": "ログアウトに成功しました" },
-  "msgExportSuccess": { "message": "データが正常にエクスポートされました！" },
-  "msgExportFailed": { "message": "エクスポートに失敗しました" },
-  "msgExportError": { "message": "エクスポートエラー: " },
-  "msgImportSuccess": { "message": "データが正常にインポートされました！" },
-  "msgImportFailed": { "message": "インポートに失敗しました: " },
-  "msgParseError": { "message": "JSONファイルの解析に失敗しました: " },
-  "msgNoLocalCloudRules": { "message": "クラウドに関連付けられたローカルルールはありません" },
-  "msgSyncFailed": { "message": "同期に失敗しました。ネットワークを確認してください" },
-  "msgSyncConflictRecovered": { "message": " 件の競合ルールをクラウドの最新バージョンに復元しました！" },
-  "msgSyncConflictKept": { "message": " 件のルールのローカル変更を保持しました！" },
-  "msgSyncUpdated": { "message": " 件のクラウドルールを正常に同期および更新しました！" },
-  "msgSyncAllLatest": { "message": "すべてのクラウド関連ルールは最新です" },
-  "msgSyncError": { "message": "同期エラー: " },
-  "msgFetchCloudFailed": { "message": "クラウドデータの取得に失敗しました" },
-  "msgDownloadSuccess": { "message": "ローカルにダウンロードしました！" },
-  "msgDownloadOverwrite": { "message": "タスクがローカルに存在します。最新バージョンに自動更新されました！" },
-  "msgDownloadOverwriteHint": { "message": "ヒントがローカルに存在します。最新バージョンに自動更新されました！" },
-  "msgPublishNeedLogin": { "message": "クラウドに公開するにはログインが必要です" },
-  "msgPublishProtect": { "message": "[] によって共有されたルールは上書きできません。" },
-  "msgPublishFailed": { "message": "公開に失敗しました: " },
-  "msgPublishPending": { "message": "クラウドに送信されました。管理者の承認待ちです" },
-  "msgPublishSuccess": { "message": "公開に成功しました！クラウドで公開されました。" },
-  "msgPublishException": { "message": "公開例外" },
-  "msgTourResetSuccess": { "message": "ツアー \"\" の完了状態がリセットされました。" },
-  "msgTourDeleteSuccess": { "message": "ガイドツアー \"\" が削除されました！" },
-  "msgDeleteFailed": { "message": "削除に失敗しました: " },
-  "msgHintDeleteSuccess": { "message": "ホバーヒントが削除されました！" },
-  "msgElementNotFound": { "message": "現在のページに要素が見つかりません。" },
-  "msgElementSelectedHint": { "message": "要素が選択されました！上にヒントテキストを入力してください。" },
-  "msgElementSelectedTour": { "message": "要素が選択されました！ステップの説明を入力してください。" },
-  "msgStepElementUpdated": { "message": "ステップのターゲット要素が更新されました！" },
-  "msgSaveSuccess": { "message": "正常に保存されました" },
-  "msgSaveFailedLog": { "message": "保存に失敗しました。ログを確認してください。" },
-  "msgSaveError": { "message": "保存エラー: " },
-  "msgTourSaveSuccess": { "message": "ツアーが正常に保存されました" },
-  "msgStepUpdated": { "message": "ステップが更新されました" }
+  "appName": {
+    "message": "O-Maid - Web Operation Guide & Smart Hint Assistant"
+  },
+  "appDesc": {
+    "message": "Web操作ガイドとホバーヒントをどのサイトにも追加できるスマートアシスタント。"
+  },
+  "popupTitle": {
+    "message": "O-Maid スマートアシスタント"
+  },
+  "popupHeader": {
+    "message": "O-Maid アシスタント"
+  },
+  "togglePanelBtn": {
+    "message": "📋 パネル切り替え"
+  },
+  "popupNotConnectedTip": {
+    "message": "💡 ヒント: 現在のページは未接続です"
+  },
+  "popupReloadTip": {
+    "message": "拡張機能を再ロードした後、ページを更新して再接続してください。"
+  },
+  "popupReloadBtn": {
+    "message": "現在のページを更新 (F5)"
+  },
+  "popupGithubLink": {
+    "message": "🔗 GitHub オープンソース"
+  },
+  "popupSystemPageError": {
+    "message": "<span>⚠️ システムページではスクリプトを実行できません。通常のWebページに切り替えてください！</span>"
+  },
+  "sidepanelTitle": {
+    "message": "O-Maid アシスタント"
+  },
+  "btnCloudAuth": {
+    "message": "クラウドアカウント"
+  },
+  "btnSettings": {
+    "message": "設定"
+  },
+  "btnExport": {
+    "message": "データをエクスポート"
+  },
+  "btnImport": {
+    "message": "データをインポート"
+  },
+  "btnAdd": {
+    "message": "ヒントを追加"
+  },
+  "tabLocal": {
+    "message": "ローカルライブラリ"
+  },
+  "tabCloud": {
+    "message": "クラウド発見"
+  },
+  "titleTours": {
+    "message": "ガイドツアー"
+  },
+  "titleHints": {
+    "message": "ホバーヒント"
+  },
+  "msgNoData": {
+    "message": "現在ヒントやツアーはありません。"
+  },
+  "titleCloudTours": {
+    "message": "共有ツアー"
+  },
+  "titleCloudHints": {
+    "message": "共有ヒント"
+  },
+  "btnRefreshCloud": {
+    "message": "クラウドデータを更新"
+  },
+  "msgCloudNoData": {
+    "message": "対応するクラウドのヒントやツアーが見つかりません。"
+  },
+  "titleAuth": {
+    "message": "クラウドアカウント"
+  },
+  "placeholderUsername": {
+    "message": "ユーザー名"
+  },
+  "placeholderPassword": {
+    "message": "パスワード"
+  },
+  "btnLogin": {
+    "message": "ログイン"
+  },
+  "btnRegister": {
+    "message": "登録"
+  },
+  "btnLogout": {
+    "message": "ログアウト"
+  },
+  "btnClose": {
+    "message": "閉じる"
+  },
+  "titleSettings": {
+    "message": "設定"
+  },
+  "labelApiBase": {
+    "message": "バックエンドAPIのURL:"
+  },
+  "btnSaveSettings": {
+    "message": "設定を保存"
+  },
+  "btnCloseSettings": {
+    "message": "閉じる"
+  },
+  "titleAddChoice": {
+    "message": "何を作成しますか？"
+  },
+  "btnCreateHint": {
+    "message": "ホバーヒント"
+  },
+  "btnCreateTour": {
+    "message": "ガイドツアー"
+  },
+  "btnCancel": {
+    "message": "キャンセル"
+  },
+  "labelHintText": {
+    "message": "ヒントテキスト:"
+  },
+  "labelCssSelector": {
+    "message": "CSSセレクタ:"
+  },
+  "btnReselect": {
+    "message": "再選択"
+  },
+  "btnSave": {
+    "message": "保存"
+  },
+  "labelTourName": {
+    "message": "ツアー名:"
+  },
+  "labelTourTrigger": {
+    "message": "トリガー:"
+  },
+  "optionManual": {
+    "message": "手動"
+  },
+  "optionAuto": {
+    "message": "自動"
+  },
+  "titleSteps": {
+    "message": "ステップ"
+  },
+  "btnAddStep": {
+    "message": "+ ステップを追加"
+  },
+  "btnSaveTour": {
+    "message": "ツアーを保存"
+  },
+  "labelStepText": {
+    "message": "ステップのテキスト:"
+  },
+  "labelStepSelector": {
+    "message": "CSSセレクタ:"
+  },
+  "btnStepReselect": {
+    "message": "再選択"
+  },
+  "btnSaveStep": {
+    "message": "ステップを保存"
+  },
+  "spTourItemToggleSteps": {
+    "message": "クリックしてステップを切り替え"
+  },
+  "spTourItemResetStatus": {
+    "message": "完了状態をリセット"
+  },
+  "spTriggerAuto": {
+    "message": "自動"
+  },
+  "spTriggerManual": {
+    "message": "手動"
+  },
+  "spUnnamedStep": {
+    "message": "名前なしステップ"
+  },
+  "spMsgTourReset": {
+    "message": "ツアー \"\" の完了状態がリセットされました。"
+  },
+  "spMsgTourDeleted": {
+    "message": "ツアーが削除されました"
+  },
+  "spMsgHintDeleted": {
+    "message": "ヒントが削除されました"
+  },
+  "spTitleEditHint": {
+    "message": "ホバーヒントを編集"
+  },
+  "spTitleNewHint": {
+    "message": "新規ホバーヒント"
+  },
+  "spTitleEditTour": {
+    "message": "ガイドツアーを編集"
+  },
+  "spTitleNewTour": {
+    "message": "新規ガイドツアー"
+  },
+  "spStepPrefix": {
+    "message": "ステップ"
+  },
+  "spUnnamed": {
+    "message": "名前なし"
+  },
+  "spMsgFillCompleteInfo": {
+    "message": "完全な情報を入力してください"
+  },
+  "spMsgHintSaved": {
+    "message": "ヒントが保存されました"
+  },
+  "spMsgFillTourInfo": {
+    "message": "ツアー名を入力し、少なくとも1つのステップを追加してください"
+  },
+  "spMsgTourSaved": {
+    "message": "ツアーが保存されました"
+  },
+  "spMsgExportSuccess": {
+    "message": "データが正常にエクスポートされました！"
+  },
+  "spMsgImportSuccess": {
+    "message": "データが正常にインポートされました！"
+  },
+  "spMsgImportFail": {
+    "message": "インポートに失敗しました: "
+  },
+  "spMsgParseFail": {
+    "message": "JSONファイルの解析に失敗しました: "
+  },
+  "uiTitle": {
+    "message": "O-Maid アシスタント"
+  },
+  "btnCollapsePanel": {
+    "message": "パネルを折りたたむ"
+  },
+  "btnClosePanel": {
+    "message": "パネルを閉じる"
+  },
+  "tabLocalRules": {
+    "message": "ローカルルール"
+  },
+  "tabCloudShared": {
+    "message": "クラウド共有"
+  },
+  "msgCloudNotLoggedIn": {
+    "message": "☁️ クラウド未ログイン"
+  },
+  "btnLoginNow": {
+    "message": "今すぐログイン"
+  },
+  "labelScope": {
+    "message": "スコープ:"
+  },
+  "scopeCurrentPage": {
+    "message": "現在のページ"
+  },
+  "btnRefresh": {
+    "message": "更新"
+  },
+  "titleSyncRefresh": {
+    "message": "クラウドから最新データを取得して更新"
+  },
+  "btnViewAll": {
+    "message": "すべて表示"
+  },
+  "btnQuickAdd": {
+    "message": "+ 新規"
+  },
+  "titleQuickAddTour": {
+    "message": "ガイドツアーをクイック追加"
+  },
+  "titleQuickAddHint": {
+    "message": "ホバーヒントをクイック追加"
+  },
+  "msgNoLocalRules": {
+    "message": "現在のページのローカルルールはありません。"
+  },
+  "linkViewAllLocal": {
+    "message": "すべてのローカルルールを表示 >>"
+  },
+  "scopeCurrentSite": {
+    "message": "現在のサイト"
+  },
+  "linkViewAllCloud": {
+    "message": "パブリックホールを表示"
+  },
+  "msgNoCloudRulesSite": {
+    "message": "現在のサイトに一致するクラウドルールはありません。"
+  },
+  "linkViewAllCloudRules": {
+    "message": "すべての公開ルールを表示 >>"
+  },
+  "labelServerAddress": {
+    "message": "サーバーアドレス:"
+  },
+  "linkChangePort": {
+    "message": "ポートを変更"
+  },
+  "titleSysSettings": {
+    "message": "⚙️ システム設定"
+  },
+  "btnSaveApiSettings": {
+    "message": "API設定を保存"
+  },
+  "labelLocalDataBackup": {
+    "message": "ローカルデータのバックアップと移行:"
+  },
+  "btnExportJson": {
+    "message": "📤 JSONをエクスポート"
+  },
+  "btnImportJson": {
+    "message": "📥 JSONをインポート"
+  },
+  "msgInvalidDataFormat": {
+    "message": "無効なデータ形式"
+  },
+  "msgFillRequiredFields": {
+    "message": "必須フィールドをすべて入力してください"
+  },
+  "msgSelectingElement": {
+    "message": "🎯 <strong>要素を選択中</strong>: ページ上のターゲット要素をクリックしてください &nbsp;<span style=\"opacity:0.85; font-size:11px; background:rgba(255,255,255,0.25); padding:2px 7px; border-radius:4px; margin-left:6px; cursor:pointer;\" id=\"o-maid-banner-esc-btn\">ESCキーで終了</span>"
+  },
+  "msgCannotAccessIframe": {
+    "message": "クロスオリジンiframeにアクセスできません"
+  },
+  "msgAccessTopUrlRestricted": {
+    "message": "トップURLへのアクセスが制限されているため、現在のURLを使用します"
+  },
+  "defaultStepTitle": {
+    "message": "ステップ "
+  },
+  "msgStepElementNotFound": {
+    "message": "ツアーステップの要素がページに見つからないため、続行できません。"
+  },
+  "introNextLabel": {
+    "message": "次へ →"
+  },
+  "introPrevLabel": {
+    "message": "← 戻る"
+  },
+  "introDoneLabel": {
+    "message": "完了"
+  },
+  "msgPluginReloaded": {
+    "message": "O-Maidプラグインが更新されました。続行するにはページを更新してください。"
+  },
+  "msgConfirmRefresh": {
+    "message": "今すぐページを更新しますか？"
+  },
+  "msgServerConnectFail": {
+    "message": "サーバー()に接続できません。バックエンドが実行されているか確認してください。"
+  },
+  "msgCloudBatchFetchFail": {
+    "message": "クラウドデータの一括取得に失敗し、単一取得にフォールバックしました"
+  },
+  "dynamicTitleMain": {
+    "message": "O-Maid"
+  },
+  "dynamicTitleCreate": {
+    "message": "作成"
+  },
+  "dynamicTitleSettings": {
+    "message": "設定"
+  },
+  "dynamicTitleAuth": {
+    "message": "クラウドアカウント"
+  },
+  "dynamicTitleEditHint": {
+    "message": "ホバーヒントを編集"
+  },
+  "dynamicTitleNewHint": {
+    "message": "新規ホバーヒント"
+  },
+  "dynamicTitleEditTour": {
+    "message": "ガイドツアーを編集"
+  },
+  "dynamicTitleNewTour": {
+    "message": "新規ガイドツアー"
+  },
+  "dynamicTitleEditStep": {
+    "message": "ステップを編集"
+  },
+  "dynamicScopeAll": {
+    "message": "すべてのルール"
+  },
+  "dynamicScopeCurrent": {
+    "message": "現在のページ"
+  },
+  "dynamicBtnViewCurrent": {
+    "message": "現在を表示"
+  },
+  "dynamicBtnViewAll": {
+    "message": "すべて表示"
+  },
+  "dynamicNoRulesAll": {
+    "message": "ローカルに保存されたルールはありません。"
+  },
+  "dynamicNoRulesCurrent": {
+    "message": "現在のページのローカルルールはありません。"
+  },
+  "dynamicStatusLoggedIn": {
+    "message": "ログイン中: "
+  },
+  "dynamicBannerLoggedIn": {
+    "message": "👤 ログイン中: <strong></strong>"
+  },
+  "dynamicBtnAccountSettings": {
+    "message": "アカウント設定"
+  },
+  "dynamicStatusNotLoggedIn": {
+    "message": "未ログイン。ルールを共有するにはログインしてください。"
+  },
+  "dynamicBannerNotLoggedIn": {
+    "message": "クラウド未ログイン (ローカルのみ)"
+  },
+  "dynamicBtnLoginRegister": {
+    "message": "ログイン / 登録"
+  },
+  "dynamicScopeCloudAll": {
+    "message": "パブリックホール (全サイト)"
+  },
+  "dynamicBtnCloudViewCurrent": {
+    "message": "現在のサイトを表示"
+  },
+  "dynamicBtnCloudViewAll": {
+    "message": "パブリックホールを表示"
+  },
+  "dynamicNoCloudRulesAll": {
+    "message": "パブリックホールに共有されたタスクはありません。"
+  },
+  "dynamicNoCloudRulesCurrent": {
+    "message": "サイト()のクラウドタスクはありません。"
+  },
+  "msgSetSaveSuccess": {
+    "message": "設定が保存され、すべてのページに適用されました。"
+  },
+  "msgApiEmpty": {
+    "message": "APIアドレスを空にすることはできません"
+  },
+  "msgInputCredentials": {
+    "message": "ユーザー名とパスワードを入力してください"
+  },
+  "msgLoginSuccess": {
+    "message": "ログインに成功しました"
+  },
+  "msgLoginFailed": {
+    "message": "ログインに失敗しました: "
+  },
+  "msgRegisterSuccess": {
+    "message": "登録に成功しました。ログインしてください"
+  },
+  "msgRegisterFailed": {
+    "message": "登録に失敗しました: "
+  },
+  "msgLogoutSuccess": {
+    "message": "ログアウトに成功しました"
+  },
+  "msgExportSuccess": {
+    "message": "データが正常にエクスポートされました！"
+  },
+  "msgExportFailed": {
+    "message": "エクスポートに失敗しました"
+  },
+  "msgExportError": {
+    "message": "エクスポートエラー: "
+  },
+  "msgImportSuccess": {
+    "message": "データが正常にインポートされました！"
+  },
+  "msgImportFailed": {
+    "message": "インポートに失敗しました: "
+  },
+  "msgParseError": {
+    "message": "JSONファイルの解析に失敗しました: "
+  },
+  "msgNoLocalCloudRules": {
+    "message": "クラウドに関連付けられたローカルルールはありません"
+  },
+  "msgSyncFailed": {
+    "message": "同期に失敗しました。ネットワークを確認してください"
+  },
+  "msgSyncConflictRecovered": {
+    "message": " 件の競合ルールをクラウドの最新バージョンに復元しました！"
+  },
+  "msgSyncConflictKept": {
+    "message": " 件のルールのローカル変更を保持しました！"
+  },
+  "msgSyncUpdated": {
+    "message": " 件のクラウドルールを正常に同期および更新しました！"
+  },
+  "msgSyncAllLatest": {
+    "message": "すべてのクラウド関連ルールは最新です"
+  },
+  "msgSyncError": {
+    "message": "同期エラー: "
+  },
+  "msgFetchCloudFailed": {
+    "message": "クラウドデータの取得に失敗しました"
+  },
+  "msgDownloadSuccess": {
+    "message": "ローカルにダウンロードしました！"
+  },
+  "msgDownloadOverwrite": {
+    "message": "タスクがローカルに存在します。最新バージョンに自動更新されました！"
+  },
+  "msgDownloadOverwriteHint": {
+    "message": "ヒントがローカルに存在します。最新バージョンに自動更新されました！"
+  },
+  "msgPublishNeedLogin": {
+    "message": "クラウドに公開するにはログインが必要です"
+  },
+  "msgPublishProtect": {
+    "message": "[] によって共有されたルールは上書きできません。"
+  },
+  "msgPublishFailed": {
+    "message": "公開に失敗しました: "
+  },
+  "msgPublishPending": {
+    "message": "クラウドに送信されました。管理者の承認待ちです"
+  },
+  "msgPublishSuccess": {
+    "message": "公開に成功しました！クラウドで公開されました。"
+  },
+  "msgPublishException": {
+    "message": "公開例外"
+  },
+  "msgTourResetSuccess": {
+    "message": "ツアー \"\" の完了状態がリセットされました。"
+  },
+  "msgTourDeleteSuccess": {
+    "message": "ガイドツアー \"\" が削除されました！"
+  },
+  "msgDeleteFailed": {
+    "message": "削除に失敗しました: "
+  },
+  "msgHintDeleteSuccess": {
+    "message": "ホバーヒントが削除されました！"
+  },
+  "msgElementNotFound": {
+    "message": "現在のページに要素が見つかりません。"
+  },
+  "msgElementSelectedHint": {
+    "message": "要素が選択されました！上にヒントテキストを入力してください。"
+  },
+  "msgElementSelectedTour": {
+    "message": "要素が選択されました！ステップの説明を入力してください。"
+  },
+  "msgStepElementUpdated": {
+    "message": "ステップのターゲット要素が更新されました！"
+  },
+  "msgSaveSuccess": {
+    "message": "正常に保存されました"
+  },
+  "msgSaveFailedLog": {
+    "message": "保存に失敗しました。ログを確認してください。"
+  },
+  "msgSaveError": {
+    "message": "保存エラー: "
+  },
+  "msgTourSaveSuccess": {
+    "message": "ツアーが正常に保存されました"
+  },
+  "msgStepUpdated": {
+    "message": "ステップが更新されました"
+  },
+  "labelLanguage": {
+    "message": "表示言語"
+  },
+  "descLanguage": {
+    "message": "拡張機能の表示言語を切り替える"
+  },
+  "msgLanguageChanged": {
+    "message": "言語設定を更新しました"
+  },
+  "labelDebugLog": {
+    "message": "デバッグログ出力"
+  },
+  "descDebugLog": {
+    "message": "コンソールに実行ログを出力する"
+  },
+  "msgDebugLogEnabled": {
+    "message": "デバッグログ出力を有効にしました"
+  },
+  "msgDebugLogDisabled": {
+    "message": "デバッグログ出力を無効にしました"
+  },
+  "langAuto": {
+    "message": "🌐 自動 (システム言語)"
+  }
 }

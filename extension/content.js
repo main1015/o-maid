@@ -3,6 +3,16 @@
 (async () => {
   const isTop = window.self === window.top;
 
+  // 优先加载并初始化日志与国际化语言模块，确保生命周期日志受控且多语言字典就绪
+  try {
+    const loggerModule = await import(chrome.runtime.getURL('modules/logger.js'));
+    await loggerModule.initLogger();
+    const i18nModule = await import(chrome.runtime.getURL('modules/i18n.js'));
+    await i18nModule.initI18n();
+  } catch (e) {
+    // 忽略加载错误
+  }
+
   /**
    * 真正的初始化函数
    */

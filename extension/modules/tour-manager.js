@@ -161,7 +161,7 @@ export function startTour(tour, startStepNumber = 1, onHidePanel = null) {
                     this._introItems[nextStepIndex].element = targetEl;
                 }
             } else {
-                console.warn(`O-Maid: [Tour] Element not found for step ${nextStepIndex + 1}: ${nextStepObj.selector}`);
+                console.debug(`O-Maid: [Tour] Element not found for step ${nextStepIndex + 1}: ${nextStepObj.selector}`);
             }
         });
 
@@ -181,7 +181,7 @@ export function startTour(tour, startStepNumber = 1, onHidePanel = null) {
                     const isHorizontalOverlap = !(tooltipRect.right < elementRect.left || tooltipRect.left > elementRect.right);
 
                     if (isOverlapping && isHorizontalOverlap) {
-                        console.warn('O-Maid: [Tour] Tooltip is overlapping element. Forcing adjustment...');
+                        console.debug('O-Maid: [Tour] Tooltip is overlapping element. Forcing adjustment...');
                         // 如果重叠，强制向下移动 (假设我们优先使用 bottom 定位)
                         const currentTop = parseFloat(tooltipContainer.style.top) || 0;
                         const offset = elementRect.bottom - tooltipRect.top + 20;
