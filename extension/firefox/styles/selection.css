@@ -1,0 +1,10 @@
+/* styles/selection.css - 元素选择高亮样式 (类名切换方案) */
+
+/* 当元素被添加此动态类名时显示高亮 */
+.o-maid-selection-highlight {
+    outline: 2px solid #007bff !important;
+    outline-offset: -2px !important;
+    background-color: rgba(0, 123, 255, 0.2) !important;
+    transition: outline 0.1s ease, background-color 0.1s ease !important;
+    cursor: crosshair !important;
+}

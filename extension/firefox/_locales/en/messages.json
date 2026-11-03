@@ -1,0 +1,593 @@
+{
+  "appName": {
+    "message": "O-Maid - Web Operation Guide & Smart Hint Assistant"
+  },
+  "appDesc": {
+    "message": "Smart assistant for web operation guides. Add hover hints, business annotations, and onboarding flows to any website to boost productivity."
+  },
+  "popupTitle": {
+    "message": "O-Maid Smart Assistant"
+  },
+  "popupHeader": {
+    "message": "O-Maid Assistant"
+  },
+  "togglePanelBtn": {
+    "message": "📋 Toggle Panel"
+  },
+  "popupNotConnectedTip": {
+    "message": "💡 Tip: Current page not connected"
+  },
+  "popupReloadTip": {
+    "message": "Please refresh the page to reconnect after extension reload."
+  },
+  "popupReloadBtn": {
+    "message": "Refresh current page (F5)"
+  },
+  "popupGithubLink": {
+    "message": "🔗 Open Source GitHub"
+  },
+  "popupSystemPageError": {
+    "message": "<span>⚠️ Scripts cannot run on browser system pages. Please switch to a normal web page!</span>"
+  },
+  "sidepanelTitle": {
+    "message": "O-Maid Assistant"
+  },
+  "btnCloudAuth": {
+    "message": "Cloud Account"
+  },
+  "btnSettings": {
+    "message": "Settings"
+  },
+  "btnExport": {
+    "message": "Export Data"
+  },
+  "btnImport": {
+    "message": "Import Data"
+  },
+  "btnAdd": {
+    "message": "Add New Hint"
+  },
+  "tabLocal": {
+    "message": "Local Library"
+  },
+  "tabCloud": {
+    "message": "Cloud Discover"
+  },
+  "titleTours": {
+    "message": "Guided Tours"
+  },
+  "titleHints": {
+    "message": "Hover Hints"
+  },
+  "msgNoData": {
+    "message": "No hints or tours currently."
+  },
+  "titleCloudTours": {
+    "message": "Shared Tours"
+  },
+  "titleCloudHints": {
+    "message": "Shared Hints"
+  },
+  "btnRefreshCloud": {
+    "message": "Refresh Cloud Data"
+  },
+  "msgCloudNoData": {
+    "message": "No matching hints or tours found in cloud."
+  },
+  "titleAuth": {
+    "message": "Cloud Account"
+  },
+  "placeholderUsername": {
+    "message": "Username"
+  },
+  "placeholderPassword": {
+    "message": "Password"
+  },
+  "btnLogin": {
+    "message": "Login"
+  },
+  "btnRegister": {
+    "message": "Register"
+  },
+  "btnLogout": {
+    "message": "Logout"
+  },
+  "btnClose": {
+    "message": "Close"
+  },
+  "titleSettings": {
+    "message": "Settings"
+  },
+  "labelApiBase": {
+    "message": "Backend API URL:"
+  },
+  "btnSaveSettings": {
+    "message": "Save Settings"
+  },
+  "btnCloseSettings": {
+    "message": "Close"
+  },
+  "titleAddChoice": {
+    "message": "What do you want to create?"
+  },
+  "btnCreateHint": {
+    "message": "Hover Hint"
+  },
+  "btnCreateTour": {
+    "message": "Guided Tour"
+  },
+  "btnCancel": {
+    "message": "Cancel"
+  },
+  "labelHintText": {
+    "message": "Hint Text:"
+  },
+  "labelCssSelector": {
+    "message": "CSS Selector:"
+  },
+  "btnReselect": {
+    "message": "Reselect"
+  },
+  "btnSave": {
+    "message": "Save"
+  },
+  "labelTourName": {
+    "message": "Tour Name:"
+  },
+  "labelTourTrigger": {
+    "message": "Trigger:"
+  },
+  "optionManual": {
+    "message": "Manual"
+  },
+  "optionAuto": {
+    "message": "Auto"
+  },
+  "titleSteps": {
+    "message": "Steps"
+  },
+  "btnAddStep": {
+    "message": "+ Add Step"
+  },
+  "btnSaveTour": {
+    "message": "Save Tour"
+  },
+  "labelStepText": {
+    "message": "Step Hint Text:"
+  },
+  "labelStepSelector": {
+    "message": "CSS Selector:"
+  },
+  "btnStepReselect": {
+    "message": "Reselect"
+  },
+  "btnSaveStep": {
+    "message": "Save Step"
+  },
+  "spTourItemToggleSteps": {
+    "message": "Click to toggle steps"
+  },
+  "spTourItemResetStatus": {
+    "message": "Reset completion status"
+  },
+  "spTriggerAuto": {
+    "message": "Auto"
+  },
+  "spTriggerManual": {
+    "message": "Manual"
+  },
+  "spUnnamedStep": {
+    "message": "Unnamed Step"
+  },
+  "spMsgTourReset": {
+    "message": "Tour \"\" completion status has been reset."
+  },
+  "spMsgTourDeleted": {
+    "message": "Tour deleted"
+  },
+  "spMsgHintDeleted": {
+    "message": "Hint deleted"
+  },
+  "spTitleEditHint": {
+    "message": "Edit Hover Hint"
+  },
+  "spTitleNewHint": {
+    "message": "New Hover Hint"
+  },
+  "spTitleEditTour": {
+    "message": "Edit Guided Tour"
+  },
+  "spTitleNewTour": {
+    "message": "New Guided Tour"
+  },
+  "spStepPrefix": {
+    "message": "Step"
+  },
+  "spUnnamed": {
+    "message": "Unnamed"
+  },
+  "spMsgFillCompleteInfo": {
+    "message": "Please fill in complete information"
+  },
+  "spMsgHintSaved": {
+    "message": "Hint saved"
+  },
+  "spMsgFillTourInfo": {
+    "message": "Please fill in tour name and add at least one step"
+  },
+  "spMsgTourSaved": {
+    "message": "Tour saved"
+  },
+  "spMsgExportSuccess": {
+    "message": "Data exported successfully!"
+  },
+  "spMsgImportSuccess": {
+    "message": "Data imported successfully!"
+  },
+  "spMsgImportFail": {
+    "message": "Import failed: "
+  },
+  "spMsgParseFail": {
+    "message": "Failed to parse JSON file: "
+  },
+  "uiTitle": {
+    "message": "O-Maid Assistant"
+  },
+  "btnCollapsePanel": {
+    "message": "Collapse Panel"
+  },
+  "btnClosePanel": {
+    "message": "Close Panel"
+  },
+  "tabLocalRules": {
+    "message": "Local Rules"
+  },
+  "tabCloudShared": {
+    "message": "Cloud Shared"
+  },
+  "msgCloudNotLoggedIn": {
+    "message": "☁️ Cloud Not Logged In"
+  },
+  "btnLoginNow": {
+    "message": "Login Now"
+  },
+  "labelScope": {
+    "message": "Scope:"
+  },
+  "scopeCurrentPage": {
+    "message": "Current Page"
+  },
+  "btnRefresh": {
+    "message": "Refresh"
+  },
+  "titleSyncRefresh": {
+    "message": "Fetch and update local rules with latest cloud data"
+  },
+  "btnViewAll": {
+    "message": "View All"
+  },
+  "btnQuickAdd": {
+    "message": "+ New"
+  },
+  "titleQuickAddTour": {
+    "message": "Quick Add Guided Tour"
+  },
+  "titleQuickAddHint": {
+    "message": "Quick Add Hover Hint"
+  },
+  "msgNoLocalRules": {
+    "message": "No local rules for current page."
+  },
+  "linkViewAllLocal": {
+    "message": "View all local rules >>"
+  },
+  "scopeCurrentSite": {
+    "message": "Current Site"
+  },
+  "linkViewAllCloud": {
+    "message": "View Public Hall"
+  },
+  "msgNoCloudRulesSite": {
+    "message": "No matching cloud rules for current site."
+  },
+  "linkViewAllCloudRules": {
+    "message": "View all public rules >>"
+  },
+  "labelServerAddress": {
+    "message": "Server Address:"
+  },
+  "linkChangePort": {
+    "message": "Change Port"
+  },
+  "titleSysSettings": {
+    "message": "⚙️ System Settings"
+  },
+  "btnSaveApiSettings": {
+    "message": "Save API Settings"
+  },
+  "labelLocalDataBackup": {
+    "message": "Local Data Backup & Migration:"
+  },
+  "btnExportJson": {
+    "message": "📤 Export JSON"
+  },
+  "btnImportJson": {
+    "message": "📥 Import JSON"
+  },
+  "msgInvalidDataFormat": {
+    "message": "Invalid data format"
+  },
+  "msgFillRequiredFields": {
+    "message": "Please fill all required fields"
+  },
+  "msgSelectingElement": {
+    "message": "🎯 <strong>Selecting Element</strong>: Please click a target element on the page &nbsp;<span style=\"opacity:0.85; font-size:11px; background:rgba(255,255,255,0.25); padding:2px 7px; border-radius:4px; margin-left:6px; cursor:pointer;\" id=\"o-maid-banner-esc-btn\">Press ESC to exit</span>"
+  },
+  "msgCannotAccessIframe": {
+    "message": "Cannot access cross-origin iframe"
+  },
+  "msgAccessTopUrlRestricted": {
+    "message": "Access to top URL restricted, using current page URL"
+  },
+  "defaultStepTitle": {
+    "message": "Step "
+  },
+  "msgStepElementNotFound": {
+    "message": "Element for tour step  not found on current page, cannot continue."
+  },
+  "introNextLabel": {
+    "message": "Next →"
+  },
+  "introPrevLabel": {
+    "message": "← Back"
+  },
+  "introDoneLabel": {
+    "message": "Done"
+  },
+  "msgPluginReloaded": {
+    "message": "O-Maid plugin has been updated or reloaded in the background. Please refresh the current page to continue."
+  },
+  "msgConfirmRefresh": {
+    "message": "Refresh page now?"
+  },
+  "msgServerConnectFail": {
+    "message": "Cannot connect to server (), please ensure the backend is running and the port is correct!"
+  },
+  "msgCloudBatchFetchFail": {
+    "message": "Failed to fetch cloud rules in batch, degrading to single precise fetch"
+  },
+  "dynamicTitleMain": {
+    "message": "O-Maid"
+  },
+  "dynamicTitleCreate": {
+    "message": "Create"
+  },
+  "dynamicTitleSettings": {
+    "message": "Settings"
+  },
+  "dynamicTitleAuth": {
+    "message": "Cloud Account"
+  },
+  "dynamicTitleEditHint": {
+    "message": "Edit Hover Hint"
+  },
+  "dynamicTitleNewHint": {
+    "message": "New Hover Hint"
+  },
+  "dynamicTitleEditTour": {
+    "message": "Edit Guided Tour"
+  },
+  "dynamicTitleNewTour": {
+    "message": "New Guided Tour"
+  },
+  "dynamicTitleEditStep": {
+    "message": "Edit Step"
+  },
+  "dynamicScopeAll": {
+    "message": "All Rules"
+  },
+  "dynamicScopeCurrent": {
+    "message": "Current Page"
+  },
+  "dynamicBtnViewCurrent": {
+    "message": "View Current"
+  },
+  "dynamicBtnViewAll": {
+    "message": "View All"
+  },
+  "dynamicNoRulesAll": {
+    "message": "No saved rules in local."
+  },
+  "dynamicNoRulesCurrent": {
+    "message": "No local rules for current page."
+  },
+  "dynamicStatusLoggedIn": {
+    "message": "Logged in as: "
+  },
+  "dynamicBannerLoggedIn": {
+    "message": "👤 Logged in: <strong></strong>"
+  },
+  "dynamicBtnAccountSettings": {
+    "message": "Account Settings"
+  },
+  "dynamicStatusNotLoggedIn": {
+    "message": "Not logged in. Login to share rules."
+  },
+  "dynamicBannerNotLoggedIn": {
+    "message": "Cloud not logged in (Local only)"
+  },
+  "dynamicBtnLoginRegister": {
+    "message": "Login / Register"
+  },
+  "dynamicScopeCloudAll": {
+    "message": "Public Hall (All Sites)"
+  },
+  "dynamicBtnCloudViewCurrent": {
+    "message": "View Current Site"
+  },
+  "dynamicBtnCloudViewAll": {
+    "message": "View Public Hall"
+  },
+  "dynamicNoCloudRulesAll": {
+    "message": "No shared tasks in public hall."
+  },
+  "dynamicNoCloudRulesCurrent": {
+    "message": "No cloud tasks for site ()."
+  },
+  "msgSetSaveSuccess": {
+    "message": "Settings saved, applied to all pages."
+  },
+  "msgApiEmpty": {
+    "message": "API address cannot be empty"
+  },
+  "msgInputCredentials": {
+    "message": "Please enter username and password"
+  },
+  "msgLoginSuccess": {
+    "message": "Login successful"
+  },
+  "msgLoginFailed": {
+    "message": "Login failed: "
+  },
+  "msgRegisterSuccess": {
+    "message": "Registration successful, please login"
+  },
+  "msgRegisterFailed": {
+    "message": "Registration failed: "
+  },
+  "msgLogoutSuccess": {
+    "message": "Logged out successfully"
+  },
+  "msgExportSuccess": {
+    "message": "Data exported successfully!"
+  },
+  "msgExportFailed": {
+    "message": "Export failed"
+  },
+  "msgExportError": {
+    "message": "Export error: "
+  },
+  "msgImportSuccess": {
+    "message": "Data imported successfully!"
+  },
+  "msgImportFailed": {
+    "message": "Import failed: "
+  },
+  "msgParseError": {
+    "message": "Failed to parse JSON file: "
+  },
+  "msgNoLocalCloudRules": {
+    "message": "No local rules associated with cloud"
+  },
+  "msgSyncFailed": {
+    "message": "Sync failed, check network or backend"
+  },
+  "msgSyncConflictRecovered": {
+    "message": "Recovered  conflict rules to cloud latest version!"
+  },
+  "msgSyncConflictKept": {
+    "message": "Kept local modifications for  rules!"
+  },
+  "msgSyncUpdated": {
+    "message": "Successfully synced and updated  cloud rules!"
+  },
+  "msgSyncAllLatest": {
+    "message": "All cloud-associated rules are up-to-date"
+  },
+  "msgSyncError": {
+    "message": "Sync error: "
+  },
+  "msgFetchCloudFailed": {
+    "message": "Failed to fetch cloud data"
+  },
+  "msgDownloadSuccess": {
+    "message": "Downloaded to local!"
+  },
+  "msgDownloadOverwrite": {
+    "message": "Task exists locally, auto-updated to latest version!"
+  },
+  "msgDownloadOverwriteHint": {
+    "message": "Hint exists locally, auto-updated to latest version!"
+  },
+  "msgPublishNeedLogin": {
+    "message": "Login required to publish to cloud"
+  },
+  "msgPublishProtect": {
+    "message": "Rule shared by [], cannot overwrite. Create a new one to share."
+  },
+  "msgPublishFailed": {
+    "message": "Publish failed: "
+  },
+  "msgPublishPending": {
+    "message": "Submitted to cloud, pending admin approval"
+  },
+  "msgPublishSuccess": {
+    "message": "Published successfully! Now public in cloud."
+  },
+  "msgPublishException": {
+    "message": "Publish exception"
+  },
+  "msgTourResetSuccess": {
+    "message": "Completion status of tour \"\" reset."
+  },
+  "msgTourDeleteSuccess": {
+    "message": "Guided tour \"\" deleted!"
+  },
+  "msgDeleteFailed": {
+    "message": "Delete failed: "
+  },
+  "msgHintDeleteSuccess": {
+    "message": "Hover hint deleted!"
+  },
+  "msgElementNotFound": {
+    "message": "Element not found on current page."
+  },
+  "msgElementSelectedHint": {
+    "message": "Element selected! Please enter hint text above."
+  },
+  "msgElementSelectedTour": {
+    "message": "Element selected! Please enter step description."
+  },
+  "msgStepElementUpdated": {
+    "message": "Step target element updated!"
+  },
+  "msgSaveSuccess": {
+    "message": "Saved successfully"
+  },
+  "msgSaveFailedLog": {
+    "message": "Save failed, please check background logs."
+  },
+  "msgSaveError": {
+    "message": "Save error: "
+  },
+  "msgTourSaveSuccess": {
+    "message": "Tour saved successfully"
+  },
+  "msgStepUpdated": {
+    "message": "Step updated"
+  },
+  "labelDebugLog": {
+    "message": "Debug Logs"
+  },
+  "descDebugLog": {
+    "message": "Output extension execution logs to console"
+  },
+  "msgDebugLogEnabled": {
+    "message": "Debug logs enabled"
+  },
+  "msgDebugLogDisabled": {
+    "message": "Debug logs disabled"
+  },
+  "labelLanguage": {
+    "message": "Display Language"
+  },
+  "descLanguage": {
+    "message": "Select extension interface language"
+  },
+  "msgLanguageChanged": {
+    "message": "Language updated"
+  },
+  "langAuto": {
+    "message": "🌐 Auto (System)"
+  }
+}

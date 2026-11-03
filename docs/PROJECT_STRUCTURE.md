@@ -1,28 +1,36 @@
 # O-Maid 项目目录结构详解
 
-本文档详细说明了 O-Maid Chrome 扩展的目录结构和各文件的功能职责。
+本文档详细说明了 O-Maid 浏览器扩展（Chrome 与 Firefox）及后端的目录结构和各文件的功能职责。
 
 ## 📁 目录结构总览
 
 ```text
 o-maid/
-├── extension/                    # Chrome 扩展目录 (前端)
-│   ├── 📄 manifest.json          # Chrome 扩展配置文件（必需）
-│   ├── 🚀 background.js          # 后台服务工作者（Service Worker）
-│   ├── 🎯 content.js             # 内容脚本入口文件
-│   ├── 🖼️  popup.html             # 弹出窗口 HTML 结构
-│   ├── 🎨 popup.js               # 弹出窗口交互逻辑
-│   ├── 📋 rules.json             # 默认规则配置文件
-│   ├── 📦 modules/               # 功能模块目录（核心业务逻辑）
-│   │   ├── 📡 communication.js   
-│   │   ├── 🎯 element-selector.js
-│   │   ├── 💡 hover-hints.js     
-│   │   ├── 🗺️  tour-manager.js   
-│   │   ├── 🎨 ui-manager.js      
-│   │   ├── 💾 storage-api.js     
-│   │   ├── ☁️  cloud-api.js       # 云端通信模块
-│   │   └── 🔨 utils.js           
-│   └── 📚 vendor/                # 第三方库目录
+├── extension/                    # 浏览器扩展目录 (前端)
+│   ├── chrome/                   # Chrome 扩展目录 (MV3 - Service Worker)
+│   │   ├── 📄 manifest.json      # Chrome 扩展清单
+│   │   ├── 🚀 background.js      # 后台服务工作者（Service Worker）
+│   │   ├── 🎯 content.js         # 内容脚本入口文件
+│   │   ├── 🖼️  popup.html         # 弹出窗口 HTML 结构
+│   │   ├── 🎨 popup.js           # 弹出窗口交互逻辑
+│   │   ├── 📋 rules.json         # 默认规则配置文件
+│   │   ├── 📦 modules/           # 功能模块目录（核心业务逻辑）
+│   │   ├── 🎨 styles/            # 样式目录
+│   │   ├── 🌐 _locales/          # 多语言字典资源
+│   │   ├── 🖼️  icons/            # 插件图标
+│   │   └── 📚 vendor/            # 第三方库目录
+│   └── firefox/                  # Firefox 扩展目录 (MV3 - Background Event Page)
+│       ├── 📄 manifest.json      # Firefox 扩展清单 (配置 gecko id, scripts 等)
+│       ├── 🚀 background.js      # 后台事件脚本 (ES Module)
+│       ├── 🎯 content.js         # 内容脚本入口文件
+│       ├── 🖼️  popup.html         # 弹出窗口 HTML 结构
+│       ├── 🎨 popup.js           # 弹出窗口交互逻辑
+│       ├── 📋 rules.json         # 默认规则配置文件
+│       ├── 📦 modules/           # 功能模块目录
+│       ├── 🎨 styles/            # 样式目录 (适配 Firefox 滚动条)
+│       ├── 🌐 _locales/          # 多语言字典资源
+│       ├── 🖼️  icons/            # 插件图标
+│       └── 📚 vendor/            # 第三方库目录
 ├── server/                       # 后端服务目录 (Monorepo 后端)
 │   ├── 🐳 Dockerfile             # Docker 镜像构建文件
 │   ├── 🐳 docker-compose.yml     # Docker 容器编排配置文件

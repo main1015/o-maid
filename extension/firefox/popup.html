@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title data-i18n="popupTitle"></title>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      width: 220px;
+      margin: 0;
+      padding: 14px;
+      box-sizing: border-box;
+      background: #ffffff;
+      color: #1e293b;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .header img {
+      width: 24px;
+      height: 24px;
+      border-radius: 5px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    #toggle-panel-btn {
+      width: 100%;
+      padding: 8px 12px;
+      background: #0d6efd;
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.1s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    #toggle-panel-btn:hover {
+      background: #0b5ed7;
+      transform: translateY(-1px);
+    }
+
+    .github-link {
+      color: #64748b;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .github-link:hover {
+      color: #0f172a;
+    }
+
+    .switch-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #cbd5e1;
+      transition: 0.2s;
+      border-radius: 18px;
+    }
+
+    .switch-slider:before {
+      position: absolute;
+      content: "";
+      height: 14px;
+      width: 14px;
+      left: 2px;
+      bottom: 2px;
+      background-color: white;
+      transition: 0.2s;
+      border-radius: 50%;
+    }
+
+    input:checked + .switch-slider {
+      background-color: #0d6efd;
+    }
+
+    input:checked + .switch-slider:before {
+      transform: translateX(16px);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <img src="icons/icon48.png" alt="O-Maid">
+    <h1 data-i18n="popupHeader"></h1>
+  </div>
+  <button id="toggle-panel-btn" data-i18n="togglePanelBtn"></button>
+  <div id="status-tip"
+    style="display:none; margin-top:10px; font-size:12px; color:#b91c1c; line-height:1.4; background:#fef2f2; padding:8px 10px; border-radius:6px; border:1px solid #fecaca; text-align:left;">
+    <div style="font-weight:600; margin-bottom:4px;" data-i18n="popupNotConnectedTip"></div>
+    <div style="font-size:11px; color:#475569; margin-bottom:6px;" data-i18n="popupReloadTip"></div>
+    <button id="reload-tab-btn"
+      style="width:100%; padding:5px; background:#ef4444; color:#fff; border:none; border-radius:4px; font-size:11px; font-weight:500; cursor:pointer;" data-i18n="popupReloadBtn"></button>
+  </div>
+
+  <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid #f1f5f9; display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: #475569;">
+    <span data-i18n="labelLanguage"></span>
+    <select id="popup-language-select" style="max-width: 110px; padding: 3px 6px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 11px; background: #fff; cursor: pointer; color: #1e293b; outline: none;">
+    </select>
+  </div>
+
+  <div style="margin-top: 8px; padding-top: 8px; border-top: 1px dashed #f1f5f9; display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: #475569;">
+    <span data-i18n="labelDebugLog"></span>
+    <label style="position: relative; display: inline-block; width: 34px; height: 18px; margin: 0; cursor: pointer;">
+      <input type="checkbox" id="popup-debug-log" style="opacity: 0; width: 0; height: 0;">
+      <span class="switch-slider"></span>
+    </label>
+  </div>
+
+  <div style="margin-top: 12px; text-align: center; font-size: 11px;">
+    <a href="https://github.com/main1015/o-maid" target="_blank"
+      class="github-link" data-i18n="popupGithubLink"></a>
+  </div>
+
+  <script src="popup.js" type="module"></script>
+</body>
+
+</html>

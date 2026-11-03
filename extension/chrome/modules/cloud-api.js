@@ -1,7 +1,7 @@
 // extension/modules/cloud-api.js
 // 使用 chrome.storage.local 实现真正跨网页、跨域名的持久化共享
 
-const DEFAULT_API_BASE = 'http://localhost:3000/api';
+const DEFAULT_API_BASE = 'http://localhost:8632/api';
 
 let cloudState = {
     token: '',

@@ -7,7 +7,7 @@ import { startTour } from './tour-manager.js';
 import { createHoverTooltip } from './hover-hints.js';
 import * as CloudAPI from './cloud-api.js';
 import { isLoggingEnabled, setLoggingEnabled } from './logger.js';
-import { SUPPORTED_LOCALES, getSupportedLocales, getCurrentLocale, setLocale } from './i18n.js';
+import { SUPPORTED_LOCALES, getSupportedLocales, getCurrentLocale, setLocale, safeSetHtml } from './i18n.js';
 
 let uiPanel = null;
 let uiHost = null;
@@ -46,7 +46,7 @@ export function createUIPanel() {
     const panel = document.createElement('div');
     panel.id = 'o-maid-panel';
     panel.style.display = 'none'; // 明确预设初始状态为隐藏，彻底解决第一次点击失效的Bug
-    panel.innerHTML = `
+    safeSetHtml(panel, `
     <div class="o-maid-resize-handle" title="${chrome.i18n.getMessage('btnCollapsePanel')}"></div>
     <div class="o-maid-collapse-tab" title="${chrome.i18n.getMessage('btnCollapsePanel')}">
       <div class="o-maid-collapse-tab-icon">📋</div>
@@ -141,7 +141,7 @@ export function createUIPanel() {
           </div>
           <button id="logout-btn" class="choice-btn" style="display:none; width: 100%; margin-bottom: 12px; background: #fef2f2; color: #ef4444; border: 1px solid #fecaca; border-radius: 6px; padding: 8px; cursor: pointer; font-weight: 500; font-size: 13px;">${chrome.i18n.getMessage('btnLogout')}</button>
           <div style="font-size: 11px; color: #64748b; margin-top: 10px; display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed #eee; padding-top: 8px;">
-            <span>${chrome.i18n.getMessage('labelServerAddress')} <code id="auth-current-server" style="color: #6366f1;">http://localhost:3000/api</code></span>
+            <span>${chrome.i18n.getMessage('labelServerAddress')} <code id="auth-current-server" style="color: #6366f1;">http://localhost:8632/api</code></span>
             <a href="javascript:void(0)" id="auth-change-server-link" style="color: #6366f1; text-decoration: underline; cursor: pointer;">${chrome.i18n.getMessage('linkChangePort')}</a>
           </div>
           <hr style="border:none; border-top:1px solid #eee; margin:16px 0;">
@@ -152,7 +152,7 @@ export function createUIPanel() {
       <div id="view-settings" style="display:none;">
           <h5 style="margin-top:0; font-size:14px; font-weight:600; margin-bottom:12px; border-bottom:1px solid #eee; padding-bottom:6px;">${chrome.i18n.getMessage('titleSysSettings')}</h5>
           <label style="font-size:12px; font-weight:600; color:#475569;">${chrome.i18n.getMessage('labelApiBase')}</label>
-          <input type="text" id="setting-api-base" placeholder="http://localhost:3000/api" style="width: 100%; margin-top:4px; margin-bottom: 10px; padding: 7px 10px; box-sizing: border-box; border:1px solid #cbd5e1; border-radius:6px; font-size:13px;">
+          <input type="text" id="setting-api-base" placeholder="http://localhost:8632/api" style="width: 100%; margin-top:4px; margin-bottom: 10px; padding: 7px 10px; box-sizing: border-box; border:1px solid #cbd5e1; border-radius:6px; font-size:13px;">
           <button id="save-settings-btn" class="save-btn" style="width: 100%; padding:8px; border-radius:6px; background:#6366f1; color:#fff; border:none; font-weight:600; cursor:pointer; margin-bottom: 16px;">${chrome.i18n.getMessage('btnSaveApiSettings')}</button>
           
           <div style="border-top:1px dashed #e2e8f0; padding-top:12px; margin-bottom:12px;">
@@ -247,7 +247,7 @@ export function createUIPanel() {
           <button id="o-maid-cancel-edit-tour-step-btn" class="cancel-btn">${chrome.i18n.getMessage('btnCancel')}</button>
         </div>
       </div>
-    `;
+    `);
     shadowRoot.appendChild(panel);
 
     // 添加样式
@@ -1514,7 +1514,7 @@ function showConflictModal(conflicts, onResolve) {
         </li>
     `).join('');
 
-    modal.innerHTML = `
+    safeSetHtml(modal, `
         <div style="background: #ffffff; border-radius: 10px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15); width: 100%; max-width: 330px; overflow: hidden; border: 1px solid #cbd5e1;">
             <div style="padding: 12px 14px; background: #fffbeb; border-bottom: 1px solid #fef3c7; display: flex; align-items: center; gap: 6px;">
                 <span style="font-size: 15px;">⚠️</span>
@@ -1536,7 +1536,7 @@ function showConflictModal(conflicts, onResolve) {
                 </button>
             </div>
         </div>
-    `;
+    `);
 
     shadowRoot.getElementById('o-maid-panel').appendChild(modal);
 
@@ -1558,9 +1558,9 @@ async function handleSyncRefresh() {
     const btn = uiPanel.querySelector('#sync-refresh-btn');
     if (!btn || btn.disabled) return;
 
-    const originalContent = btn.innerHTML;
+    const originalContent = btn.textContent;
     btn.disabled = true;
-    btn.innerHTML = '<span class="sync-icon">⏳</span> 刷新中';
+    btn.textContent = '⏳ 刷新中';
 
     try {
         const response = await getDataForTab();
@@ -1643,7 +1643,7 @@ async function handleSyncRefresh() {
     } finally {
         if (btn) {
             btn.disabled = false;
-            btn.innerHTML = originalContent;
+            btn.textContent = originalContent;
         }
     }
 }
@@ -1665,7 +1665,7 @@ function updateAuthUI() {
         if (status) status.textContent = chrome.i18n.getMessage('dynamicStatusLoggedIn').replace('$1', user);
         if (form) form.style.display = 'none';
         if (logoutBtn) logoutBtn.style.display = 'block';
-        if (bannerText) bannerText.innerHTML = chrome.i18n.getMessage('dynamicBannerLoggedIn').replace('$1', user);
+        if (bannerText) safeSetHtml(bannerText, chrome.i18n.getMessage('dynamicBannerLoggedIn').replace('$1', user));
         if (bannerBtn) bannerBtn.textContent = chrome.i18n.getMessage('dynamicBtnAccountSettings');
     } else {
         if (status) status.textContent = chrome.i18n.getMessage('dynamicStatusNotLoggedIn');
@@ -1726,7 +1726,7 @@ function renderCloudToursList(tours) {
             statusBadge = `<span style="background:rgba(239,68,68,0.15); color:#ef4444; border:1px solid rgba(239,68,68,0.35); padding:1px 5px; border-radius:3px; font-size:11px; margin-left:5px;">✕ 已驳回</span>`;
         }
 
-        li.innerHTML = `
+        safeSetHtml(li, `
             <div class="item-header">
                 <div class="item-info toggle-steps" style="cursor: pointer;">
                     <div class="name">${domainBadge}${tour.name}${statusBadge}</div>
@@ -1738,7 +1738,7 @@ function renderCloudToursList(tours) {
             <div class="item-meta">
                 <span class="details">作者: ${tour.author || '匿名'} | 下载: ${tour.downloads || 0}</span>
             </div>
-        `;
+        `);
         li.querySelector('.download-btn').addEventListener('click', async () => {
             const res = await addTour({...tour, id: undefined, cloudId: tour.id, isDownloaded: true, isSynced: true, trigger: 'manual'});
             if(res.success) {
@@ -1766,7 +1766,7 @@ function renderCloudHintsList(hints) {
             statusBadge = `<span style="background:rgba(239,68,68,0.15); color:#ef4444; border:1px solid rgba(239,68,68,0.35); padding:1px 5px; border-radius:3px; font-size:11px; margin-left:5px;">✕ 已驳回</span>`;
         }
 
-        li.innerHTML = `
+        safeSetHtml(li, `
             <div class="item-header">
                 <div class="item-info">
                     <div class="name">${domainBadge}${hint.text}${statusBadge}</div>
@@ -1778,7 +1778,7 @@ function renderCloudHintsList(hints) {
             <div class="item-meta">
                 <span class="details">作者: ${hint.author || '匿名'} | 下载: ${hint.downloads || 0}</span>
             </div>
-        `;
+        `);
         li.querySelector('.download-btn').addEventListener('click', async () => {
             const res = await addHoverHint({...hint, id: undefined, cloudId: hint.id, isDownloaded: true, isSynced: true});
             if(res.success) {
@@ -1889,7 +1889,7 @@ function renderToursList(tours, isShowAll = false) {
             cloudBtnStyle = 'border-color: #10b981; color: #10b981; background: rgba(16, 185, 129, 0.08); font-weight: bold;';
         }
 
-        li.innerHTML = `
+        safeSetHtml(li, `
             <div class="item-header">
                 <div class="item-info toggle-steps" style="cursor: pointer;" title="点击展开/折叠步骤">
                     <span class="step-arrow">▶</span>
@@ -1917,7 +1917,7 @@ function renderToursList(tours, isShowAll = false) {
                     `;
         }).join('')}
             </ul>
-        `;
+        `);
 
         const startBtn = li.querySelector('.start-btn');
         startBtn.addEventListener('click', (e) => {
@@ -2127,7 +2127,7 @@ function renderHintsList(hints, isShowAll = false) {
         }
 
         const li = document.createElement('li');
-        li.innerHTML = `
+        safeSetHtml(li, `
             <div class="item-header">
                 <div class="item-info preview-trigger" style="cursor: pointer;" title="点击在页面上定位">
                     <div class="name">${domainBadge}${hint.text}${modifiedBadge}</div>
@@ -2141,7 +2141,7 @@ function renderHintsList(hints, isShowAll = false) {
             <div class="item-info">
                 <span class="details">${hint.selector}</span>
             </div>
-        `;
+        `);
         li.querySelector('.publish-btn').addEventListener('click', async (e) => {
             e.stopPropagation();
             if(!CloudAPI.getUsername()) {
@@ -2259,7 +2259,7 @@ function renderTourBuilderSteps() {
     uiPanel.querySelector('#o-maid-tour-step-count').textContent = tourBuilderState.steps.length;
     tourBuilderState.steps.forEach((step, index) => {
         const li = document.createElement('li');
-        li.innerHTML = `
+        safeSetHtml(li, `
             <div class="item-info">
                 <div class="name">${index + 1}. ${step.text}</div>
                 <span class="step-details">${step.selector}</span>
@@ -2270,7 +2270,7 @@ function renderTourBuilderSteps() {
                 <button class="btn btn-outline-primary btn-sm edit-step-btn" data-index="${index}">✎</button>
                 <button class="btn btn-outline-danger btn-sm delete-step-btn" data-index="${index}">🗑</button>
             </div>
-        `;
+        `);
 
         li.querySelector('.move-up-btn').addEventListener('click', (e) => {
             const idx = parseInt(e.target.dataset.index, 10);

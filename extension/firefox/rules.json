@@ -1,0 +1,37 @@
+{
+  "guides": [
+    {
+      "id": "guide-google-search",
+      "name": "谷歌搜索入门",
+      "trigger": "manual",
+      "startUrl": "https://www.google.com/",
+      "steps": [
+        {
+          "step": 1,
+          "url": "https://www.google.com/",
+          "element": "textarea[name='q']",
+          "title": "第一步：输入搜索词",
+          "content": "在这里输入您想搜索的任何内容。",
+          "position": "bottom"
+        },
+        {
+          "step": 2,
+          "url": "https://www.google.com/",
+          "element": "input[name='btnK']",
+          "title": "第二步：开始搜索",
+          "content": "点击“Google 搜索”按钮来查找结果。",
+          "position": "bottom"
+        }
+      ]
+    }
+  ],
+  "singleHints": [
+    {
+      "id": "hint-google-mic",
+      "url": "https://www.google.com/",
+      "element": "div[aria-label='Search by voice']",
+      "content": "您也可以点击这里，使用语音进行搜索。",
+      "trigger": "hover"
+    }
+  ]
+}

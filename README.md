@@ -32,11 +32,18 @@
 
 本项目包含两部分：Chrome 扩展前端和本地/云端管理后端。前端基于原生 JavaScript，**无需编译即可直接运行**。
 
-### 2.1 运行前端扩展 (Chrome Extension)
+### 2.1 运行前端扩展
+
+#### Chrome 浏览器
 1. 打开 Chrome 浏览器，访问扩展管理页面：`chrome://extensions/`
 2. 在页面右上角开启 **“开发者模式”**。
 3. 点击左上角的 **“加载已解压的扩展程序”** (Load unpacked) 按钮。
-4. 选择本项目中的 `extension` 文件夹，即可加载并运行。
+4. 选择本项目中的 `extension/chrome` 文件夹，即可加载并运行。
+
+#### Firefox 浏览器
+1. 打开 Firefox 浏览器，访问调试页面：`about:debugging#/runtime/this-firefox`
+2. 点击 **“临时载入附加组件...”** (Load Temporary Add-on) 按钮。
+3. 选择本项目中的 `extension/firefox/manifest.json` 文件，即可加载并运行。
 
 ### 2.2 运行后端服务 (Server)
 后端服务提供管理控制台及数据持久化。详细部署说明请参考 [server/README.md](./server/README.md)。
@@ -56,16 +63,9 @@ docker-compose up -d
 
 ```text
 o-maid/
-├── extension/            # Chrome 扩展文件目录 (前端)
-│   ├── manifest.json
-│   ├── background.js
-│   ├── content.js
-│   ├── popup.html/js
-│   ├── sidepanel.html/js
-│   ├── rules.json
-│   ├── modules/
-│   ├── styles/
-│   └── vendor/
+├── extension/            # 浏览器扩展目录 (前端)
+│   ├── chrome/           # Chrome 浏览器扩展 (Manifest V3 - Service Worker)
+│   └── firefox/          # Firefox 浏览器扩展 (Manifest V3 - Background Scripts)
 ├── server/               # 后端服务目录 (Node.js + SQLite)
 │   ├── server.js
 │   ├── database.js

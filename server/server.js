@@ -9,7 +9,7 @@ const hintsRoutes = require('./routes/hints');
 const statsRoutes = require('./routes/stats');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8632;
 
 // 中间件配置
 app.use(cors());

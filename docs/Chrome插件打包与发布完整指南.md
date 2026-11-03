@@ -21,14 +21,14 @@
 ### 2.1 方式 A：打包为 `.crx` 文件直接分发（最常用）
 
 #### 步骤 1：准备打包目录
-确保 `/home/wy/code/chrome/o-maid/extension` 目录下所有文件已就绪，且已更新 `manifest.json` 中的 `version`（如从 `1.0` 升级为 `1.1`）。
+确保 `/home/wy/code/chrome/o-maid/extension/chrome` 目录下所有文件已就绪，且已更新 `manifest.json` 中的 `version`（如从 `1.0` 升级为 `1.1`）。
 
 #### 步骤 2：使用 Chrome 自带工具打包
 1. 在 Chrome 浏览器地址栏输入并打开：`chrome://extensions/`；
 2. 开启右上角的 **「开发者模式」** 开关；
 3. 点击左上角弹出的 **「打包扩展程序 (Pack extension)」** 按钮；
 4. 填写配置项：
-   - **扩展程序根目录**：选择你的 `extension` 目录（例如 `/home/wy/code/chrome/o-maid/extension`）；
+   - **扩展程序根目录**：选择你的 Chrome 扩展目录（例如 `/home/wy/code/chrome/o-maid/extension/chrome`）；
    - **私有密钥文件 (Private key file)**：
      - **如果是首次打包**：留空无需选择，直接点击「打包扩展程序」；
      - **如果是后续版本更新**：**必须**选择上一次打包时生成的 `.pem` 密钥文件，否则 Chrome 会认为这是两个不同的插件，导致旧数据无法继承且无法覆盖安装！
@@ -97,12 +97,12 @@
 #### 步骤 1：本地压缩打包
 > [!IMPORTANT]
 > **切勿直接压缩外层文件夹！**
-> 必须进入 `extension/` 文件夹内部，选中所有文件进行打包，确保 `manifest.json` 位于 zip 文件的根路径！
+> 必须进入 `extension/chrome/` 文件夹内部，选中所有文件进行打包，确保 `manifest.json` 位于 zip 文件的根路径！
 
 - **Linux / Mac 终端快速打包命令**：
   ```bash
-  cd /home/wy/code/chrome/o-maid/extension
-  zip -r ../o-maid-v1.0.zip ./* -x "*.git*"
+  cd /home/wy/code/chrome/o-maid/extension/chrome
+  zip -r ../../o-maid-v1.0.zip ./* -x "*.git*"
   ```
 
 #### 步骤 2：上传到开发者控制台

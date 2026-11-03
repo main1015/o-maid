@@ -1,12 +1,14 @@
 #!/bin/bash
-# 压缩 extension 目录为 o-maid.zip 插件包（版本号独立管理，零污染仓库）
+# 压缩 extension/chrome 与 extension/firefox 目录为插件包（版本号独立管理，零污染仓库）
 
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
-echo "📦 正在打包 O-Maid 插件..."
+TARGET="${1:-all}" # all | chrome | firefox
+
+echo "📦 正在打包 O-Maid 插件 (目标: $TARGET)..."
 
 VERSION_FILE="version.txt"
 DEFAULT_VERSION="1.4"
@@ -28,31 +30,62 @@ console.log(nextVer);
 
 echo "🆙 扩展版本号已更新至: v$NEW_VERSION (独立记录于 $VERSION_FILE)"
 
-# 2. 准备临时构建目录，确保源码仓库 100% 干净
-TEMP_BUILD_DIR=".build_temp"
-rm -rf "$TEMP_BUILD_DIR"
-mkdir -p "$TEMP_BUILD_DIR"
+# 打包函数
+package_target() {
+  local browser_type="$1"
+  local src_dir="extension/$browser_type"
+  local output_zip="o-maid-$browser_type.zip"
 
-# 复制 extension 文件到临时目录
-cp -R extension/. "$TEMP_BUILD_DIR/"
+  if [ ! -d "$src_dir" ]; then
+    echo "❌ 目录 $src_dir 不存在，跳过打包"
+    return
+  fi
 
-# 将独立版本号注入到临时构建目录中的 manifest.json
-node -e "
-const fs = require('fs');
-const path = '$TEMP_BUILD_DIR/manifest.json';
-const manifest = JSON.parse(fs.readFileSync(path, 'utf8'));
-manifest.version = '$NEW_VERSION';
-fs.writeFileSync(path, JSON.stringify(manifest, null, 2) + '\n', 'utf8');
-"
+  local temp_dir=".build_temp_$browser_type"
+  rm -rf "$temp_dir"
+  mkdir -p "$temp_dir"
 
-# 3. 压缩打包
-rm -f o-maid.zip
-(
-  cd "$TEMP_BUILD_DIR"
-  zip -r ../o-maid.zip * -x "*.DS_Store" "*__MACOSX*" > /dev/null
-)
+  # 复制源码到临时目录
+  cp -R "$src_dir/." "$temp_dir/"
 
-# 4. 清理临时构建目录
-rm -rf "$TEMP_BUILD_DIR"
+  # 注入版本号到 manifest.json
+  node -e "
+  const fs = require('fs');
+  const path = '$temp_dir/manifest.json';
+  const manifest = JSON.parse(fs.readFileSync(path, 'utf8'));
+  manifest.version = '$NEW_VERSION';
+  fs.writeFileSync(path, JSON.stringify(manifest, null, 2) + '\n', 'utf8');
+  "
 
-echo "✅ 打包完成！生成文件：o-maid.zip (版本: v$NEW_VERSION，源码工作区保持干净)"
+  # 压缩打包
+  rm -f "$output_zip"
+  (
+    cd "$temp_dir"
+    zip -r "../$output_zip" * -x "*.DS_Store" "*__MACOSX*" > /dev/null
+  )
+
+  # 清理临时目录
+  rm -rf "$temp_dir"
+
+  echo "✅ 打包完成：$output_zip (适用于 $browser_type, v$NEW_VERSION)"
+
+  # 如果是 chrome，同时同步一份 o-maid.zip 保持向后兼容
+  if [ "$browser_type" = "chrome" ]; then
+    cp -f "$output_zip" o-maid.zip
+    echo "ℹ️  已同步更新 o-maid.zip (兼容旧脚本与说明)"
+  fi
+}
+
+if [ "$TARGET" = "source" ]; then
+  exec "$SCRIPT_DIR/package-source.sh"
+fi
+
+if [ "$TARGET" = "chrome" ] || [ "$TARGET" = "all" ]; then
+  package_target "chrome"
+fi
+
+if [ "$TARGET" = "firefox" ] || [ "$TARGET" = "all" ]; then
+  package_target "firefox"
+fi
+
+echo "🎉 打包流程全部结束！源码工作区保持干净。"
