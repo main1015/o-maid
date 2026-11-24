@@ -1,13 +1,33 @@
 // content.js - O-Maid 内容脚本入口文件
 
 (async () => {
+  // 检查扩展上下文活性：若上下文已失效（如扩展重载后的残留脚本），直接静默退出
+  if (typeof chrome === 'undefined' || !chrome.runtime || !chrome.runtime.id) {
+    return;
+  }
+
   const isTop = window.self === window.top;
+
+  // 安全获取扩展内部资源 URL，若上下文失效或无效则返回 null
+  const getSafeURL = (path) => {
+    try {
+      if (!chrome.runtime || !chrome.runtime.id) return null;
+      const url = chrome.runtime.getURL(path);
+      return (!url || url.includes('//invalid/')) ? null : url;
+    } catch (e) {
+      return null;
+    }
+  };
 
   // 优先加载并初始化日志与国际化语言模块，确保生命周期日志受控且多语言字典就绪
   try {
-    const loggerModule = await import(chrome.runtime.getURL('modules/logger.js'));
+    const loggerUrl = getSafeURL('modules/logger.js');
+    const i18nUrl = getSafeURL('modules/i18n.js');
+    if (!loggerUrl || !i18nUrl) return;
+
+    const loggerModule = await import(loggerUrl);
     await loggerModule.initLogger();
-    const i18nModule = await import(chrome.runtime.getURL('modules/i18n.js'));
+    const i18nModule = await import(i18nUrl);
     await i18nModule.initI18n();
   } catch (e) {
     // 忽略加载错误
@@ -22,11 +42,18 @@
     // 动态导入所有模块 (放在这里延迟加载)
     let communication, uiManager, elementSelector, hoverHints, tourManager;
     try {
-      communication = await import(chrome.runtime.getURL('modules/communication.js'));
-      uiManager = await import(chrome.runtime.getURL('modules/ui-manager.js'));
-      elementSelector = await import(chrome.runtime.getURL('modules/element-selector.js'));
-      hoverHints = await import(chrome.runtime.getURL('modules/hover-hints.js'));
-      tourManager = await import(chrome.runtime.getURL('modules/tour-manager.js'));
+      const commUrl = getSafeURL('modules/communication.js');
+      const uiUrl = getSafeURL('modules/ui-manager.js');
+      const selectorUrl = getSafeURL('modules/element-selector.js');
+      const hintsUrl = getSafeURL('modules/hover-hints.js');
+      const tourUrl = getSafeURL('modules/tour-manager.js');
+      if (!commUrl || !uiUrl || !selectorUrl || !hintsUrl || !tourUrl) return;
+
+      communication = await import(commUrl);
+      uiManager = await import(uiUrl);
+      elementSelector = await import(selectorUrl);
+      hoverHints = await import(hintsUrl);
+      tourManager = await import(tourUrl);
       console.log(`O-Maid: [${isTop ? 'Top' : 'Iframe'}] 所有模块导入并在延迟后加载完毕`);
     } catch (err) {
       console.error(`O-Maid: [${isTop ? 'Top' : 'Iframe'}] 模块导入失败:`, err);

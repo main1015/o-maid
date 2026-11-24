@@ -34,8 +34,14 @@ export function createUIPanel() {
     // 创建宿主元素
     uiHost = document.createElement('div');
     uiHost.id = 'o-maid-ui-host';
-    // 确保宿主本身不影响布局，但能承载 Shadow DOM
-    uiHost.style.position = 'static';
+    // 确保宿主脱离文档流、零尺寸且不影响页面布局，事件穿透（由 Shadow DOM 内部子元素自行交互）
+    uiHost.style.position = 'fixed';
+    uiHost.style.top = '0';
+    uiHost.style.left = '0';
+    uiHost.style.width = '0';
+    uiHost.style.height = '0';
+    uiHost.style.overflow = 'visible';
+    uiHost.style.pointerEvents = 'none';
     uiHost.style.zIndex = '2147483646';
     document.body.appendChild(uiHost);
 
